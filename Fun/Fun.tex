@@ -1,0 +1,190 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[explicit]{titlesec}
+\usepackage{ulem}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amsthm}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[subsection] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition} % definition numbers are dependent on theorem numbers
+\theoremstyle{lemma}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\theoremstyle{example}
+\newtheorem{example}[theorem]{Example}
+
+\titleformat{\subsection}
+{\small}{\thesubsection}{1em}{\uline{#1}}
+\begin{document}
+	\begin{titlepage} 
+		\title{Fun Summary}
+		\clearpage\maketitle
+		\thispagestyle{empty}
+	\end{titlepage}
+	\tableofcontents
+	\newpage
+	\section{metric spaces}
+	\label{sec: metric spaces}
+	\subsection{metric spaces}
+	\begin{definition}
+		A \underline{metric space} is a non-empty set $X$ together with a map \[d: X \times X \to \mathbb{R}\]
+		\[(x,y) \mapsto d(x,y)\]
+		such that \begin{enumerate}
+			\item $d(x,y) = 0$ iff $x = y$
+			\item $d(x,y) = d(y,x)$
+			\item $d(x,z) \leq d(x,y) + d(y,z) \; \forall x,y,z \in X$
+		\end{enumerate}
+	\end{definition}
+
+	\begin{remark}($d$ admits only positive values)\\
+		\[0 = d(x,x) \leq d(x,y) + d(y,x) = 2d(x,y)\]
+	\end{remark}
+
+	\begin{example}
+		\begin{enumerate}
+			\item $d_2(x,y) = ||x-y||_2$
+			\item $d(x,y) = \begin{cases}
+				0 \; \text{ if } x = y\\
+				1 \; \text{ else}
+			\end{cases}$
+		\end{enumerate}
+	\end{example}
+	
+	\begin{definition} (convergence)\\
+		A sequence $(x_n)_{n \in \mathbb{N}}$ in a metric space $(X,d)$ is said to be convergent to $x \in X$ if \[x_n \to x \text{ in } (X,d)\] or \[\lim\limits_{n \to \infty} x_n = x \text{ in } (x,d)\]
+	\end{definition}
+
+	\subsection{Topology in metric spaces}
+	Let $(X,d)$ be a metric space.
+	\begin{definition}
+		\begin{enumerate}
+			\item an open ball is defined by \[B_r(x) = \{y \in X: \; d(x,y) < r\}\]
+			\item $O \subset X$ is called open if $\forall y \in O$ there is $r > 0$ such that $B_r(y) \subset O$
+			\item $A \subset X$ is closed if $X \setminus A$ is open.
+		\end{enumerate}
+	\end{definition}
+
+	\begin{theorem} (metric spaces are topological spaces)\\
+		Let $\mathcal{T}$ be the set of open subsets of $X$. Then \begin{enumerate}
+			\item $\varnothing, X \in \mathcal{T}$
+			\item if $U,V \in \mathcal{T}$, then $U \cup V \in \mathcal{T}$
+			\item if $\{U_i\}_{i \in I} \subset \mathcal{T}$, then $\bigcup_{i \in I} \in \mathcal{T}$
+		\end{enumerate}
+	\end{theorem}
+
+	\begin{remark}
+		\begin{enumerate}
+			\item $\varnothing, X$ are closed
+			\item finite union of closed sets is closed
+			\item arbitrary intersections of closed sets is closed
+		\end{enumerate}
+	\end{remark}
+
+	\begin{lemma}
+		$A \subset X$ is closed iff $\forall$ convergent sequences $(x_n)_{n \in \mathbb{N}} \subset A$ the limit point is in $A$.
+	\end{lemma}
+
+	\begin{definition}
+		For $M \subset X$ we define \[\overline{M} = \bigcap\limits_{A \supset M, \; A \text{ closed}}\] as the closure of $M$ and \[\overset{°}{M} = \bigcup\limits_{O \subset M, \; O \text{ open}}\] as the interior of $M$.\\
+		$\partial M = \overline{M} \setminus \overset{°}{M}$ is the boundary of $M$
+	\end{definition}
+
+	\noindent\underline{Attention:}\\
+	Define the closed ball as $\overline{B}_r(a) = \{y \in X: \; d(y,a) \leq r\}$. Then in general $\overline{B_r(a)} \neq \overline{B}_r(a)$.\\
+	Example: Take $X \neq \varnothing$ and the trivial metric $d$. Then \[B_1(a) = \{a\} = \overline{B_1(a)}\] but $\overline{B}_1(a) = X$.
+	
+	\subsection{separability and completion}
+	Let $(X,d)$ be a metric space.
+	\begin{definition}
+		\begin{enumerate}
+			\item $M \subset X$ is called dense in $X$ if $\overline{M} = X$.
+			\item $X$ is called separable if $X$ has a countable dense subset.
+		\end{enumerate}
+	\end{definition}
+
+	\begin{remark}
+		$M$ is dens in $X$ iff \[\forall x \in X \; \forall \varepsilon > 0 \; \exists y \in M \text{ s.t. } d(x,y) < \varepsilon\]
+	\end{remark}
+
+	\begin{definition}
+		\begin{enumerate}
+			\item $(x_n)_{n \in \mathbb{N}} \subset X$ is called a Cauchy sequence if \[\forall \varepsilon > 0 \; \exists N \in \mathbb{N} \text{ s.t. } m,n > N \text{ implies } d(x_n,x_m) < \varepsilon\]
+			\item A metric space in which all Cauchy sequences converge is called complete.
+		\end{enumerate}
+	\end{definition}
+
+	\begin{example}
+		\begin{enumerate}
+			\item $(C^0([a,b], \mathbb{R}), d_\infty)$ with $d_\infty(f,g) = \max\limits_{x \in [a,b]} \left|f(x)-g(x)\right|$ is complete.
+			\item $(\mathbb{R}^n, d_2)$ with $d_2(x,y) = ||x-y||_2$ is complete.
+		\end{enumerate}
+	\end{example}
+
+	\begin{lemma}
+		Let $(X,d)$ be a complete metric space and $\varnothing \neq A \subset X$. Then $(A,d)$ is complete iff $A$ is closed.
+	\end{lemma}
+
+	\begin{definition}
+		$A \subset X$ is called bounded if its diameter \[diam(A) = \sup\{d(x,y): \; x,y \in A\}\] is finite.
+	\end{definition}
+
+	\begin{theorem}
+		$(X,d)$ is complete iff $\forall (F_n)_{n \in \mathbb{N}}$ sequences of closed subsets such that $F_{n+1} \subset F_n$ and $diam(F_n) \to 0$ then \[\exists ! x_0 \in X \text{ s.t.} \bigcap\limits_{n \in \mathbb{N} F_n = \{x_0\}}\]
+	\end{theorem}
+
+	\subsection{Continuity}
+	\begin{definition}
+		Let $(X,d_x), (Y, d_y)$ be metric spaces and $f: X \to Y$. $f$ is continuous in $x_0$ if \[\forall \varepsilon > 0 \; \exists \delta > 0 \text{ s.t. } \forall x \in X \; d_x(x,x_0) < \delta \text{ implies } d_y(f(x),f(x_0)) < \varepsilon\]
+		With sequences: \[\forall (x_n)_{n\in \mathbb{N}} \subset X \; x_n \to x_0 \text{ in } (X,d_x) \text{ if it holds } (f(x_n))_{n \in \mathbb{N}} \subset Y, \, f(x_n) \to f(x_0) \text{ in } (Y,d_y)\]
+	\end{definition}
+	$f$ is continuous if $f$ is continuous in $x_0$ for all $x_0 \in X$.\\
+	In other words $f$ is continuous if for all $O \subset Y$ open (closed) $f^{-1}(O)$ is open (closed) in $X$.\\
+	\underline{Special case}: $f$ is Lipschitz continuous if $\exists L > 0$ s.t. \[d_y(f(x),f(y)) \leq Ld_x(x,y) \; \forall x,y \in X\]
+	$f$ is an isometric if $\forall x,y \in X$ it holds that $d_Y(f(y),f(x)) = d_x(x,y)$.
+	\subsection{Compact sets}
+	\begin{definition}
+		Let $(X,d)$ be a metric space and $A \subset X$. 
+		\begin{enumerate}
+			\item an open cover of $A$ is a collection $\{U_i\}_{i \in I}$ where $I\neq \varnothing$ is an arbitrary index set of open subsets of $X$ s.t. $A \subset \bigcup\limits_{i \in I} U_i$.
+			\item $A$ is compact if every open cover of $A$ contains a finite subcover i.e. there is $N \in \mathbb{N}$ and indices $i_1,...,i_N$ such that \[A \subset U_1 \cup ... \cup U_N\]
+			\item $A$ is sequentially compact if every sequence in $A$ has a convergence subsequence in $A$.
+			\item $A$ is called precompact or totally bounded if $\forall \varepsilon > 0 \; \exists N \in \mathbb{N}$ and $\exists x_1,...,x_N \in X$ such that $A \subset \bigcup_{i = 1}^N B_\varepsilon(x_i)$.
+		\end{enumerate}
+	\end{definition}
+
+	\begin{theorem}
+		Let $(X,d)$ be a metric scape and $A \subset X$. The following are equivalent:
+		\begin{enumerate}
+			\item $A$ is compact
+			\item $A$ is sequentially compact
+			\item $(A,d)$ is complete and $A$ is precompact.
+		\end{enumerate}
+	\end{theorem}
+
+	\begin{remark}
+		If $A$ is precompact, then $\overline{A}$ is precompact. Further, if $(X,d)$ is complete and $A\subset X$ then $A$ is precompact $\Leftrightarrow$ $\overline{A}$ is compact.
+	\end{remark}
+
+	Recall: $A$ compact $\Rightarrow$ bounded and closed and $f: X \to Y$ continuous with $A \subset X$ compact, then $f(A)$ is compact as well. Further, if $f:A \to \mathbb{R}$ is continuous and $A$ is compact, then \[\exists x_1, x_2 \in A \; \text{ s.t. } f(x_1) \leq f(x) \leq f(x_2) \; \forall x \in A\]
+	Theorem of Heine-Borel: $A \subset \mathbb{R}^n$ is compact iff $A$ is closed and bounded.
+	\subsection{Theorem of Baire}
+	\begin{theorem}
+		Let $(X,d)$ be a complete metric space and $\forall n \in \mathbb{N}$ consider $U_n \subset X$ open and dense. Then \[\bigcap\limits_{n \in \mathbb{N}} U_n\] is dense in $X$.
+	\end{theorem}
+
+	\begin{remark}
+		\begin{enumerate}
+			\item Completeness is in general necessary. Consider $(\mathbb{Q}, d)$ and $d(x,y) = \left|x-y\right|$. Define a sequence $x_n$ such that $\mathbb{Q} = \{x_n \; n \in \mathbb{N}\}$. Take $U_n = \mathbb{Q} \setminus \{x_n\}$ which is open and dense. Then \[\bigcap\limits_{n \in \mathbb{N}} U_n = \varnothing\]
+		\end{enumerate}
+	\end{remark}
+\end{document}

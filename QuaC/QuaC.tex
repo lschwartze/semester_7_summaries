@@ -1,0 +1,105 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[explicit]{titlesec}
+\usepackage{ulem}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amsthm}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition} % definition numbers are dependent on theorem numbers
+\theoremstyle{lemma}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\theoremstyle{example}
+\newtheorem{example}[theorem]{Example}
+
+\titleformat{\subsection}
+{\small}{\thesubsection}{1em}{\uline{#1}}
+\begin{document}
+	\begin{titlepage} 
+		\title{QuaC Zusammenfassung}
+		\clearpage\maketitle
+		\thispagestyle{empty}
+	\end{titlepage}
+	\tableofcontents
+	\newpage
+	\section{Grundlagen}
+	\subsection{Definitionen}
+	\begin{definition}
+		$|\phi \rangle$ ist ein Spaltenvektor und $\langle \phi |$ ein Spaltenvektor.\\
+		$\langle \phi | \psi \rangle = \sum_{i=1}^{n} \phi_i^* \cdot \psi_i$ ist das innere Produkt.\\
+		$|0 \rangle = \binom{1}{0}$ und $|1 \rangle = \binom{0}{1}$. Das sind die Basis Vektoren.
+	\end{definition}
+	Ein Qubit ist ein normierter Vektor der Form $\alpha |0\rangle + \beta |1\rangle$. Auf diesem kann eine Messung durchgeführt werden, sodass das Qubit kollabiert zu 0 mit Wahrscheinlichkeit $\left|\alpha\right|^2$ und mit Wahrscheinlichkeit  $\left|\beta\right|^2$ zu 1.\\
+	Ein $n$-Qubit ist ein Vektor der Dimension $2^n$. Das heißt, obiges Beispiel ist ein 1-Qubit und ein 2-Qubit hat vier Einträge. Die Vektoren sind dabei immer normiert. In höher dimensionalen Vektoren kann eine Messung einzelner Bits ausreichen, um das System zum kollabieren zu bringen.\\
+	Ein 1-Qubit-Gatter ist eine unitäre $2\times 2$ Matrix $U$. Das heißt, $U^tU = I$, wobei $U^t = (U^T)^*$. Ein Spezialfall ist dabei $$H = \frac{1}{\sqrt{2}}\begin{pmatrix}
+		1 & 1\\
+		1 & -1
+	\end{pmatrix}$$
+	Die Transformation eines Qubits $\phi$ mit $H$ ist dabei einfach $H\cdot \phi$. So ist zum Beispiel $$H(|0\rangle) = \frac{1}{\sqrt(2)} |0\rangle + \frac{1}{\sqrt(2)}|1\rangle$$ Im Falle eines 2-Qubit-Gatters würde eine unitäre $4\times 4$ Matrix herangezogen werden. Ein Beispiel ist das \textit{C-NOT} Gatter \[C = \begin{pmatrix}
+		1 & 0 & 0 & 0\\
+		0 & 1 & 0 & 0\\
+		0 & 0 & 0 & 1\\
+		0 & 0 & 1 & 0
+	\end{pmatrix}\]
+	
+	\begin{lemma}
+		Das innere Produkt hat folgende Eigenschaften:
+		\begin{enumerate}
+			\item $\langle \phi | \phi \rangle \geq 0$
+			\item $\langle \phi | (a|\phi_1 \rangle + b|\phi_2 \rangle) = a \langle \phi | \phi_1 \rangle + b \langle \phi | \phi_2 \rangle$
+			\item $\langle \psi | \phi\rangle^* = \langle \phi | \psi \rangle$
+		\end{enumerate}
+		Für eine $m\times n$ Matrix $A$ ist weiter \[(|A\psi \rangle , |A\phi \rangle) = \langle AA^t \psi | \phi \rangle\]
+	\end{lemma}
+	\begin{definition}
+		Wir definieren weiter eine Qubit-Norm $||\cdot||: \mathbb{C}^n \to \mathbb{C}$ durch \[|||\phi \rangle || = \sqrt{\langle \phi | \phi \rangle}\]
+		Dabei heißt ein Vektor $\phi$ unitär, wenn $|||\phi \rangle|| = 1$.
+	\end{definition}
+
+	\begin{definition}
+		Wir definieren zu den Vektoren $|0\rangle$ und $|1\rangle$ eine Dualbasis durch $$|\nearrow\rangle = \frac{1}{\sqrt{2}}\binom{1}{1}$$ und $$|\searrow\rangle = \frac{1}{\sqrt{2}}\binom{1}{-1}$$. Dies ist eine Orthonormalbasis.
+	\end{definition}
+
+	\begin{definition}(Tensorprodukt)
+		Seien $x = \binom{x_1}{x_2}$ und $y = \binom{y_1}{y_2}$ zwei Vektoren. Das Tensorprodukt ist definiert als \[x \otimes y = \begin{pmatrix}
+			x_1y_1\\
+			x_1y_2\\
+			x_2y_1\\
+			x_2y_2
+		\end{pmatrix}\]
+		Das ist leicht verallgemeinerbar für höher dimensionale Vektoren. Außerdem kann das Tensorprodukt auf Matrizen \[A = \begin{pmatrix}
+			a_{1,1} & \dots & a_{1,n}\\
+			\vdots & & \vdots\\
+			a_{m,1} & \dots & a_{m,n}
+		\end{pmatrix}\] und eine beliebig dimensionale Matrix $B$ angewandt werden durch \[A \otimes B = \begin{pmatrix}
+		a_{1,1}B & \dots & a_{1,n}B\\
+		\vdots & & \vdots\\
+		a_{m,1}B & \dots & a_{m,n}B
+	\end{pmatrix}\]
+	\end{definition}
+	Wenn mehrere Qubits $|\phi\rangle = \binom{\alpha}{\beta}$ und $|\psi\rangle =  \binom{\gamma}{\delta}$ vorliegen, dann schreiben wir \[|\phi\rangle |\psi\rangle = |\phi \psi \rangle = |\phi\rangle \otimes |\psi\rangle \in \mathbb{C}^4\]
+	Wird $|\phi^n\rangle$ geschrieben, so ist damit das $n$-fache Tensorprodukt von $|\phi\rangle$ gemeint. 
+	
+	\begin{lemma}
+		Das Tensorprodukt hat folgende Eigenschaften:
+		\begin{enumerate}
+			\item $|v\rangle \otimes |w\rangle + |v\rangle \otimes |u\rangle = |v\rangle (|w\rangle + |u\rangle)$
+			\item $a(|v\rangle \otimes |w\rangle = a|v\rangle \otimes |w\rangle) = |v\rangle \otimes a|w\rangle$
+			\item $(|u\rangle \otimes |v\rangle , |w\rangle \otimes |x\rangle) = (|u\rangle\otimes|w\rangle , |v\rangle\otimes|x\rangle)$
+		\end{enumerate}
+	\end{lemma}
+
+	\subsection{Quantenschaltkreise}
+	Diese unterscheiden sich von klassischen Schaltkreisen insofern, dass Operationen reversibel sind. In klassischen Schaltkreisen ist das nicht der Fall, da zum Beispiel bei einer $\land$ Verknüpfung mit Ergebnis 0 nicht auf die Eingabewerte rückgeschlossen werden kann. Quantenschaltkreise können verwendet werden um sowohl klassische als auch probabilistische Schaltkreise zu modellieren.
+\end{document}

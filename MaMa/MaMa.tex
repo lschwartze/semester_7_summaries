@@ -1,0 +1,140 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[explicit]{titlesec}
+\usepackage{ulem}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amsthm}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[subsection] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition} % definition numbers are dependent on theorem numbers
+\theoremstyle{lemma}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\theoremstyle{example}
+\newtheorem{example}[theorem]{Example}
+
+\titleformat{\subsection}
+{\small}{\thesubsection}{1em}{\uline{#1}}
+\begin{document}
+	\begin{titlepage} 
+		\title{MaMa Summary}
+		\clearpage\maketitle
+		\thispagestyle{empty}
+	\end{titlepage}
+	\tableofcontents
+	\newpage
+	\section{Classification Learning}
+	\subsection{vocabulary}
+	\begin{itemize}
+		\item domain set $X$: set of possible inputs
+		\item classes or label set $Y$: target of classification
+		\item data points or samples: $x \in X$
+		\item features or attributes: entries of $x$
+		\item training set $S \subseteq X$: pairs $(x,y)$ of data points $x$ and labels $y$
+		\item classifier $h$: function $X \to Y$
+	\end{itemize}
+
+	\subsection{loss and error}
+	Let $h$ be a classifier $h: X \to Y$.\\
+	\begin{itemize}
+		\item loss function: $l(y,y') \geq 0$ for $y,y' \in Y$.
+		\item zero-one loss: \[l_{0-1}(y,y') = \begin{cases}
+			0, \text{ if } y = y'\\
+			1, \text{ if } y \neq y'
+		\end{cases}\]
+	\item training error: \[L_S(h) = \frac{1}{\left|S\right|} \sum_{(x,y) \in S} l(y,h(x))\]
+	\end{itemize}
+
+	\begin{example}
+		Let $X = \mathbb{R}^2$ and $Y = \{-1,1\}$. The easiest function is a linear classifier that splits $X$ in two parts and characterizes data points accordingly. For the general case of $X = \mathbb{R}^n$, a $w \in \mathbb{R}^n$ and $b \in \mathbb{R}$ we have:
+		\[h_{w,b} = sgn(w^Tx + b)\] 
+		You can get rid of the bias $b$ by adapting the training set a little: \[\overline{S} = (\binom{x}{1},v): (x,y) \in S\]
+		where the new linear classifier is defined by \[\overline{h}_{\overline{w}}(x) = sgn(\overline{w}^T\overline{x})\] with $\overline{w} = \binom{w}{b}$.
+	\end{example}
+	\noindent\underline{When is it possible to achieve training error 0?} (wrt zero-one-loss)\\
+	This is precisely then the case, when $\exists w \in \mathbb{R}^n$ s.t. $\forall (x,y) \in S$ \begin{itemize}
+		\item if $y = 1$ then $w^Tx \geq 0$ $\leftrightarrow$ if $y = 1$ then $w^Tx > 0$
+		\item if $y = -1$ then $w^Tx < 0$
+	\end{itemize} 
+	Both can be generalized by saying \[y\cdot w^Tx > 0\]
+	or \[\exists w: y \cdot w^Tx \geq 1 \; \forall (x,y) \in S\] 
+	A training set with 0 training error is called separable.
+	
+	\subsection{logistic regression}
+	Logistic regression computes a linear classifier.\\
+	\underline{direct way:}\\
+	Look for a $w \in \mathbb{R}^n$ such that the training error is minimised, i.e. \[\min\limits_{w \in \mathbb{R}^n} \frac{1}{\left|S\right|} \sum_{(x,y) \in S} h_{0-1}(y,h_w(x))\]
+	
+	\begin{definition}[logistic function]
+		The logistic function $\phi_{sig}: \mathbb{R} \to [0,1]$ is defined by \[z \mapsto \frac{1}{1+e^{-z}}\]
+		We then solve \[\min\limits_{w \in \mathbb{R}^n} \frac{1}{\left|S\right|} \sum_{(x,y) \in S} - \log_2(\phi_{sig}(yw^Tx))\]
+	\end{definition}
+	
+	\begin{lemma}
+		For all training sets $S \subseteq \mathbb{R}^n \times \{-1,1\}$ it holds that \[\frac{1}{\left|S\right|} \sum_{(x,y) \in S} h_{0-1}(y,h_w(x)) \leq \frac{1}{\left|S\right|} \sum_{(x,y) \in S} -log_2(\phi_{sig}(yw^Tx))\]
+	\end{lemma}
+
+	\subsection{training error and real life}
+	A classifier is only good, if it performs good on new data. To test your classifier you need to evaluate the classifier on data it hasn't seen during training. This is called the test error. The question now is, how the data should be split into test and training data. This is a difficult question and should be evaluated for each use case separately. A part from the training set should also be used for validation if there are degrees of freedom in the chosen classifier.
+	
+	\subsection{Quadratic classifier}
+	This is another binary classifier. In this case wa search for a matrix $U \in \mathbb{R}^{n\times n}$ of weights, a vector $w \in \mathbb{R}^n$ and a bias $b \in \mathbb{R}$. The classifier is then defined by \[h(x) = sgn\left(\sum_{i,j = 1}^{n} u_{i,j}x_ix_j + \sum_{i=1}^{n} w_ix_i + b\right) = sgn(x^Tux + w^Tx + b)\]
+	To simplify things we redefine the training set $S$ by $\overline{S}$ containing all samples $(x,y)$ with $x = \begin{pmatrix}
+		x_1\\
+		\vdots\\
+		x_n
+	\end{pmatrix}$ and $y$ analogously defined. Redefine $x$ by \[\overline{x} = (x_1^2, x_1x_2, x_1x_3, .., x_n^2,.., x_n,1)\]
+	Doing this will transform the quadratic classifier into a linear one.
+	
+	\subsection{nearest neighbour classifier}
+	The training set again is defined by $S \subseteq X\times Y$. When adding a new data-point, we check what class the nearest data point belongs to and add the new point to the same class. In the case of $k$-nearest-neighbour we check the classes of the $k$ nearest points. The problem is that the training set must be in memory the entire time. This makes the learning potentially very slow.
+	
+	\subsection{decision tree classifier}
+	The classifier of a decision tree works as follows: \begin{enumerate}
+		\item Set $v = r$ where $r$ is the tree's root
+		\item while $v$ is not a leaf do
+		\item Let $(i,j)$ be the decision rule of $v$
+		\item If $x_i \leq t$ set $v = v_L$ else set $v = v_R$
+		\item end while
+		\item Output the class $c(v)$ of $v$
+	\end{enumerate}
+	The following now describes how a tree can be learned.\\
+	The idea is to start with a single node $r$ where the class $c(r)$ is just the majority class in $S$.\\
+	Iteratively decide for each leaf $v$, if it is beneficial to split it into two child nodes. Let $S_v$ be the path of the training set that, following the existing decisions, ends up in $v$. The split into $S_L$ and $S_R$ would then be defined by a feature $i$ and a threshold $t$. We define the gain of the split by \[gain(v,i,t) = \gamma(S_v) - \left(\frac{\left|S_L\right|}{\left|S_R\right|}\gamma(S_L) + \frac{\left|S_R\right|}{\left|S_L\right|}\gamma(S_R)\right)\] where $\gamma$ is a inhomogeneity measure. This can be defined in multiple ways.
+	\begin{definition}
+		The inhomogeneity can be defined by the training error \[\gamma(S_v) = 1- \max\limits_{y \in Y} p(y,S_v)\] where \[p(y,S_v) = \frac{\left|\{(x,y') \in S_v: \; y' = y\}\right|}{\left|S_v\right|}\]
+	\end{definition}
+	\begin{definition}[gini impurity]
+		This is used in scikit-learn. \[\gamma(S_v) = 1- \sum_{y \in Y} p(y, S_v)^2\]
+	\end{definition}
+	\begin{definition}[entropy]
+		\[\gamma(S_v) = -\sum_{y \in Y} p(y,S_v)\cdot\log_2(y,S_v)\]
+	\end{definition}
+	\subsection{loss functions}
+	So far, we only looked at the zero-one-loss $l_{0-1}(y,y') = \begin{cases}
+		1, \; y \neq y'\\
+		0, \; y = y'
+	\end{cases}$ where $y$ is the true class and $y'$ is the prediction.\\
+	Consider the use case of a spam filter. This is a binary classifier that checks whether a new mail is spam or not. This admits two kind of errors: \begin{itemize}
+		\item false-positive: good mail is classified as spam
+		\item false-negative: spam mail is classified as good
+	\end{itemize}
+	The case of false-positive is more serious in this example. This needs to be applied to the loss function. \[l(y,y') = \begin{cases}
+		0, \; y=y'\\
+		10, \; \text{if $y$ is good and $y'$ spam}\\
+		1, \; \text{if $y$ is spam and $y'$ is good}
+	\end{cases}\]
+	\begin{example}[loss functions in regressions]
+		Consider a predictor $h: \mathbb{R}^n \to \mathbb{R}$. The (mean)square-loss is defined by \[l(y,y') = (y-y')^2\] and the (mean) absolute loss \[l(y,y') = \left|y-y'\right|\]
+	\end{example}
+\end{document}

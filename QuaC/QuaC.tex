@@ -102,4 +102,46 @@
 
 	\subsection{Quantenschaltkreise}
 	Diese unterscheiden sich von klassischen Schaltkreisen insofern, dass Operationen reversibel sind. In klassischen Schaltkreisen ist das nicht der Fall, da zum Beispiel bei einer $\land$ Verknüpfung mit Ergebnis 0 nicht auf die Eingabewerte rückgeschlossen werden kann. Quantenschaltkreise können verwendet werden um sowohl klassische als auch probabilistische Schaltkreise zu modellieren.
+	\begin{theorem} [no cloning satz]
+		Es gibt keine unitäre Transformation $U$, das ein Qubit $|\phi\rangle$ kopiert.
+	\end{theorem}
+	\begin{proof}
+		Falls so ein $U$ existiert, dann gilt $\forall |\phi\rangle$ und $\forall |\psi\rangle$ immer $U|\phi 0 \rangle = |\phi\phi\rangle$ und $U|0\psi\rangle = |\psi\psi\rangle$. Dann gilt \[\langle\phi|\psi\rangle\langle\phi|\psi\rangle = \langle\phi\psi|\phi\phi\rangle = (U|\phi0\rangle, U|\psi0\rangle) = (U^tU|\phi0\rangle, |\psi0\rangle) = \langle\phi0|\psi0\rangle = \langle\phi|\psi\rangle\langle0|0\rangle\] Da 0 die Norm 1 hat folgt $\langle\phi|\psi\rangle = \langle\phi|\psi\rangle^2$ was nur für die Werte 0 und 1 der Fall ist.
+	\end{proof}
+	\subsection{Simulation klassischer Schaltkreise}
+	Wir definieren das Fredkin Gatter $f(a,b,0) = (a,b,0)$ und $f(a,b,1) = (b,a,1)$ für $a,b \in \{0,1\}$. Dafür dient die folgende $8\times8$ Matrix: \[F = \begin{pmatrix}
+		I_3 & 0 & 0\\
+		0 & J_3 & 0\\
+		0 & 0 & I_2 
+	\end{pmatrix}\] wo $J_3$ die um 90° rotierte $3\times3$ Einheitsmatrix ist. Mit diesem können klassische Boole'sche Funktionen simuliert werden. Mit der obigen Matrix gilt $f(0,b,c) = (c\land b, \overline{c}\land b, c)$ und ist somit eine UND-Funktion. Der erste Output ist der für die Operation relevante Teil, die anderen beiden werden für die Umkehrung gebraucht. Ein ODER-Gatter kann mit $f(1,b,c) = (b\land\overline{c}, b\land c, c)$ simuliert werden. Zum Schluss ist eine Negation durch $f(0,1,c) = (c,\overline{c},c)$ darstellbar. Da diese drei Funktionen eine vollständige Basis sind, kann somit jeder klassische Schaltkreis durch Verkettung von Fredkin Gattern simuliert werden. Für einen klassischen Schaltkreis $c$ gibt es einen Quantenschaltkreis der Größe $p(\left|c\right|)$, der $c$ berechnet. 
+	\subsection{Simulation probabilistischer Schaltkreise}
+	Ein probabilistischer Schaltkreis ist ein klassische Schaltkreis, der als Eingabe mit gewisser Wahrscheinlichkeit eine Konstante bekommt und der das Ergebnis mit einer genügend großen Wahrscheinlichkeit berechnet.\\
+	Die Eingabe ist dabei gegeben als Input $x$ und einer Menge $z$ an Zufallsbits. Die Aufgabe des Schaltkreises könnte es sein, mit Wahrscheinlichkeit $p>\frac{3}{4}$ zu berechnen, ob $x$ eine Primzahl ist.\\
+	Der Input einer Zufallsvariablen kann durch Transformation mittels eines Hadamard Gatters und anschließender Messung des Qubits simuliert werden.
+	\section{Die Komplexitätsklasse BQP}
+	Im klassischen Sinne ist eine Problem $L$ einer Sprache $\Sigma^*$ in der Klasse P, wenn es einen polynomiellen Algorithmus gibt, der $L$ entscheidet.
+	\begin{definition}[BPP - bounded error probabilistic polynomial time]
+		Sei $L\subseteq \Sigma^*$. Dann gilt $L\in$BPP genau dann, wenn es eine Familie von Quantenschaltkreisen $\{c_1,...\}$ mit Zufallsbits und ein Polynom $p$ gibt, sodass $\forall x \in \Sigma^*$
+		\begin{itemize}
+			\item $\forall x$ gilt $x \in L$ impliziert $p[c_n(x) = 1] \geq \frac{3}{4}$
+			\item $\forall x$ gilt $x \notin $ ipliziert $p[c_n(x) = 0] \geq \frac{3}{4}$
+			\item $c_n$ hat höchstes $c(n)$ Gatter
+		\end{itemize}
+	\end{definition}
+	\begin{definition}[BQP - bounded error quantum polynomial time]
+		Sei $L\subseteq \Sigma^*$. Dann gilt $L\in$BQP genau dann, wenn es eine Familie von Quantenschaltkreisen $\{c_1,...\}$ und ein Polynom $p$ gibt, sodass $\forall x \in \Sigma^*$ \begin{itemize}
+			\item $\forall x$ gilt $x \in L$ impliziert $p[c_n(x) = 1] \geq \frac{3}{4}$
+			\item $\forall x$ gilt $x \notin $ ipliziert $p[c_n(x) = 0] \geq \frac{3}{4}$
+			\item $c_n$ hat höchstes $c(n)$ Gatter
+		\end{itemize}
+	\end{definition} 
+	\begin{remark}
+		Es gilt BQP$\subset$BPP.
+	\end{remark}
+	\begin{definition}
+		Sei $S$ eine Menge an Transformationen. $S$ ist eine universelle Menge für alle $U$ unitär, wenn $U$ mit Gattern aus $S$ approximiert werden kann. D.h. \[\forall \epsilon > 0 \; \exists G_1,G_2,...G_k \in S \text{ s.d. } ||U-G_1G_2...G_k|| < \epsilon\]
+		Ein Beispiel für $S$ ist CNOT mit allen 1-Qubit Gattern. Diese ist aber unendlich groß. $S = \{\text{CNOT, H, } \frac{\pi}{8} = \begin{pmatrix}
+			1&0\\0&e^{i\frac{pi}{4}}
+		\end{pmatrix}\}$ ist ein endliches Beispiel.
+	\end{definition}
 \end{document}

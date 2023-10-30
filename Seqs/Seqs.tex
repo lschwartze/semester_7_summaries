@@ -1,0 +1,104 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[explicit]{titlesec}
+\usepackage{ulem}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amsthm}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[subsection] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition} % definition numbers are dependent on theorem numbers
+\theoremstyle{lemma}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\theoremstyle{corollary}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{example}
+\newtheorem{example}[theorem]{Example}
+
+\titleformat{\subsection}
+{\small}{\thesubsection}{1em}{\uline{#1}}
+\begin{document}
+	\begin{titlepage} 
+		\title{Seqs Zusammenfassung}
+		\clearpage\maketitle
+		\thispagestyle{empty}
+	\end{titlepage}
+	\tableofcontents
+	\newpage
+	\section{Suffix Arrays}
+	Sei $S = c_1c_2...c_n$ ein String. der $i$-te Suffix $S_i$ ist definiert als der String $c_ic_{i+1}...c_n$. Ein Suffix Array nimmt die Menge aller $n$ Suffixe und sortiert sie lexikographisch. Dafür ist eine Ordnung $<$ auf dem Alphabet $\Sigma$ gegeben. Die naive Implementierung, die Substrings anhand ihrer ersten Character vergleicht, hat eine Laufzeit von $\mathcal{O}(n^2)$
+	\subsection{Skew Algorithmus}
+	Dieser ist ein Beispiel für einen linear-Zeit Algorithmus. Dieser wird im Folgenden am Beispiel $S = ctaataatg$ erklärt.\\
+	\underline{Schritt 1.} Als erstes teilt der Algorithmus den String $S$ in zwei Teile. Sei $S_i$ der Substring beginnend an der Stelle $i$. Man definiert die Menge $S_L = \{S_i: \; i \mod 3 \neq 1\}$ und $S_R = \{S_i: \; i \mod 3 = 1\}$. Im Beispiel besteht $S_L$ aus 
+	\begin{itemize}
+		\item taataatg
+		\item aataatg
+		\item aatg
+		\item tg
+		\item g
+	\end{itemize} und $S_R$ aus 
+	\begin{itemize}
+		\item ctaataatg
+		\item ataatg
+		\item atg
+	\end{itemize}
+	Die Suffixmenge von $S_L$ wird mittels Radixsort rekursiv in linearer Zeit sortiert, dabei wird nur bezüglich der ersten drei Stellen aller Suffixe sortiert. Dadurch erhält man
+	\begin{itemize}
+		\item aat ($S_3$)
+		\item aat ($S_6$)
+		\item g\$\$ ($S_9$)
+		\item taa ($S_2$)
+		\item taa ($S_5$)
+		\item tg\$ ($S_8$)
+	\end{itemize}
+	Wären nun alle dieser Tripel echt verschieden, so wäre diese Liste bereits total sortiert, was in diesem Beispiel aber nicht der Fall ist. Die Tripel werden anschließend von oben nach unten nummeriert, wobei gleiche Tripel die gleiche Nummer erhalten. Diese werden als lexikografische Namen bezeichnet. Man definiert $\overline{S}$ als der String der lexikografischen Namen der Substrings $S_i$ mit $i \mod 3 = 2$ konkateniert mit dem String der lexikografischen Namen der Substrings $S_i$ mit $i \mod 3 = 0$. Im Beispiel ist $\overline{S} = 334112$. Auf $\overline{S}$ wird der Algorithmus rekursiv angewandt. Von $\overline{S}$ erhalten wir die Suffixe \begin{enumerate}
+		\item 334112
+		\item 34112
+		\item 4112
+		\item 112
+		\item 12
+		\item 2
+	\end{enumerate}
+	Diese Liste wird im Sinne eines Suffixarrays sortiert, wodurch man \begin{itemize}
+		\item 112
+		\item 12
+		\item 2
+		\item 334112
+		\item 34112
+		\item 4112
+	\end{itemize} 
+	erhält. Für jeden dieser Suffixe erhält man einen dazugehörigen Suffix vom ursprünglichen String $S$ und seine Position in $i$ in $S$. In der Tat erhält man die Zuordnungen: $\overline{S}_1 \equiv S_2$, $\overline{S}_2 \equiv s_5$, $\overline{S}_3 \equiv S_8$, ... \\
+	Im Allgemeinen gilt $\overline{S}_{\frac{i+1}{3}} \equiv S_i$ wenn $i = 3 \mod 2$. Für $i = 0 \mod 3$ hingegen gilt $\overline{S}_{\frac{n+i}{3}} \equiv S_i$. Dafür wird die Notation \[\tau(i) = \begin{cases}
+		\frac{i+1}{3}, \; i = 2 \mod 3\\
+		\frac{n+i}{3}, \; i = 0 \mod 3
+	\end{cases}\]
+
+	Da wir aber die Richtung von $\overline{S}$ zu $S$ benötigen, brauchen wir die Umkehrabbildung von $\tau$: \[\tau^{-1}(j) = \begin{cases}
+		3j-1, \; 1 \leq j \leq \frac{n}{3}\\
+		3j-n, \; \frac{n}{3} < j \leq \frac{2n}{3}
+	\end{cases}\]
+	Mittels $\tau^{-1}$ können nun die Suffixe von $\overline{S}$ in jene von $S$ umgerechnet werden, die dadurch sortiert sind.
+	\underline{Schritt 2}: In diesem Teil müssen die Suffixe in $S_R$ sortiert werden. In diesem Schritt wird jeder Suffix von seinem Anfangsbuchstaben getrennt. Man erhält \begin{itemize}
+		\item $S_1 = cS_2$
+		\item $S_4 = aS_5$
+		\item $S_7 = aS_8$
+	\end{itemize}
+	Wendet man nun Radixsort auf die ersten Buchstaben an, so werden diese Strings automatisch sortiert.\\
+	\underline{Schritt 3}: In diesem Schritt werden die beiden Sublisten wieder zu einem Suffixarray zusammengefügt. Wenn das in der naiven Merge-Sort Implementierung durchgeführt wird, so würde das in quadratischer Laufzeit resultieren. Deswegen wird wieder die Strategie von Schritt 2 verwendet; die Liste $S_R$ wird wieder aufgespalten in erste Buchstaben und Suffixe von $S_L$. Dadurch sind die beiden Suffixe aber nicht zwingend in der selben Gruppe, weswegen auch noch der zweite Buchstabe abgespalten werden kann. Der Merge Teil kann nun zuerst auf Basis der ersten beiden Buchstaben entschieden werden, außer wenn die beiden Buchstaben der zu vergleichenden Suffixe gleich sind. Dieses Verfahren funktioniert für Substrings $S_i$ aus $S_L$ mit $i = 0 \mod 3$. Für Substrings $S_i$ aus $S_L$ mit $i = 2 \mod 3$ hingegen würde die abgespaltenen Suffixe wieder in verschiedenen Listen liegen. Deshalb wird in diesem Fall nur ein Buchstabe abgespalten.\\
+	Der Vergleich der beiden abgespaltenen Suffixe funktioniert aber nur in linearer Zeit. Deswegen wird hierfür das sogenannte inverse Suffixarray eingeführt.
+	\begin{definition}[inverses Suffixarray (ISA)]
+		Für ein Suffixarray $SA$ mit $k \to SA[k]$ ist das inverse Suffixarray definiert durch $ISA[SA[k]] = k$.
+	\end{definition}
+	Allgemein gilt dann $S_i < S_j \Leftrightarrow ISA[\tau(i)] < ISA[\tau(j)]$.
+\end{document}

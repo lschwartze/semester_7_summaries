@@ -56,9 +56,9 @@
 	\end{itemize}
 
 	\begin{example}
-		Let $X = \mathbb{R}^2$ and $Y = \{-1,1\}$. The easiest function is a linear classifier that splits $X$ in two parts and characterizes data points accordingly. For the general case of $X = \mathbb{R}^n$, a $w \in \mathbb{R}^n$ and $b \in \mathbb{R}$ we have:
+		Let $X = \mathbb{R}^2$ and $Y = \{-1,1\}$. The easiest function is a linear classifier that splits $X$ in two parts and characterizes data points accordingly. For the general case of $X = \mathbb{R}^n$, $w \in \mathbb{R}^n$ and $b \in \mathbb{R}$ we have:
 		\[h_{w,b} = sgn(w^Tx + b)\] 
-		You can get rid of the bias $b$ by adapting the training set a little: \[\overline{S} = (\binom{x}{1},v): (x,y) \in S\]
+		You can get rid of the bias $b$ by adapting the training set a little: \[\overline{S} = (\binom{x}{1},y): (x,y) \in S\]
 		where the new linear classifier is defined by \[\overline{h}_{\overline{w}}(x) = sgn(\overline{w}^T\overline{x})\] with $\overline{w} = \binom{w}{b}$.
 	\end{example}
 	\noindent\underline{When is it possible to achieve training error 0?} (wrt zero-one-loss)\\
@@ -137,4 +137,66 @@
 	\begin{example}[loss functions in regressions]
 		Consider a predictor $h: \mathbb{R}^n \to \mathbb{R}$. The (mean)square-loss is defined by \[l(y,y') = (y-y')^2\] and the (mean) absolute loss \[l(y,y') = \left|y-y'\right|\]
 	\end{example}
+	\subsection{A statistical model}
+	Let $X$ and $Y$ be sets as above. We define a probability distribution $D$ on $X\times Y$ with the following assumptions \begin{itemize}
+		\item $D$ is unknown
+		\item if $D$ were defined on $X$ only, then $\mathbb{P}[p] = \begin{cases}
+			\text{large if picture shows cat or dog}\\
+			\text{small if not}
+		\end{cases}$ where $p$ is a picture. Instead $D$ is defined on $X\times Y$ because there might be some uncertainty in $X$\\
+	\item iid: data points of the training set are drawn from $D$ independently
+	\item $D$ is fixed 
+	\end{itemize}
+	A classifier $h^*: X \to Y$ works well on new data if \[L_D(h^*) = \mathbb{E}_{(x,y)\sim D}[l(y,h^*(x))]\] is small. This is called true risk or generalization error. For classification using the zero-one-loss this simplifies to \[L_D(h^*) = \mathbb{P}_{(x,y)\sim D}[h^*(x)\neq y]\]
+	\subsection{Bayes error and classifier}
+	The Bayes error is the smallest error that any classifier can achieve.
+	\[\varepsilon_{bayes} = \inf\limits_{h} L_D(h)\] A Bayes classifier $h^*$ such that $L_D(h^*) = \varepsilon_{bayes}$ is called a Bayes classifier.
+	\begin{theorem}
+		For all classifiers $h: X \to Y$ it holds that \[L_D(h) \geq L_D(h_{bayes})\]
+	\end{theorem}
+
+	\section{PAC learning}
+	Let $H$ be a set of classifiers. Draw a training set $S$ from $D$. The goal is to minimize $h_S = \arg\min\limits_{h \in H}L_S(h)$. This is called the method of empirical risk minimization.
+	\subsection{empirical risk minimisation}
+	\begin{lemma}[Hoeffding's inequality]
+		Given independent random variables $X_1,...,X_m: \Omega \to [a,b]$ with $\mathbb{E}[X_i] = \mu$ for all $i\in[n]$.
+		Then $$\mathbb{P}\left[\left|\frac{1}{m}\sum_{i=1}^m X_i-\mu\right|\right] \leq 2\cdot \exp\left(-2\frac{m\varepsilon^2}{(b-a)^2}\right)$$
+	\end{lemma}
+	We now want to figure out the connection between $L_S(h)$ and $L_D(H)$. Let $\left|S\right| = m$ and $S = \{(x_1,y_1), ... (x_m,y_m)\}$. Define $X_i = l(y_i,h(x_i))$. Then the training error is given by \[\frac{1}{m} = \sum_{i=1}^m X_i = L_S(h)\]
+	Furthermore, $\mathbb{E}[X_i] = \mathbb{E}_{(x,y) \sim D}[l(y,h(x))] = L_D(h)$. Assuming zero-one-loss, Hoeffing implies \[\mathbb{P}[\left|L_S(h) - L_D(h)\right| \geq \varepsilon] \leq 2\cdot \exp(-2m\varepsilon^2) := \delta\]
+	Then $\varepsilon = \sqrt{\frac{\ln(\frac{2}{\delta})}{2m}}$
+	\begin{theorem}
+		With probability $\geq 1-\delta$ it holds that \[\left|L_S(h) - L_D(h)\right| \leq \sqrt{\frac{\ln(\frac{2}{\delta})}{2m}}\]
+	\end{theorem}
+	This does not however imply that with high probability $L_S(h_S)\approx L_D(h_S)$. It is however true for the test-set: with probability $1-\delta$ it holds that $\left|L_T(h_S)-L_D(h_S)\right| \leq \sqrt{\frac{\ln(\frac{2}{\delta})}{2\left|T\right|}}$.
+	
+	\subsection{error decomposition}
+	Assume we have a training set $S$ and a test set $T$ and the training error $h_S$ has been minimised by empirical risk minimisation. We are interested in the generalisation error $L_D(h_s)$. For example assume a training error of $9\%$ and a test error of $12\%$. We can decompose the unknown generalisation error as follows: \[L_D(h_S) = \underset{\text{small if $T$ reasonably large}}{(L_D(h_S) - L_T(h_S))} + \underset{\text{generalisation gap,} 12\%-9\%}{(L_T(h_S)-L_S(h_S))} + \underset{9\%}{L_S(h_S)}\]
+	
+	A large generalisation gap means that the classifier learns the training set and not the underlying distribution $D$. That means the classifier is overfitting.
+	\subsection{finitely many classifiers}
+	\begin{lemma}
+		Let $H$ be a set of classifiers. Assume that for every $\varepsilon, \delta > 0$, there is an $m$ s.t. when drawing a sample $S$ of size at least $m$ then, with a probability at least $1-\delta$ it holds that \[\sup_{h \in H} \left|L_D(h) - LS_(H)\right| \leq \frac{\varepsilon}{2}\] Then with probability at least $1-\delta$ it holds that \[L_D(h_S) \leq \inf_{h \in H}L_D(h)+\varepsilon\]
+		These assumptions are called the uniform convergence property.
+	\end{lemma}
+	\begin{theorem}
+		Let $\varepsilon, \delta > 0$ and $H$ be a finite class of classifiers. Let the training set $S$ have size $m\geq \frac{2}{\varepsilon^2}\ln\frac{2\left|H\right|}{\delta}$. Then with probability at least $1-\delta$ it holds that \[L_D(h_S) \leq \min_{h \in H} L_D(h) + \varepsilon\]
+		This proves that empirical risk minimisation works.
+	\end{theorem}
+	\subsection{probably approximately correct (pac)}
+	Let $H$ be a set of classifiers. $H$ is agnostically PAC learnable if\\
+	(informal) there is a learning algorithm that provided the training set is large enough, returns an almost optimal classifier.\\
+	(formal) $\exists m_H: (0,1)^2 \to \mathbb{Z}_+$ and a learning algorithm $A$ (think risk minimisation) s.t. $\forall \varepsilon,\delta \in (0,1)$ and $\forall$ probability distributions $D$ on $X\times Y$ if $S$ if $\left|S\right|\geq m_H(\varepsilon, \delta)$ is iid drawn from $D$ then with probability $\geq 1-\delta$ it holds that \[L_D(A(S)) \leq \inf_{h \in H}L_D(h)+\varepsilon\]
+	Classes $H$ that are finite are PAC-learnable. Also classes that satisfy the uniform convergence property are PAC-learnable as well.
+	\subsection{VC-dimension}
+	Very informally this dimension gives an idea of how powerful a class of classifiers can be.\\
+	The VC-dimension is only defined for binary classifiers, say with classes $0$ and $1$. Let $H$ be a set of binary classifiers (for example axis-parallel rectangle classifiers, H = $\{I_R: R \text{ axis parallel rectangle}\}$, so $I_R(x) = \begin{cases}
+		1, x \in R\\
+		0, x \notin R
+	\end{cases}$).
+	Formal definition: We say that $H$ shatters a set $C \subset X$ if \[\{h|_C: h \in H\} = H|_C \overset{!}{=} \{f: C \to \{0,1\}\} \Leftrightarrow \left|H|_C\right| = 2^{\left|C\right|}\]  
+	The VC-dimension of $H$ is then the largest $d$ s.t. \[\exists C \subseteq X \text{ of } \left|C\right| = d \text{ s.t. } C \text{ is shattered by } H\]
+	The dimension of $H$ is infinite if $\forall k \in \mathbb{Z}_+ \; \exists C \subseteq X$ of $\left|C\right| = X$ that is shattered by $H$.\\
+	It is easy to see that the VC-dimension of the axis parallel rectangle classifier is at least 4 and in fact it is exactly for as we will see below.\\
+	Consider any set of 5 points in $\mathbb{R}^2$. Let $p_1$ be the point with the largest $y$-coordinate and $p_2$ be the point with the smallest $y$-coordinate. $p_3$ has the largest $x$ coordinate and $p_4$ has the smallest. Notice that each pair of points may be identical. Finally, there is a fifth point $q$ that is somewhere in the rectangle spanned by those four points. If we give points $p_1$ to $p_4$ the class 1 and $q$ class 0, then we can't shatter any set of five points implying that VC-dim $\leq 4$.
 \end{document}

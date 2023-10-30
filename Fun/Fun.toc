@@ -6,3 +6,9 @@
 \contentsline {subsection}{\numberline {1.4}Continuity}{4}{}%
 \contentsline {subsection}{\numberline {1.5}Compact sets}{5}{}%
 \contentsline {subsection}{\numberline {1.6}Theorem of Baire}{6}{}%
+\contentsline {section}{\numberline {2}Normal spaces and Banach spaces}{6}{}%
+\contentsline {subsection}{\numberline {2.1}definitions}{7}{}%
+\contentsline {subsection}{\numberline {2.2}Example: $l^p$-spaces}{7}{}%
+\contentsline {subsection}{\numberline {2.3}Finite dimensional normed spaces}{8}{}%
+\contentsline {subsection}{\numberline {2.4}On the closure of $\overline {B_1(0)}$}{8}{}%
+\contentsline {section}{\numberline {3}A question from approximation theory}{9}{}%

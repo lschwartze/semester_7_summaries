@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  19 OCT 2023 11:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  24 OCT 2023 11:39
 entering extended mode
 **./QuaC.tex
 (QuaC.tex
@@ -226,14 +226,14 @@ LaTeX Warning: No \author given.
 \tf@toc=\write3
 \openout3 = `QuaC.toc'.
 
- [1] [2] [3] [4] (QuaC.aux) ) 
+ [1] [2] [3] [4] [5] [6] (QuaC.aux) ) 
 Here is how much of TeX's memory you used:
- 2886 strings out of 479322
- 39452 string characters out of 2856609
- 351404 words of memory out of 3000000
- 20338 multiletter control sequences out of 15000+600000
- 412639 words of font info for 63 fonts, out of 8000000 for 9000
+ 2891 strings out of 479322
+ 39513 string characters out of 2856609
+ 352404 words of memory out of 3000000
+ 20342 multiletter control sequences out of 15000+600000
+ 412976 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 67i,8n,74p,414b,212s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 67i,9n,74p,866b,212s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on QuaC.dvi (5 pages, 10352 bytes).
+Output written on QuaC.dvi (7 pages, 18556 bytes).

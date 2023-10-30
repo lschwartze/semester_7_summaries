@@ -8,3 +8,11 @@
 \contentsline {subsection}{\numberline {1.6}nearest neighbour classifier}{4}{}%
 \contentsline {subsection}{\numberline {1.7}decision tree classifier}{4}{}%
 \contentsline {subsection}{\numberline {1.8}loss functions}{5}{}%
+\contentsline {subsection}{\numberline {1.9}A statistical model}{6}{}%
+\contentsline {subsection}{\numberline {1.10}Bayes error and classifier}{7}{}%
+\contentsline {section}{\numberline {2}PAC learning}{7}{}%
+\contentsline {subsection}{\numberline {2.1}empirical risk minimisation}{7}{}%
+\contentsline {subsection}{\numberline {2.2}error decomposition}{8}{}%
+\contentsline {subsection}{\numberline {2.3}finitely many classifiers}{8}{}%
+\contentsline {subsection}{\numberline {2.4}probably approximately correct (pac)}{8}{}%
+\contentsline {subsection}{\numberline {2.5}VC-dimension}{9}{}%

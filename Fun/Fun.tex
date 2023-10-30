@@ -20,6 +20,9 @@
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 
+\theoremstyle{corollary}
+\newtheorem{corollary}[theorem]{Corollary}
+
 \theoremstyle{example}
 \newtheorem{example}[theorem]{Example}
 
@@ -179,6 +182,7 @@
 	Theorem of Heine-Borel: $A \subset \mathbb{R}^n$ is compact iff $A$ is closed and bounded.
 	\subsection{Theorem of Baire}
 	\begin{theorem}
+		\label{th: baire}
 		Let $(X,d)$ be a complete metric space and $\forall n \in \mathbb{N}$ consider $U_n \subset X$ open and dense. Then \[\bigcap\limits_{n \in \mathbb{N}} U_n\] is dense in $X$.
 	\end{theorem}
 
@@ -187,4 +191,112 @@
 			\item Completeness is in general necessary. Consider $(\mathbb{Q}, d)$ and $d(x,y) = \left|x-y\right|$. Define a sequence $x_n$ such that $\mathbb{Q} = \{x_n \; n \in \mathbb{N}\}$. Take $U_n = \mathbb{Q} \setminus \{x_n\}$ which is open and dense. Then \[\bigcap\limits_{n \in \mathbb{N}} U_n = \varnothing\]
 		\end{enumerate}
 	\end{remark}
+
+	\begin{corollary}
+		Let $(X,d)$ be a complete metric space. Let $\forall n \in \mathbb{N}$, $A_n \subset X$ be closed and \[X = \bigcup\limits_{n \in \mathbb{N}} A_n\] Then $\exists N \in \mathbb{N}$ s.t. $A_N$ has an interior point.
+	\end{corollary}
+
+	\begin{remark}
+		Theorem \ref{th: baire} is also called \underline{Baire category theory}.\\
+		\begin{itemize}
+			\item In a metric space $(X,d)$ $A \subset X$ is called nowhere dense if $\overline{A}$ has no interior points.
+			\item $A$ is called of first category if $\exists (M_n)_{n \in \mathbb{N}}$ where $M_n \subset A$ nowhere dense s.t. $A = \bigcup_{n \in \mathbb{N}} M_n$
+			\item $A$ is called of second category if it is not of first category
+		\end{itemize}
+		Hence the theorem of Baire implies that every complete metric space is of second category.
+	\end{remark}
+	
+	\section{Normal spaces and Banach spaces}
+	Let $X$ be a $\mathbb{K}$-vector space where $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$.
+	\subsection{definitions}
+	\begin{definition}
+		A map $||\cdot||: X \to \mathbb{R}$ is called a norm on $X$ if \begin{enumerate}
+			\item $\forall x \in X$, $||x||\geq 0$ and $||x|| = 0$ iff $x = 0$
+			\item $\forall \lambda \in \mathbb{K}$ and $\forall x \in X$ it holds that $||\lambda x|| = \left|\lambda\right|\cdot ||x||$
+			\item $\forall x, y \in X$ it holds $||x+y|| \leq ||x|| + ||y||$
+		\end{enumerate}
+		The pair $(X,||\cdot||)$ is called an normed space.\\
+		
+		\noindent $p:X \to \mathbb{R}$ is called a seminorm if $p(x) \geq 0$ $\forall x \in X$ and 2. and 3. are also satisfied.
+	\end{definition}
+
+	\begin{example}
+		\begin{enumerate}
+			\item $C^0([0,1]; \mathbb{R})$ with $||f||_\infty = \max\limits_{x \in [0,1]} \left|f(x)\right|$
+			\item more general for a compact metric space $K$: $C^0(K,\mathbb{R})$ with $||f||_\infty = \max\limits_{x \in K} \left|f(x)\right|$
+			\item $C^1([0,1]; \mathbb{R})$ with $p(f) = \max\limits_{x \in [0,1]} \left|f'(x)\right|$
+			\item $\Omega \subset \mathbb{R}^n$ measurable. $L^1(\Omega) = \{f: \Omega \to \mathbb{R}: \; f \text{ integrable }\}$ with \[p: L^(\Omega) \to \mathbb{R}: \; p(f) = \int_{\Omega} \left|f(x)\right|dx\] then $p$ is a seminorm.
+		\end{enumerate}
+	\end{example}
+	\begin{remark}
+		Any normed space is a metric space via \[d(x,y) = ||x-y||\] All concepts from chapter \ref{sec: metric spaces} apply.
+	\end{remark}
+
+	\begin{lemma}
+		Let $(X,||\cdot||)$ be a normed space. Then $X$ is called separable iff $\exists A \subset X$ countable such that s.t. $\overline{span\{A\}} = X$ where $span\{A\} = \{\sum_{i=1}^{n} \lambda_i x_i$\} with $n \in \mathbb{N}$, $\lambda_i \in K$ and $x_i \in A$. Here the colusre is defined w.r.t the norm.
+	\end{lemma}
+
+	\begin{definition}
+		A complete normed space is called a Banach space.
+	\end{definition}
+
+	\subsection{Example: $l^p$-spaces}
+	We consider the vector space $\mathbb{K}^\mathbb{N}$ of sequences in in $\mathbb{K}$. Let $x = (x_n)_{n \in \mathbb{N}}$ and $y = (y_n)_{n \in \mathbb{N}}$. Define $x+y = (x_n+y_n)_{n \in \mathbb{N}}$ and $\lambda x = (\lambda x_n)_{n \in \mathbb{N}}$.\\
+	For $x \in \mathbb{K}^\mathbb{N}$ define \[||x||_{l^p} = \left(\sum_{n=1}^\infty \left|x\right|^p\right)^{1/p}\] for $1\leq p < \infty$ and \[||x||_{l^\infty} = \sup\limits_{n \in \mathbb{N}} \left|x_n\right|\] else.\\
+	Define $l^p = \{x = (x_n)_{n \in \mathbb{N}}: ||x||_{l^p} < \infty\}$ for $1 \leq p \leq \infty$. We find that $l^p$ is a subspace of $\mathbb{K}^\mathbb{N}$ and $l^p$ is a normed space (for the triangle inequality use the Hölder inequality).
+	\begin{theorem}
+		For $1 \leq p \leq \infty$ $l^p$ is a Banach space.
+	\end{theorem}
+	\begin{lemma}
+		For finite $p$, $l^p$ is separable while $l^\infty$ is not.
+	\end{lemma}
+
+	\subsection{Finite dimensional normed spaces}
+	Let $X$ be a vector space over $\mathbb{K}$. $\exists e_1,...,e_n \in X$ s.t. \[\forall x \in X; \; \exists \lambda_1,...,\lambda_n \in \mathbb{K}: \; x = \sum_{i=1}^n \lambda_i x_i\]
+	For $p \in [1,\infty)$ we define \[||x||_p = \left(\sum_{i=1}^n \left|\lambda_i\right|^p\right)^{1/p}\] and for $p = \infty$ \[||x||_\infty = \max\limits_{1 \leq i \leq n} \left|\lambda_i\right|\]
+	
+	\begin{definition}
+		Two norms are equivalent in that \[\alpha ||\cdot ||_1 \leq ||\cdot ||_2 \leq \beta ||\cdot ||_1\]
+	\end{definition}
+
+	\begin{theorem}
+		In a finite dimensional space, all norms are equivalent.
+	\end{theorem}
+
+	\begin{theorem}
+		Finite dimensional normed spaces are Banach spaces.
+	\end{theorem}
+
+	\subsection{On the closure of $\overline{B_1(0)}$}
+	\begin{lemma}[Lemma of Riesz, Lemma of the almost orthogonal element]
+		Let $X$ be a normed space. $U \subset X$ a closed subspace of $X$ s.t. $U \neq X$. Then $\forall \lambda \in (0,1) \exists x_\lambda \in X$ s.t. $||x_\lambda|| = 1$ and $dist(x_\lambda, U) \geq \lambda$.
+	\end{lemma}
+	\begin{theorem}
+		In a normed space $X$, $\overline{B_1(0)}$ is compact iff $X$ is finite dimensional.
+	\end{theorem}
+
+	\section{A question from approximation theory}
+	Let $X$ be a compact metric space. Then $(C^0(X), \mathbb{K}), ||\cdot ||_\infty$, where $||f||_\infty = \max\limits_{x \in X} \left|f(x)\right|$ is a Banach space.\\
+	Which property of $A \subset C^0(X, \mathbb{K})$ ensures that $A$ is dense.
+	\begin{definition}
+		$A \subset C^0(X, \mathbb{K})$ is called subalgebra, if $\forall f,g, \in A$ \begin{enumerate}
+			\item $\lambda f + \mu g \in A$ (subspace)
+			\item $f\cdot g \in A$
+		\end{enumerate}
+	\end{definition}  
+	\begin{example}
+		\begin{itemize}
+			\item $\{p: [0,1] \to \mathbb{R}\}$ is a subalgebra of $C^0([0,1]; \mathbb{R})$. 
+			\item $\{f: [-1,1] \to \mathbb{R}; f\text{ continuous and even}\}$ is a subalgebra.
+		\end{itemize}
+	\end{example}
+	\begin{remark}
+		If $A$ is a subalgebra, then $\overline{A}$ is also a subalgebra.
+	\end{remark}
+	\begin{definition}
+		Let $A \subset C^0(X)$ be a subalgebra. \begin{enumerate}
+			\item $A$ is called unital if $1 \in A$
+			\item $A$ separates point if $x,y \in X$, $x \neq y$, $\exists f \in A$ s.t. $f(x) \neq f(y)$.
+		\end{enumerate}
+	\end{definition}
 \end{document}

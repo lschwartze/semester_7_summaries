@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  26 OCT 2023 09:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  27 OCT 2023 11:26
 entering extended mode
-**./Fun.tex
-(Fun.tex
+**./Seqs.tex
+(Seqs.tex
 LaTeX2e <2020-10-01> patch level 4
 L3 programming layer <2021-02-18>
 (C:\Users\lauri\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -190,8 +190,8 @@ File: l3backend-dvips.def 2021-03-18 L3 backend support: dvips
 \g__pdf_backend_annotation_int=\count270
 \g__pdf_backend_link_int=\count271
 \g__pdf_backend_link_sf_int=\count272
-) (Fun.aux)
-\openout1 = `Fun.aux'.
+) (Seqs.aux)
+\openout1 = `Seqs.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
 LaTeX Font Info:    ... okay on input line 31.
@@ -225,56 +225,18 @@ LaTeX Warning: No \author given.
 [1
 
 
-] (Fun.toc)
+] (Seqs.toc)
 \tf@toc=\write3
-\openout3 = `Fun.toc'.
+\openout3 = `Seqs.toc'.
 
- [1]
-Underfull \hbox (badness 10000) in paragraph at lines 52--53
-
- []
-
-[2]
-
-LaTeX Warning: Command \textdegree invalid in math mode on input line 101.
-
-
-LaTeX Warning: Command \textdegree invalid in math mode on input line 101.
-
-Missing character: There is no ° in font cmr8!
-
-LaTeX Warning: Command \textdegree invalid in math mode on input line 102.
-
-
-LaTeX Warning: Command \textdegree invalid in math mode on input line 102.
-
-Missing character: There is no ° in font cmr8!
-[3] [4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 200--201
-
- []
-
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 218--219
-
- []
-
-LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 2
-36.
-(C:\Users\lauri\AppData\Local\Programs\MiKTeX\tex/latex/base\omscmr.fd
-File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 236.
-
-[7] [8] [9] (Fun.aux) ) 
+ [1] [2] [3] [4] (Seqs.aux) ) 
 Here is how much of TeX's memory you used:
- 2923 strings out of 479322
- 40016 string characters out of 2856609
- 352434 words of memory out of 3000000
- 20369 multiletter control sequences out of 15000+600000
- 414925 words of font info for 71 fonts, out of 8000000 for 9000
+ 2891 strings out of 479322
+ 39511 string characters out of 2856609
+ 351436 words of memory out of 3000000
+ 20343 multiletter control sequences out of 15000+600000
+ 412629 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 67i,10n,74p,391b,278s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 67i,7n,74p,984b,212s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Fun.dvi (10 pages, 29716 bytes).
+Output written on Seqs.dvi (5 pages, 12296 bytes).

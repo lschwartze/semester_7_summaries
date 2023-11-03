@@ -101,4 +101,21 @@
 		Für ein Suffixarray $SA$ mit $k \to SA[k]$ ist das inverse Suffixarray definiert durch $ISA[SA[k]] = k$.
 	\end{definition}
 	Allgemein gilt dann $S_i < S_j \Leftrightarrow ISA[\tau(i)] < ISA[\tau(j)]$.
+	\subsection{Longest common prefixes}
+	Das LCP-Array ist definiert auf der Sortierung des Suffix-Arrays. $LCP[i]$ speichert die Länge des längsten gemeinsamen Präfixes von $S_{SA[i-1]}$ und $S_{SA[i]}$. Insbesondere ist daher $LCP[1]$ undefiniert und wird daher auf -1 gesetzt. Algorithmus: \begin{enumerate}
+		\item setze $LCP[1] = 1$ und $LCP[n+1] = -1$
+		\item konstruiere ISA aus SA (linear)
+		\item man beginnt mit dem längsten Suffix (bekommt man konstant aus ISA) und vergleicht mit dem Suffix in der Zeile oben
+		\item dieser Wert $l$ wird eingeschrieben und man geht zum zweitlängsten Suffix
+		\item Wieder vergleichen mit dem nächst-höheren Suffix im SA. Dort ist die Länge mindestens $l-1$, daher erst ab dem $l$-ten Buchstaben vergleichen.
+		\item iterativ fortsetzen
+	\end{enumerate}
+	\subsection{LCP-Intervalle}
+	Ein Intervall $[i,i]$ wird als Singleton bezeichnet. Ein Intervall $[i,j]$ in einem LCP Array mit $1 \leq i < j \leq n$ heißt LCP-Intervall mit LCP-Wert $l$, wenn \begin{enumerate}
+		\item $LCP[i] \leq l$
+		\item $LCP[k]\geq l$ für alle $k$ mit $i+1 \leq k \leq j$
+		\item $LCP[k] = l$ für mindestens ein $i+1 \leq k \leq j$
+		\item $LCP[j+1] < l$
+	\end{enumerate}
+	Wenn man jeden String mit einem Dummy-Wert (z.B. \$), dann ist das Intervall $[1,n]$ immer ein LCP-Intervall.
 \end{document}

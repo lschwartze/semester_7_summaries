@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  24 OCT 2023 11:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  2 NOV 2023 11:30
 entering extended mode
 **./QuaC.tex
 (QuaC.tex
@@ -226,7 +226,15 @@ LaTeX Warning: No \author given.
 \tf@toc=\write3
 \openout3 = `QuaC.toc'.
 
- [1] [2] [3] [4] [5] [6] (QuaC.aux) ) 
+ [1] [2] [3] [4] [5] [6]
+Overfull \hbox (17.28311pt too wide) in paragraph at lines 174--175
+\OT1/cmr/m/n/12 Der Quan-ten-schaltkreis nimmt als In-put $\OMS/cmsy/m/n/12 j\O
+T1/cmr/m/n/12 0[]\OMS/cmsy/m/n/12 i$ \OT1/cmr/m/n/12 und $\OMS/cmsy/m/n/12 j\OT
+1/cmr/m/n/12 1\OMS/cmsy/m/n/12 i$\OT1/cmr/m/n/12 . Beide wer-den Hadamard-trans
+formiert,
+ []
+
+[7] [8] (QuaC.aux) ) 
 Here is how much of TeX's memory you used:
  2891 strings out of 479322
  39513 string characters out of 2856609
@@ -236,4 +244,4 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  67i,9n,74p,866b,212s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on QuaC.dvi (7 pages, 18556 bytes).
+Output written on QuaC.dvi (9 pages, 27740 bytes).

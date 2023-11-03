@@ -16,3 +16,4 @@
 \contentsline {subsection}{\numberline {2.3}finitely many classifiers}{8}{}%
 \contentsline {subsection}{\numberline {2.4}probably approximately correct (pac)}{8}{}%
 \contentsline {subsection}{\numberline {2.5}VC-dimension}{9}{}%
+\contentsline {subsection}{\numberline {2.6}Fundamental Theorem of PAC-learning}{10}{}%

@@ -186,7 +186,7 @@
 	\subsection{probably approximately correct (pac)}
 	Let $H$ be a set of classifiers. $H$ is agnostically PAC learnable if\\
 	(informal) there is a learning algorithm that provided the training set is large enough, returns an almost optimal classifier.\\
-	(formal) $\exists m_H: (0,1)^2 \to \mathbb{Z}_+$ and a learning algorithm $A$ (think risk minimisation) s.t. $\forall \varepsilon,\delta \in (0,1)$ and $\forall$ probability distributions $D$ on $X\times Y$ if $S$ if $\left|S\right|\geq m_H(\varepsilon, \delta)$ is iid drawn from $D$ then with probability $\geq 1-\delta$ it holds that \[L_D(A(S)) \leq \inf_{h \in H}L_D(h)+\varepsilon\]
+	(formal) $\exists m_H: (0,1)^2 \to \mathbb{Z}_+$ and a learning algorithm $A$ (think risk minimisation) s.t. $\forall \varepsilon,\delta \in (0,1)$ and $\forall$ probability distributions $D$ on $X\times Y$ if $S$ with $\left|S\right|\geq m_H(\varepsilon, \delta)$ is iid drawn from $D$ then with probability $\geq 1-\delta$ it holds that \[L_D(A(S)) \leq \inf_{h \in H}L_D(h)+\varepsilon\]
 	Classes $H$ that are finite are PAC-learnable. Also classes that satisfy the uniform convergence property are PAC-learnable as well.
 	\subsection{VC-dimension}
 	Very informally this dimension gives an idea of how powerful a class of classifiers can be.\\
@@ -199,4 +199,25 @@
 	The dimension of $H$ is infinite if $\forall k \in \mathbb{Z}_+ \; \exists C \subseteq X$ of $\left|C\right| = X$ that is shattered by $H$.\\
 	It is easy to see that the VC-dimension of the axis parallel rectangle classifier is at least 4 and in fact it is exactly for as we will see below.\\
 	Consider any set of 5 points in $\mathbb{R}^2$. Let $p_1$ be the point with the largest $y$-coordinate and $p_2$ be the point with the smallest $y$-coordinate. $p_3$ has the largest $x$ coordinate and $p_4$ has the smallest. Notice that each pair of points may be identical. Finally, there is a fifth point $q$ that is somewhere in the rectangle spanned by those four points. If we give points $p_1$ to $p_4$ the class 1 and $q$ class 0, then we can't shatter any set of five points implying that VC-dim $\leq 4$.
+	\begin{example}
+		Let $X = \mathbb{R}$. Define \[H = \{h_{[a,b]}: a\leq b\}\] where \[h_{[a,b]}(x) = \begin{cases}
+			1 \; x \in [a,b]\\
+			0; \text{ else}
+		\end{cases}\]
+		Obviously $VC(H) \geq 2$ because there is always an interval that contains two points. Indeed the dimension is exactly 2 because if we have $x_1 < x_2 < x_3$ with classes 1, 0 and 1, there is no classifier that is correct.
+	\end{example}
+	The class of homogeneous linear classifiers in $\mathbb{R}^d$ \[h_w: x \mapsto sgn(w^Tx)\] has VC-dimension of $d$.
+	\subsection{Fundamental Theorem of PAC-learning}
+	\begin{theorem}
+		Let $H$ be a set of binary classifiers. Then $H$ is PAC-learnable iff the VC dimension of $H$ is finite.
+	\end{theorem}
+	\begin{theorem}
+		Let $H$ be a set of binary classifiers with $VC(H) = d < \infty$. Then $\exists c > 0$ s.t. $\forall \varepsilon, \delta > 0$ it holds that with probability at least $1-\delta$ \[L_D(h_S) \leq \inf_{h \in H} L_D(h) + \sqrt{c\frac{d+\log(\frac{1}{\delta})}{m}}\]
+	\end{theorem}
+	\begin{definition}
+		Let $H$ be a set of binary classifiers. We define the growth function \[\tau: \mathbb{N} \to \mathbb{N}\] with \[\tau(n) = \max\limits_{C\subseteq X, \left|C\right| = m} \left|H|_C\right| = \max\left|\{h|_c: C \to \{0,1\}: h \in H\}\right|\]
+	\end{definition}
+	\begin{lemma}
+		Let $H$ be a set of binary classifiers with $VC(H) = d < \infty$. Then \[\tau(m) \leq \sum_{i=0}^d \binom{m}{i} \; \forall m \in \mathbb{N}\] In particular if \[m \geq d+1\] then $\tau(m) \leq (d+1)\cdot m^{d+1}$.
+	\end{lemma}
 \end{document}

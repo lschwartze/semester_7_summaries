@@ -12,8 +12,5 @@ classdef lights < handle
         function obj = set_dir(obj, d)
             obj.direction = d; 
         end
-        
     end
-    
-    
 end

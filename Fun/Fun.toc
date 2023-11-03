@@ -12,3 +12,5 @@
 \contentsline {subsection}{\numberline {2.3}Finite dimensional normed spaces}{8}{}%
 \contentsline {subsection}{\numberline {2.4}On the closure of $\overline {B_1(0)}$}{8}{}%
 \contentsline {section}{\numberline {3}A question from approximation theory}{9}{}%
+\contentsline {subsection}{\numberline {3.1}Theorem of Stone-Weierstrass}{9}{}%
+\contentsline {subsection}{\numberline {3.2}Applications}{10}{}%

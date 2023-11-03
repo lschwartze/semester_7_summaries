@@ -118,10 +118,10 @@
 	Ein probabilistischer Schaltkreis ist ein klassische Schaltkreis, der als Eingabe mit gewisser Wahrscheinlichkeit eine Konstante bekommt und der das Ergebnis mit einer genügend großen Wahrscheinlichkeit berechnet.\\
 	Die Eingabe ist dabei gegeben als Input $x$ und einer Menge $z$ an Zufallsbits. Die Aufgabe des Schaltkreises könnte es sein, mit Wahrscheinlichkeit $p>\frac{3}{4}$ zu berechnen, ob $x$ eine Primzahl ist.\\
 	Der Input einer Zufallsvariablen kann durch Transformation mittels eines Hadamard Gatters und anschließender Messung des Qubits simuliert werden.
-	\section{Die Komplexitätsklasse BQP}
-	Im klassischen Sinne ist eine Problem $L$ einer Sprache $\Sigma^*$ in der Klasse P, wenn es einen polynomiellen Algorithmus gibt, der $L$ entscheidet.
+	\subsection{Die Komplexitätsklasse BQP}
+	Im klassischen Sinne ist ein Problem $L$ einer Sprache $\Sigma^*$ in der Klasse P, wenn es einen polynomiellen Algorithmus gibt, der $L$ entscheidet.
 	\begin{definition}[BPP - bounded error probabilistic polynomial time]
-		Sei $L\subseteq \Sigma^*$. Dann gilt $L\in$BPP genau dann, wenn es eine Familie von Quantenschaltkreisen $\{c_1,...\}$ mit Zufallsbits und ein Polynom $p$ gibt, sodass $\forall x \in \Sigma^*$
+		Sei $L\subseteq \Sigma^*$. Dann gilt $L\in$BPP genau dann, wenn es eine probabilistische Turing Maschine mit Zufallsbits und ein Polynom $p$ gibt, sodass $\forall x \in \Sigma^*$
 		\begin{itemize}
 			\item $\forall x$ gilt $x \in L$ impliziert $p[c_n(x) = 1] \geq \frac{3}{4}$
 			\item $\forall x$ gilt $x \notin $ ipliziert $p[c_n(x) = 0] \geq \frac{3}{4}$
@@ -131,7 +131,7 @@
 	\begin{definition}[BQP - bounded error quantum polynomial time]
 		Sei $L\subseteq \Sigma^*$. Dann gilt $L\in$BQP genau dann, wenn es eine Familie von Quantenschaltkreisen $\{c_1,...\}$ und ein Polynom $p$ gibt, sodass $\forall x \in \Sigma^*$ \begin{itemize}
 			\item $\forall x$ gilt $x \in L$ impliziert $p[c_n(x) = 1] \geq \frac{3}{4}$
-			\item $\forall x$ gilt $x \notin $ ipliziert $p[c_n(x) = 0] \geq \frac{3}{4}$
+			\item $\forall x$ gilt $x \notin $ impliziert $p[c_n(x) = 0] \geq \frac{3}{4}$
 			\item $c_n$ hat höchstes $c(n)$ Gatter
 		\end{itemize}
 	\end{definition} 
@@ -144,4 +144,35 @@
 			1&0\\0&e^{i\frac{pi}{4}}
 		\end{pmatrix}\}$ ist ein endliches Beispiel.
 	\end{definition}
+	\begin{definition}[PP]
+		$L \in PP$ gilt genau dann, wenn es eine polynomiell beschränkte nicht-deterministische Turin Maschine $M$ gibt sodass, \begin{itemize}
+			\item $x \in L \Rightarrow$ die Anzahl der akzeptierenden Pfade in $M(x)$ ist größer als die Anzahl der verwerfenden Pfade in $M(x)$
+			\item $x \notin L \Rightarrow$ die Anzahl der akzeptierenden Pfade in $M(x)$ ist höchstens die Anzahl der verwerfenden Pfade in $M(x)$
+		\end{itemize}
+		Das ist äquivalent zu $L \in PP \Leftrightarrow \exists f \in \#P, g \in FP$ sodass $\forall x \in L \Leftrightarrow f(x) \geq g(x)$.
+	\end{definition}
+	Wir wollen nun umgekehrt zeigen, dass jeder Quantenschaltkreis durch klassische Schaltkreise simuliert werden kann. Dafür betrachten wir $U = \{H, R, CNOT, Toffoli\}$, eine universelle Menge von Quantengatter. Mit Hilfe dieser Gatter ist es möglich, zu beweisen, dass $BQP \subseteq PP$.
+	\section{Erste Quantenalgorithmen}
+	Im Folgenden ist eine Relation für die $n$-te Hadamard Matrix $H_n$ wichtig. Man nummeriere die Zeilen dieser Matrix mit binär Zahlen von 0000... bis 111... als $x$ und die Spalten auf die selbe Weise als $y$. Es gilt dann $(H_n)_{x,y} = \frac{1}{\sqrt{2^n}}(-1)^{x\cdot y}$. Dabei wird $x\cdot y$ definiert als \[x\cdot y = \bigoplus_{i=1}^n x_i \land y_i\] 
+	Wenn angenommen wird, dass für eine zu berechnende Funktion $f$ eine black box mit einem Quantenschaltkreis $U_f$ existiert, so soll die Anzahl der benötigten Anfragen an den Schaltkreis $U_f$ bestimmt werden.
+	\subsection{Algorithmus von Deutsch}
+	Sei $f:\{0,1\} \to \{0,1\}$. Wir wollen $f(0)\oplus f(1)$ berechnen. Im klassischen Fall müssen zwei Anfragen an $f$ gestellt werden, um $f(0)$ und $f(1)$ zu bestimmen. Der Deutsch Algorithmus löst das mit einer Abfrage wie folgt:\\
+	Die Eingaben $|0\rangle$ und $|1\rangle$ werden Hadamar-transformiert, d.h. \[|01\rangle \overset{H}{\to} \frac{1}{2}(|0\rangle+|1\rangle)(|0\rangle - |1\rangle) = \frac{1}{2}(|00\rangle + |10\rangle - |01\rangle - |11\rangle)\] Nun gibt es vier verschiedene Fälle für $f$ wie in der obigen Tabelle. \begin{table}
+		\centering
+		\begin{tabular}{c|c}
+			f(0) & f(1) \\
+			\hline
+			0 & 0\\
+			0 & 1\\
+			1 & 0\\
+			1 & 1
+		\end{tabular}
+	\end{table}
+	Allgemein folgt aber $\overset{U_f}{\to} \frac{1}{2}(|0(0\oplus f(0))\rangle + |1(0\oplus f(1))\rangle - |0(1\oplus f(0))\rangle - |1(1\oplus f(1))\rangle)$
+	\subsection{Deutsch-Josza-Problem}
+	Sei $f:\{0,1\}^n \to \{0,1\}$. $f$ ist von Typ 1, wenn $f(x) = 1 \lor f(x) = 0 \; \forall x$. $f$ ist von Typ 2, wenn $\left|\{x: \; f(x) = 0\}\right| = \left|\{x: f(x) = 1\}\right| = 2^{n-1}$, sich die Funktion also im Gleichgewicht befindet. Im klassischen Fall sind bis zu $2^{n-1}+1$ Abfragen nötig, um den Typen on $f$ zu bestimmen.\\
+	In einem probabilistischen Schaltkreis werden zufällig $x \in \{0,1\}^n$ gewählt und berechne $f(x)$. Falls alle $f(x)$ gleich sind, ist mit hoher Wahrscheinlichkeit eine Funktion von Typ 1 vorliegend. Werden nun $k$ Eingaben zufällig und ``ohne Zurücklegen'' gezogen, dann ist die Fehlerwahrscheinlichkeit, wenn $k$ mal der selbe Funktionswert zurückgegeben wird, gegeben durch \[\prod_{i=1}^{k} \frac{2^{n-1}-i}{2^n-i} < \frac{1}{2^k}\] Mit dieser Ungleichung ist es leicht, ein $k$ zu finden, wodurch die Fehlerwahrscheinlichkeit kleiner als ein gegebenes $\varepsilon$ ist.\\
+	Der Quantenschaltkreis nimmt als Input $|0^n\rangle$ und $|1\rangle$. Beide werden Hadamard-transformiert, wobei $H|0^n\rangle$ bereits in einer früheren Vorlesung berechnet wurde. Es ergibt sich \[|0^n\rangle|1\rangle \overset{H}{\to} \frac{1}{\sqrt(2^n)} \sum_{x \in \{0,1\}^n} |x\rangle\left(\frac{|0\rangle-|1\rangle}{\sqrt{2}}\right)\]
+	Mit der Anwendung des Schaltkreises geht dies weiter zu \[\overset{U_f}{\to} \frac{1}{\sqrt(2^n)} \sum_{x \in \{0,1\}^n} |x\rangle\left(\frac{|f(x)\rangle-\overline{|f(x)\rangle}}{\sqrt{2}}\right)\] Weitere Vereinfachungen liefern anschließend \[\frac{1}{2^n}\sum_{z \in \{0,1\}} \alpha_z |z\rangle\left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right)\] wobei \[\alpha_z = \sum_{x \in \{0,1\}^n} (-1)^{xz\oplus f(x)}\] 
+	Mit nur einer Abfrage kann der Typ bestimmt werden, wodurch die Funktion bereits eindeutig definiert ist. Mit diesem Quantenparallelismus ist also nur eine Messung nötig.
 \end{document}

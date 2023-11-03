@@ -276,6 +276,7 @@
 	\end{theorem}
 
 	\section{A question from approximation theory}
+	\subsection{Theorem of Stone-Weierstrass}
 	Let $X$ be a compact metric space. Then $(C^0(X), \mathbb{K}), ||\cdot ||_\infty$, where $||f||_\infty = \max\limits_{x \in X} \left|f(x)\right|$ is a Banach space.\\
 	Which property of $A \subset C^0(X, \mathbb{K})$ ensures that $A$ is dense.
 	\begin{definition}
@@ -297,6 +298,52 @@
 		Let $A \subset C^0(X)$ be a subalgebra. \begin{enumerate}
 			\item $A$ is called unital if $1 \in A$
 			\item $A$ separates point if $x,y \in X$, $x \neq y$, $\exists f \in A$ s.t. $f(x) \neq f(y)$.
+			\item (if $\mathbb{K} = \mathbb{C}$) $A$ is stable under conjuguation if from $f \in A$ we conclude that also $\overline{f} \in A$.
 		\end{enumerate}
 	\end{definition}
+	\begin{remark}
+		If $A$ is unital then all constant functions are in $A$.
+	\end{remark}
+	\begin{lemma}
+		Consider $f: [-1,1] \to \mathbb{R}$ where $f(x) = \left|x\right|$. Then $\exists$ sequence of polynomials $(p_n)_{n \in \mathbb{N}}$ s.t. \[p_n \to f\] uniformly in $[-1,1]$.
+	\end{lemma}
+	\begin{lemma}
+		Let $A \subset C^0(X, \mathbb{R})$ be a unital subalgebra. Then \begin{enumerate}
+			\item if $f \in A$ then $\left|f\right| \in \overline{A}$.
+			\item if $f,g \in A$ then $\max\{f,g\} \in \overline{A}$ and $\min\{f,g\} \in \overline{A}$
+		\end{enumerate}
+	\end{lemma}
+
+	\begin{theorem}[Stone-Weierstrass]
+		Let $A$ be a compact metric space. $A \subset C^0(X,\mathbb{K})$ is a unital subalgebra that separates points and if $\mathbb{K} = \mathbb{C}$ is stable under conjugation, then $A$ is dense in $C^0(X,\mathbb{K})$ w.r.t $||\cdot||_\infty$.
+	\end{theorem}
+	\subsection{Applications}
+	\begin{theorem}[Theorem of Weierstraß]
+		Let $[a,b]$ be a compact interval in $\mathbb{R}$, $f:[a,b] \to \mathbb{R}$ be a continuous function and $\varepsilon>0$. Then $\exists p: [a,b] \to \mathbb{R}$ a polynomial s.t. \[||p-f||_\infty = \sup_{x \in [a,b]} \left|p(x)-f(x)\right| < \varepsilon\]
+	\end{theorem}
+	\begin{definition}
+		A function $f:\mathbb{R} \to \mathbb{C}$ is periodic if \[f(x+t) = f(x)\] for a $t \in \mathbb{R}$ and all $x \in \mathbb{R}$.
+	\end{definition}
+	\begin{remark}
+		If $f$ is periodic with period $t$ then $\tilde{f}: \mathbb{R} \to \mathbb{C}$ where $\tilde{f}(x) = f(t\frac{x}{2\pi})$ is periodic of period $2\pi$.\\
+		Consider $C_{2\pi}^0(\mathbb{R}, \mathbb{C})$ the space of continuous $2\pi$-periodic functions. We consider the span of $\{e^{ikx} = \cos(kx)+i\sin(kx),k \in \mathbb{Z}\}$.
+	\end{remark}
+	\begin{definition}
+		A trigonometric polynomial is a function $f:\mathbb{R} \to \mathbb{C}$ \[f(x) = \sum_{k=-N}^{N} c_k\cdot e^{ikx}\] with $c_k \in \mathbb{C}$
+	\end{definition}
+	\begin{theorem}[Approximation of periodic functions]
+		Trigonometric polynomials are dense in $(C_{2\pi}^0(\mathbb{R},\mathbb{C}),||\cdot||_\infty)$ 
+	\end{theorem}
+	\underline{Application to neural networks}\\
+	The simplest case of a neural network has $d$ inputs $x_1,...,x_d$ and one output $Z$ called a \textit{feed forward} network. Each input influences the output and $x_i$ might have a weight $\alpha_i$ associated to it. The output is a function in $x=(x_1,...,x_d)$ and the weights $\alpha= (\alpha_1,...,\alpha_d)$. For instance, the output is often of the form \[Z = \sum_{i=1}^d \alpha_ix_i + b\] where $b$ is the bias of the network. To make the network slightly stronger, we add a intermediate layer $y = (y_1,...,y_r)$ where each $x_i$ is connected to each $y_j$ with the associated weight $\gamma_{i,j}$. The $y$ layer (often called activation) is the connected to the output $Z$ as above with weights $\alpha_j$. We introduce the realtion \[y_j = \Phi(\sum_{i=1}^d \gamma_{j,i}x_i+b)\] for a measurable function $\Phi$. Lastly, the output is then given by \[Z = \sum_{j=1}^r \alpha_j y_j\]
+	\begin{definition}
+		\begin{enumerate}
+			\item $A^d = \{a: \mathbb{R}^d \to \mathbb{R}: \; a(x9 = w^Tx+b)\}$ where $w \in \mathbb{R}^d$ and $b \in \mathbb{R}$.
+			\item given $\Phi: \mathbb{R} \to \mathbb{R}$ measurable $d \in \mathbb{N}$ define $\Sigma^d(\Phi) = \{f: \mathbb{R}^d \to \mathbb{R}: \; f(x) = \sum_{j=1}^N \alpha_j \Phi(a_j(x)) \text{ wtih } N \in \mathbb{N}, \alpha_j \in \mathbb{R}, a_j \in A^d\}$ as the set of single hidden layer feed forward networks.
+			\item A squashing function is a measurable non-decreasing function $\Phi: \mathbb{R} \to \mathbb{R}$ s.t. $\lim_{x \to -\infty} \Phi(x) = 0$ and $\lim_{x \to \infty} \Phi(x) = 1$.
+		\end{enumerate}
+	\end{definition}
+	\begin{theorem}[Universal Approximation theorem of Hornik-Stinchcombe-White]
+		Let $\Phi$ we a squashing function $K\subset \mathbb{R}^d$ compact $f:K \to \mathbb{R}$ continuous and $\varepsilon > 0$. Then $\exists g \in \Sigma^d(\Phi)$ s.t. \[\sup_{x \in K} \left|f(x)-g(x)\right| < \varepsilon\]
+	\end{theorem}
 \end{document}

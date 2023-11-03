@@ -11,22 +11,19 @@ classdef situation < handle
                     switch num_of_input_points
                         % first lens point
                         case 1
-                            plot(x,y,"b+")
+                            %plot(x,y,"b+")
                             previous_lens_point = [x;y];
                             lens.set_start(previous_lens_point);
                         % second lens point
                         case 2
-                            plot(x,y,"b+")
-                            lens.set_end([x;y]);
-                            % plot lense
-                            plot([x,previous_lens_point(1)], [y, previous_lens_point(2)], "b")
-                            lens_vector = previous_lens_point - [x;y];
-                            % orhtogonal vector of lense
-                            orthogonal = [lens_vector(2); -lens_vector(1)];
-                            % normalize
-                            normalized = orthogonal/norm(orthogonal);
-                            % plot lense
-                            lens.set_normal(normalized);
+                            %plot(x,y,"b+")
+                            fun = @(z) sin(z)^4;
+                            if x > previous_lens_point(1)
+                                wl = weird_lens([previous_lens_point(1), x], fun);
+                            else
+                                wl = weird_lens([x, previous_lens_point(1)], fun);
+                            end
+                            wl.draw_lens();
                         case 3
                             % plot light source
                             plot(x,y,"yo")
@@ -36,17 +33,13 @@ classdef situation < handle
                             direction = [x;y]-light.source;
                             % normalize
                             norm_direction = direction/norm(direction);
-
                             light.set_dir(norm_direction);
-                            % this ensures that the lense's normalvector points away from the light
-                            if dot(norm_direction, normalized) < 0
-                                normalized = -normalized;
-                            end
 
-                            lens = lens.set_normal(normalized);
                             % find intersection of beam and lense
-                            p = obj.get_intersection(light, lens);
+                            p = obj.get_intersection(light, wl);
+
                             if ~isequal(p, [-1;-1])
+                                lens = obj.get_tangent(light,wl,p);
                                 % if there is intersection, go further
                                 obj.get_reflection_refraction(light, lens, p)
                             else
@@ -61,26 +54,45 @@ classdef situation < handle
             end
         end
         
-        function p = get_intersection(~,light,lens)
-            connection_lens = lens.end_point - lens.start_point;
-            A = [light.direction, -connection_lens];
-            b = [lens.start_point(1)-light.source(1); lens.start_point(2)-light.source(2)];
-            sol = linsolve(A,b);
-            % no intersection if:
-            % 1. crossing point right of lense
-            % 2. crossing point left of lense
-            % 3. crossing point in source of light
-            if sol(2) >= 1 || sol(2) <= 0 || sol(1) < 1e-4
+        function p = get_intersection(~,light,wl)
+            syms z;            
+            a = light.direction(2)/light.direction(1);
+            b = light.source(2) - a*light.source(1);
+            intersec = vpasolve(a*z+b == wl.fun(z), z, wl.range);
+            tmp = dot(light.direction, [intersec;wl.fun(intersec)]-light.source);
+            if isempty(intersec) || tmp < 0
                 p = [-1;-1];
-                disp("here")
                 return
             end
-            p = light.source + sol(1)*light.direction;
-            % plot intersection
-            plot(p(1),p(2), "k+")
-            % plots normal vector in both directions for good measure
-            plot([p(1) + lens.normal_vec(1)/10, p(1)], [p(2) + lens.normal_vec(2)/10, p(2)], "r")
-            plot([p(1) - lens.normal_vec(1)/10, p(1)], [p(2) - lens.normal_vec(2)/10, p(2)], "r--")
+            iterator = intersec;
+            while true
+                if iterator(1) < light.source(1)
+                    iterator = vpasolve(a*z+b == wl.fun(z), z, [iterator+eps,wl.range(2)]);
+                else
+                    iterator = vpasolve(a*z+b == wl.fun(z), z, [wl.range(1), iterator-eps]);
+                end
+                if isempty(iterator)
+                    break;
+                end 
+                intersec = iterator;
+            end
+            p = [intersec;wl.fun(intersec)];
+        end
+        
+        function l = get_tangent(~,light,wl,p)
+            syms x;
+            df = eval(['@(x)' char(diff(wl.fun(x)))]);
+            tang = df(p(1));
+            l = lens();
+            l.set_start(p+[1;tang])
+            l.set_end(p-[1;tang]);
+            lens_vector = l.end_point - l.start_point;
+            normal = [lens_vector(2); -lens_vector(1)];
+            normal = normal/norm(normal);
+            l.set_normal(normal);
+            if dot(light.direction, l.normal_vec) < 0
+                l.set_normal(-l.normal_vec); 
+            end
         end
         
         function get_reflection_refraction(~,light,lens,p)

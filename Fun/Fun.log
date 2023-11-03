@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  26 OCT 2023 09:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  2 NOV 2023 09:29
 entering extended mode
 **./Fun.tex
 (Fun.tex
@@ -267,7 +267,7 @@ File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 236.
 
-[7] [8] [9] (Fun.aux) ) 
+[7] [8] [9] [10] [11] (Fun.aux) ) 
 Here is how much of TeX's memory you used:
  2923 strings out of 479322
  40016 string characters out of 2856609
@@ -275,6 +275,6 @@ Here is how much of TeX's memory you used:
  20369 multiletter control sequences out of 15000+600000
  414925 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 67i,10n,74p,391b,278s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 67i,10n,74p,945b,278s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Fun.dvi (10 pages, 29716 bytes).
+Output written on Fun.dvi (12 pages, 38552 bytes).

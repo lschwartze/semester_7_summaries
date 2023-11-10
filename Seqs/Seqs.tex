@@ -118,4 +118,26 @@
 		\item $LCP[j+1] < l$
 	\end{enumerate}
 	Wenn man jeden String mit einem Dummy-Wert (z.B. \$), dann ist das Intervall $[1,n]$ immer ein LCP-Intervall.
+	\begin{lemma}
+		Zwei LCP-Intervalle können sich nicht überlappen, d.h. es muss einer der folgenden Fälle eingetreten sein:
+		\begin{enumerate}
+			\item Intervall $[i,j]$ ist echt in $[p,q]$ enthalten oder 
+			\item Intervalle $[i,j]$ und $[p,q]$ sind disjunkt
+		\end{enumerate}
+	\end{lemma}
+	\begin{definition}
+		Ein $m$-Intervall ist in einem $l$-Intervall enthalten, falls höchstens einer der Ränder gleich ist und $m>l$ gilt.\\
+		Das $l$-Intervall $[i,j]$ ist das umschließende Intervall von $[p,q]$, wenn $[p,q]$ in $[i,j]$ enthalten ist und es kein anderes in $[i,j]$ enthaltenes Intervall gibt, das $[p,q]$ enthält. Diese Intervalle werden Eltern und Kinder-Intervalle genannt.\\
+		Ein Intervall der Form $[k,k]$ wird Singleton genannt. Das Elternintervall ist das kleinste LCP-Intervall, dass den Singleton enthält.
+	\end{definition}
+	\subsubsection{Range Minimum Queries}
+	Gegeben ist ein Array $A$ von $n$ ganzen Zahlen. Ein Range Minimum Query gibt für das Array $A$ und Indices $i,j$ ein $k$ zurück, sodass \[A[k] = \min_{i\leq m\leq j} A[m]\] 
+	So ein Query wird im Folgenden als $RMQ_A(i,j)$ bezeichnet. Man kann zeigen, dass $A$ in linearer Zeit bearbeitet werden kann, sodass das RMQ in konstanter Zeit ausgeführt werden kann.
+	\begin{definition}
+		Aus der Definition eines LCP-Arrays folgt, dass es einen Index $k$ gibt, an dessen Stelle der LCP-Wert $l$ angenommen wird. All diese Indizes werden in Folge als $l$-Index bezeichnet.
+	\end{definition}
+	\subsubsection{Kind-Intervalle finden}
+	\begin{lemma}
+		Sei $[i,j]$ ein $l$-Intervall. Seien $i_1 < i_2 <...<i_k$ die $l$-Indizes in aufsteigender Reihenfolge. Dann sind die Kind-Intervalle gerade \[[i,i_1-1], [i_1,i_2-1], \dots [i_k,i_{k+1}-1], \dots [i_k, j]\]
+	\end{lemma}
 \end{document}

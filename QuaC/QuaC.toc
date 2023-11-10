@@ -8,3 +8,4 @@
 \contentsline {section}{\numberline {2}Erste Quantenalgorithmen}{6}{}%
 \contentsline {subsection}{\numberline {2.1}Algorithmus von Deutsch}{6}{}%
 \contentsline {subsection}{\numberline {2.2}Deutsch-Josza-Problem}{7}{}%
+\contentsline {subsection}{\numberline {2.3}Simon's Algorithmus}{8}{}%

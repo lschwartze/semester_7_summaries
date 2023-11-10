@@ -33,7 +33,7 @@
 	\end{titlepage}
 	\tableofcontents
 	\newpage
-	\section{Classification Learning}
+\section{Classification Learning}
 	\subsection{vocabulary}
 	\begin{itemize}
 		\item domain set $X$: set of possible inputs
@@ -220,4 +220,29 @@
 	\begin{lemma}
 		Let $H$ be a set of binary classifiers with $VC(H) = d < \infty$. Then \[\tau(m) \leq \sum_{i=0}^d \binom{m}{i} \; \forall m \in \mathbb{N}\] In particular if \[m \geq d+1\] then $\tau(m) \leq (d+1)\cdot m^{d+1}$.
 	\end{lemma}
+	\begin{theorem}
+		Let $H$ be a set of binary classifiers. Then for every $\delta >0$ with probability of at least $1-\delta$ over the choice $S\sim D^m$ of the training set it holds that \[\sup_{h \in H} \left|L_D(h) - L_S(h)\right| \leq \frac{4+\sqrt{\log(\tau_H(2\cdot m))}}{\delta\sqrt{2\cdot m}}\] 
+	\end{theorem}
+	\begin{lemma}
+		Let $H$ be a set of binary classifiers. Then for every $\delta > 0$ with probability at least $1-\delta$ over the choice $S\sim D^m$ of the training set it holds that \[\sup_{h \in H} \left|L_D(h) - L_S(h)\right| \leq \frac{8+2\sqrt{\log(\tau_H(2\cdot m))}}{\delta \sqrt{m}}\]
+	\end{lemma}
+	\underline{Note:} The lemma is a weaker bound than the one in above theorem and can thus be ignored.
+	\begin{theorem}
+		Let $H$ be a set of binary classifiers with the domain set $X$ of VC-dimension $\geq2m$ and a learning algorithm $A$. Then there is a distribution $D$ on $X\times \{0,1\}$ s.t. \begin{enumerate}
+			\item $\exists h^* \in H$ with $L_D(h^*) = 0$
+			\item with probability $\geq \frac{1}{7}$ and a choice of training set $S$ with $\left|S\right| = m$ we have: \[L_D(A(S)) \geq \frac{1}{8}\]
+		\end{enumerate}
+	\end{theorem}
+
+	\subsection{VC-dimension of linear classifiers}
+	\begin{theorem}
+		The class of linear classifiers in $\mathbb{R}^d$ \[H = \{x\mapsto sgn(w^Tx): \; w \in \mathbb{R}^d\}\]
+		has VC-dimension $d$.
+	\end{theorem}
+	\subsection{neural networks}
+	For an input vector $x$, weights $w$ and a bias $b$ the output of an artificial neuron is $w^Tx+b$.\\
+	A classification network is made up of an input layer, the hidden layer where the neurons are and the output layer. In such a case, the weight vector $w$ would be a weight matrix $W^{(1)}$. The each neuron then has a weight to the output neuron which also has a bias $b^{(2)}$ so the final output is then given by $sgn(W^{(2)}h + b^{(2)})$ where $h$ is the output of the hidden layer. One can notice that this is simply an affine function. Hence neurons are augmented by an activation function, e.g. ReLU$(x) = \max(0,x)$ (=Rectified linear unit). If the activation function is non-linear one can calculate more difficult stuff than with normal affine functions.\\
+	Activation functions $\sigma: \mathbb{R} \to \mathbb{R}$ are applied component-wise. It is important to note, that neurons on the same layer must share the same activation function. The necessity of activation functions becomes inherently apparent, when one tries to compute XOR with a neural network. Even though XOR is not separable, one can compute the XOR function using a neural network, if an activation function like ReLU is used.\\
+	Modern neural networks consist of many hidden layers, each equipped with ReLU while the output layer usually uses the logistic function or softmax. A logistic function output does not give a simple class but a confidence level instead. This is a difference to the classical classification task. Quite similarly, one can use a softmax function defined by \[z \mapsto \frac{e^{z_i}}{\sum_{j=1}^k e^{z_j}}\] This gives a distribution over the classes instead. 
+		
 \end{document}

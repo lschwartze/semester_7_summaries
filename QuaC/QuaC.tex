@@ -175,4 +175,27 @@
 	Der Quantenschaltkreis nimmt als Input $|0^n\rangle$ und $|1\rangle$. Beide werden Hadamard-transformiert, wobei $H|0^n\rangle$ bereits in einer früheren Vorlesung berechnet wurde. Es ergibt sich \[|0^n\rangle|1\rangle \overset{H}{\to} \frac{1}{\sqrt(2^n)} \sum_{x \in \{0,1\}^n} |x\rangle\left(\frac{|0\rangle-|1\rangle}{\sqrt{2}}\right)\]
 	Mit der Anwendung des Schaltkreises geht dies weiter zu \[\overset{U_f}{\to} \frac{1}{\sqrt(2^n)} \sum_{x \in \{0,1\}^n} |x\rangle\left(\frac{|f(x)\rangle-\overline{|f(x)\rangle}}{\sqrt{2}}\right)\] Weitere Vereinfachungen liefern anschließend \[\frac{1}{2^n}\sum_{z \in \{0,1\}} \alpha_z |z\rangle\left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right)\] wobei \[\alpha_z = \sum_{x \in \{0,1\}^n} (-1)^{xz\oplus f(x)}\] 
 	Mit nur einer Abfrage kann der Typ bestimmt werden, wodurch die Funktion bereits eindeutig definiert ist. Mit diesem Quantenparallelismus ist also nur eine Messung nötig.
+	\subsection{Simon's Algorithmus}
+	Wir betrachten $f: \{0,1\}^n \to \{0,1\}^n$ und $a \in \{0,1\}^n$ und wir repräsentieren mit $\oplus$ das bitweise XOR. $f$ besitzt diese Eigenschaften:
+	\begin{enumerate}
+		\item $\forall x \in \{0,1\}^n$, $f(x) = f(x\oplus a)$
+		\item $\forall x,y$ mit $y\neq x$ und $y\neq x\oplus a$ gilt $f(x)\neq f(y)$. D.h. es liegt eine 2-zu-1 Funktion vor
+	\end{enumerate}
+	Das Problem ist, $f$ zu finden.\\
+	\begin{remark}[Klassischer Ansatz]
+		Für jedes $x$ lässt sich $f(x)$ berechnen. D.h. finden wir $x_1$ und $x_2$ mit $f(x_1) 0 f(x_2)$, so erhalten wird $x_1 = x_2 \oplus a$ und damit $a = x_1\oplus x_2$.\\
+		Generell gilt, werden $k$ verschiedene Inputs probiert und ist $f(x_i) \neq f(x_j)$ für alle $i,j \leq k$, so können $\binom{k}{2}$ Werte ausgeschlossen werden. Damit nur ein $a$ übrig bleibt, müssen also so viele $k$ probiert werden, damit \[2^n-1-\binom{k}{2} = 1\] gilt. D.h. $k = \Omega(\sqrt{2^n})$.
+	\end{remark}
+	\begin{remark}[Probabilistischer Ansatz]
+		Sei $a'$ zufällig in $\{0,1\}^n \setminus 0^n$. Es gilt $\mathbb{P}[a' = a] = \frac{1}{2^n-1}$ ist unabhängig von $a'$. Wir nehmen wieder $k$ Stichproben mit paarweise verschiedenen Funktionswerten $x_1,...,x_k$, sodass gilt $x_i \neq x_j$ für alle $i,j\leq k$ an. Nun gilt $\mathbb{P}[\underbrace{a = a'}_{=A}| \underbrace{f(x_i) \neq f(x_j), \; x_i \neq x_j}_{=B}]$. Nun ist bekannt, dass $P[B|A] = 1$. $\mathbb{P}[B]$ ist unabhängig von $a'$. Es folgt daher, dass $P[A|B]$ komplett unabhängig von der Wahl von $a'$ ist. Eben da diese Wahrscheinlichkeit für alle noch nicht getesteten $a'$ gleich ist, müssen weiterhin $\sqrt{2^n}$ Stichproben gemacht werden.
+	\end{remark}
+	\begin{remark}[Quanten Ansatz]
+		Der Schaltkreis besteht aus zwei mal der Eingabe $|0^n\rangle$, wobei der Ablauf so aussieht \[|0^n\rangle |0^n\rangle \overset{H_n}{\to} \frac{1}{\sqrt{2^n}} \sum_{x \in \{0,1\}^n} |x\rangle |0^n\rangle \overset{U_f}{\to} \frac{1}{\sqrt{2^n}} \sum_{x \in \{0,1\}^n} |x\rangle |f(x)\rangle \overset{M_n}{\to} \frac{|x\rangle |f(x)\rangle + |x\oplus a\rangle|f(x)\rangle}{\sqrt{2}}\] Durch eine weitere Hadamard Transformation auf dem ersten $n$-Qubits erhält man daraus \[\frac{1}{\sqrt{2^n}} \left( \sum_{z \in \{0,1\}^n} (-1)^{zx}(1+(-1)^{za})|z\rangle\right) |f(x)\rangle = \sum_{z \in \{0,1\}^n} \alpha_z|z\rangle|f(x)\rangle\] mit \[\alpha_z = \frac{(-1)^{zx}(1+(-1)^{za})}{\sqrt{2^{n+1}}}\]
+		Nun gilt, falls $za = 1$, so gilt $\alpha_z= 0$. Darum messen wir nur $z$ mit $za = 0$, gilt $\alpha_z = \frac{(-1)^{zx}}{\sqrt{2^{n-1}}}$. D.h. $\left|\alpha_z\right|^2$ ist gleich für alle $z$ mit $za = 0$.\\
+		Bemerke nun, dass $za = 0 \Rightarrow \bigoplus_{i=1}^n z_i\land a_i = 0$. Das heißt, $z$ ist orthogonal zu $a$. Um genau zu sein, erhält man diese Relation für alle $n-1$ Vektoren $z^k$, die orthogonal zu $a$ sind. Formaler ist $\{z \in \{0,1\}^n: \; za = 0\}$ ist ein Untervektorraum mit Dimension $n-1$. Wir brauchen also $n-1$ l.u. $z$ mit $za = 0$, um das System lösen zu können und $a$ zu berechnen. Dafür sind die folgenden Schritte da.\\
+		\underline{Schritt 1} Generiere $z_1\neq 0^n$ mit $z_1a = 0$. Das hat Wahrscheinlichkeit $1-\frac{1}{2^{n-1}}$.\\
+		\underline{Schritt 2} Generiere $z_2$ mit $z_2a = 0$ das linear unabhängig zu $z_1$ und $0^n$ ist. Das hat Wahrscheinlichkeit $1-\frac{2}{2^{n-1}}$\\
+		\underline{Schritt $k$} Generiere $z_k$ mit $z_ka = 0$ das linear unabhängig zu dem Raum erzeugt von den vorherigen $k-1$ Vektoren und $0^n$ ist. Das hat Wahrscheinlichkeit $1-\frac{2^{k-1}}{2^{n-1}}$.\\
+		Wir sehen, dass die Wahrscheinlichkeit $n-1$ solche Vektoren zu generieren \[\prod_{j=1}^{n-1} (1-\frac{2^{j-1}}{2^{n-1}}) \leq \frac{1}{4}\] ist. Wird dieses Experiment $k$ mal wiederholt, so ist die Wahrscheinlichkeit, dass alle Experimente Vektoren produzieren, die linear abhängig sind, $\frac{3}{4}^k \leq \frac{1}{2^{k-2}}$. Bei $k(n-1)$ Stichproben, findet man $a$ mit Wahrscheinlichkeit $\geq 1-\frac{1}{2^{k-2}}^k$. 
+	\end{remark}
 \end{document}

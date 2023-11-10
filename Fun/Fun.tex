@@ -346,4 +346,65 @@
 	\begin{theorem}[Universal Approximation theorem of Hornik-Stinchcombe-White]
 		Let $\Phi$ we a squashing function $K\subset \mathbb{R}^d$ compact $f:K \to \mathbb{R}$ continuous and $\varepsilon > 0$. Then $\exists g \in \Sigma^d(\Phi)$ s.t. \[\sup_{x \in K} \left|f(x)-g(x)\right| < \varepsilon\]
 	\end{theorem}
+
+\section{Continuous linear maps}
+	$(X,||\cdot ||_X), (Y,||\cdot ||:Y)$ are $K$-Vector spaces with $K = \mathbb{R}$ or $K = \mathbb{C}$. $T:X \to Y$ is called linear if \[T(\lambda_1x_1 + \lambda_2 x_2) = \lambda_1 T(x_1) + \lambda_2 T(x_2)\]
+	\subsection{Continuity of linear maps}
+	\begin{definition}
+		LEt $T:X\to Y$ be linear. Then $T$ is bounded if $\exists C>0$ s.t. \[||Tx||_Y \leq C||x||_X \; \forall x \in X\]
+		or equivalently \[\sup_{x \in X\setminus \{0\}} \frac{||Tx||_Y}{||x||_X} \leq C\] which is also equivalent to \[\sup_{x \in X, ||x||_X=1} ||Tx||_Y \leq C\]
+	\end{definition}
+	\begin{theorem}
+		For $T: X \to Y$ linear, the following are equivalent: \begin{enumerate}
+			\item $T$ is continuous 
+			\item $T$ is continuous in 0
+			\item $t$ is bounded
+		\end{enumerate}
+	\end{theorem}
+	\begin{lemma}
+		Let $X$ have infinite dimension. Then $\exists T: X \to \mathbb{K}$ linear and not bounded.
+	\end{lemma}
+	\begin{definition}
+		Define $L(X,Y)$ as the set of linear continuous ($\Leftrightarrow$ bounded) maps from $X$ to $Y$. With the usual addition $((T_1+T_2)(x) = T_1(X) + T_2(x))$ and the scalar multiplication $((\lambda(T)(x)) = \lambda T(x))$ this is a vector space.\\
+		If $X=Y$ we write $L(X)$. For $T \in L(X,Y)$ \[\ker T = \{x \in X: Tx = 0\}\] and \[\Im(T) = \{y \in Y: \exists x\in X: \; Tx = y\}\]
+	\end{definition}
+	\subsection{Operatornorm and dual space}
+	\begin{theorem}
+		Let $X \neq \{0\}$. \begin{itemize}
+			\item $L(X,Y)$ with the operatornorm $||T|| = \sup_{x \in X\setminus \{0\}} \frac{||Tx||_Y}{||x||_X} = \sup_{x \in X, ||x||_X=1} ||Tx||_Y$ is a normed space. We have \[||Tx||_Y \leq ||T||||x||_X\]
+			\item If $Y$ is a Banach space then $L(X,Y)$ is a Banach space.
+		\end{itemize}
+	\end{theorem}
+	\begin{definition}
+		For a normed space $(X,||\cdot||_\infty)$ we define the dual space $X' = L(X,\mathbb{K})$. 
+	\end{definition}
+	\begin{remark}
+		$X'$ is a Banach space.
+	\end{remark}
+	\subsection{Neumann series}
+	\begin{lemma}
+		Let $X,Y,Z$ be three normed spaces. Let $T \in L(X,Y)$ and $S \in L(Y,Z)$. Then $S\circ T \in L(X,Z)$ and \[||S\circ T||\leq ||S|| ||T||\] 
+	\end{lemma}
+	Let $T:X\to Y$ be linear, bounded and bijective. Then $\exists T^-1: Y \to X$ linear. 
+	\begin{definition}
+		Let $X,Y$ be normed spaces. \begin{enumerate}
+			\item $T \in L(X,Y)$ is bijective such that $T^-1 \in L(Y,X)$ then $T$ is called an isomorphism
+			\item $X,Y$ are called isomorph if there is $T: X \to Y$ isomorphism.
+			\item $T \in L(X,Y)$ is called an Isometry if $||Tx|| = ||x||$.
+			\item $X,Y$ are called isometric isomorph if $\exists T \in L(X,Y)$ an isomorphism that is also an isometry.
+		\end{enumerate}
+	\end{definition} 
+	\begin{remark}
+		The identity $I_x: X \to X$ with $x \mapsto x$ is in $L(X)$. Then $T \in L(X)$ is an isomorphism iff $\exists S \in L(X)$ s.t. $S\circ T = I_x$ and $T\circ S = I_x$
+	\end{remark}
+	Let $T \in L(X)$ s.t $||T|| < 1$. Define $T^0 = I_x$, $T^n = T\circ T^{n-1}$. Obviously $T^n \in L(X)$ for all $n$. Now, \[\left(\sum_{k=0}^{n}T^k \right)_{n\in \mathbb{N}} \subset L(X)\] is a Cauchy sequence w.r.t. the operatornorm. Hence, if $X$ is a Banach-Space, so is $L(X)$ and thus the series converges to a $S \in L(X)$. Furthermore \[\sum_{k=0}^\infty ||T||^k = \frac{1}{1-||T||}\]
+	Finally, we can also note that $S = (I_x-T)^{-1}$.
+	\begin{theorem}[Neumann series]
+		Let $X$ be a Banach-Space, $T \in L(X)$ with $||T|| < 1$ The $I_x - T$ is an isomorphism and \[(I_x - T)^{-1} = \sum_{k=0}^\infty T^k\] is in $L(X)$. This is called the Neumann series.
+	\end{theorem}
+	\subsection{The dual space of $l^p$}
+	We only deal with $1\leq p < \infty$.
+	\begin{theorem}
+		Let $q \in (1,\infty]$ be s.t. $\frac{1}{p} + \frac{1}{q} = 1$. Then the dualspace $(l^p)'$ is isometric isomorph to $l^q$.
+	\end{theorem}
 \end{document}

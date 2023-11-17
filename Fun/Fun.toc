@@ -19,3 +19,6 @@
 \contentsline {subsection}{\numberline {4.2}Operatornorm and dual space}{12}{}%
 \contentsline {subsection}{\numberline {4.3}Neumann series}{12}{}%
 \contentsline {subsection}{\numberline {4.4}The dual space of $l^p$}{13}{}%
+\contentsline {section}{\numberline {5}Theorem of Hahn-Banach}{13}{}%
+\contentsline {subsection}{\numberline {5.1}Extension Theorem}{14}{}%
+\contentsline {subsection}{\numberline {5.2}Separation Theorems}{15}{}%

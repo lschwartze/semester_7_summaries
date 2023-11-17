@@ -14,9 +14,12 @@ classdef (Abstract) general_lens < matlab.mixin.Heterogeneous & handle
                 obj.end_point = b;
             end
         end
-        function draw_points(obj)
-            plot(obj.start_point(1),obj.start_point(2),'b+')
-            plot(obj.end_point(1),obj.end_point(2),'b+')
+        function draw_points(obj,color)
+            if nargin == 1
+                color = "b";
+            end
+            plot(obj.start_point(1),obj.start_point(2),'Color',color,'Marker','+')
+            plot(obj.end_point(1),obj.end_point(2),'Color',color,'Marker','+')
         end
         
         function rotated = rotateVec(obj, vector, inverse)

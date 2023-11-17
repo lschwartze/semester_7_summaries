@@ -243,6 +243,48 @@
 	For an input vector $x$, weights $w$ and a bias $b$ the output of an artificial neuron is $w^Tx+b$.\\
 	A classification network is made up of an input layer, the hidden layer where the neurons are and the output layer. In such a case, the weight vector $w$ would be a weight matrix $W^{(1)}$. The each neuron then has a weight to the output neuron which also has a bias $b^{(2)}$ so the final output is then given by $sgn(W^{(2)}h + b^{(2)})$ where $h$ is the output of the hidden layer. One can notice that this is simply an affine function. Hence neurons are augmented by an activation function, e.g. ReLU$(x) = \max(0,x)$ (=Rectified linear unit). If the activation function is non-linear one can calculate more difficult stuff than with normal affine functions.\\
 	Activation functions $\sigma: \mathbb{R} \to \mathbb{R}$ are applied component-wise. It is important to note, that neurons on the same layer must share the same activation function. The necessity of activation functions becomes inherently apparent, when one tries to compute XOR with a neural network. Even though XOR is not separable, one can compute the XOR function using a neural network, if an activation function like ReLU is used.\\
-	Modern neural networks consist of many hidden layers, each equipped with ReLU while the output layer usually uses the logistic function or softmax. A logistic function output does not give a simple class but a confidence level instead. This is a difference to the classical classification task. Quite similarly, one can use a softmax function defined by \[z \mapsto \frac{e^{z_i}}{\sum_{j=1}^k e^{z_j}}\] This gives a distribution over the classes instead. 
-		
+	Modern neural networks consist of many hidden layers, each equipped with ReLU while the output layer usually uses the logistic function or softmax. A logistic function output does not give a simple class but a confidence level instead. This is a difference to the classical classification task. Quite similarly, one can use a softmax function defined by \[z \mapsto \frac{e^{z_i}}{\sum_{j=1}^k e^{z_j}}\] This gives a distribution over the classes instead.
+	\begin{theorem}
+		Consider the class $F$ of neural networks with $L-1$ fully connected hidden layers and one output layer. Each hidden layer uses the ReLU function as an activation function whereas the output has $sgn$ as activation function. Let the number of weights be upper bounded by $N$. Then \[VCdim(F) \in \mathcal{O}(NL\cdot \log N)\]
+		There is also a lower bound given by \[ VCdim(F) \in \Omega\left(NL\cdot \log\left(\frac{N}{L}\right)\right)\] 
+		Using the $\tanh$ activation function, we find \[VCdim(F) \in \Omega(N^2)\]
+	\end{theorem}
+	\section{stochastic gradient descent}
+	\subsection{convexity}
+	\begin{definition}[convex set]
+		A set $M$ is convex, if $\forall x,y \in M, \; \forall \lambda \in [0,1]$, $$\lambda x + (1-\lambda) y \in M$$
+	\end{definition}
+	\begin{definition}[convex function]
+		A function $f$ is convex if $\forall x_1, x_2$ in the convex preimage of $f$ and $\forall \lambda \in [0,1]$ we have \[f(\lambda x_1 + (1-\lambda) x_2)\leq\lambda f(x_1) + (1-\lambda) f(x_2)\]
+	\end{definition}
+	There is a relation between convex sets and convex functions.
+	\begin{remark}
+		Let $C$ be a convex set and $f$ be a function on $C$, then the epigraph $epi(f) = \{(x,y): x \in C, y \geq f(x)\}$ is a convex set iff $f$ is a convex function. 
+	\end{remark}
+	\subsection{convex optimization}
+	\begin{definition}
+		Let $K\subseteq \mathbb{R}^n$ be convex, $f: K \to \mathbb{R}$ convex. A convex optimization problem searches for \[\inf_{x\in K} f(x)\]
+	\end{definition}
+	\begin{remark}
+		Any local minimum of a convex function is a global minimum.
+	\end{remark}
+	\begin{lemma}
+		Let $f$ be a doubly differentiable function with compact preimage. The following statements are equivalent
+		\begin{itemize}
+			\item $f$ is convex
+			\item $f'$ is monotonically non-decreasing
+			\item $f''$ is non-negative
+		\end{itemize}
+	\end{lemma}
+	\begin{lemma}
+		Let $g: \mathbb{R} \to \mathbb{R}$ be convex and let $x \to w^Tx+b$. Then $f: \mathbb{R}^n \to \mathbb{R}$ defined by $f(x) = g(w^Tx+b)$ is convex as well.
+	\end{lemma}
+	As a consequence from above lemma, $w \mapsto \log(1+e^{-yw°tx})$ is convex.
+	\begin{lemma}
+		Let $C\subset \mathbb{R}^n$ be a convex set, $f_1,...,f_n$ are convex functions from $C$ to $\mathbb{R}$ and weights $w_1,...,w_n \geq 0$, then \[f= \sum_{i=1}^n w_if_i\] is convex.
+	\end{lemma}
+	As a consequence from this lemma, the logistic loss function is convex.
+	\begin{lemma}
+		Let $I$ be some index set and $C$ be a convex set. Let $f_i: C \to \mathbb{R}$ be a family of convex functions. Then \[f:x\mapsto \sup_{i\in I} f_i(x)\] is a convex function.
+	\end{lemma}
 \end{document}

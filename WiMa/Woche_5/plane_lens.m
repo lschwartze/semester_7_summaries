@@ -5,9 +5,12 @@ classdef plane_lens < general_lens
             obj.draw_lens()
         end
 
-        function draw_lens(obj)
-            plot([obj.start_point(1),obj.end_point(1)],[obj.start_point(2),obj.end_point(2)],"b")
-            obj.draw_points
+        function draw_lens(obj,color)
+            if nargin == 1
+                color = "b";
+            end
+            plot([obj.start_point(1),obj.end_point(1)],[obj.start_point(2),obj.end_point(2)],color)
+            obj.draw_points(color)
         end
         function [p,normal,t] =  intersect(obj,light)
             % light: source, normalized direction

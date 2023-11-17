@@ -140,4 +140,41 @@
 	\begin{lemma}
 		Sei $[i,j]$ ein $l$-Intervall. Seien $i_1 < i_2 <...<i_k$ die $l$-Indizes in aufsteigender Reihenfolge. Dann sind die Kind-Intervalle gerade \[[i,i_1-1], [i_1,i_2-1], \dots [i_k,i_{k+1}-1], \dots [i_k, j]\]
 	\end{lemma}
+	\begin{definition}
+		Für $2\leq i \leq n$ definiere \[PSV[i] = \max\{j | 1\leq j < i \text{ und } LCP[i] < LCP[j]\}\]
+		und \[NSV[i] = \min\{j | i < j \leq n+1 \text{ und } LCP[i] < LCP[j]\}\]
+	\end{definition}
+	\begin{lemma}
+		Sei $2 \leq k \leq n$ und $LCP[k] = l$. Dann ist $[PSV[k], NSV[k]-1]$ ein LCP Intervall mit LCP-Wert $l$
+	\end{lemma}
+	\begin{lemma}
+		Sei $[i,j] \neq [1,n]$ ein LCP-Intervall mit $LCP[i] = p$ und $LCP[j+1] = q$. \begin{itemize}
+			\item Ist $p=q$, dann \begin{itemize}
+				\item ist das Elternintervall $[PSV[i],NSV[i]-1]$
+				\item hat das Elternintervall den LCP-Wert $p=q$
+				\item sind $i$ und $j+1$ aufeinander folgende $p$-Indizes des Elternintervall
+			\end{itemize}
+			\item Ist $p>q$, dann \begin{itemize}
+				\item ist $[PSV[i],j]$ das Elternintervall 
+				\item hat das Elternintervall den LCP-Wert $p$
+				\item ist $i$ der letzte $p$-Index vom Elternintervall
+			\end{itemize}
+			\item Ist $p<q$, dann \begin{itemize}
+				\item ist das Elternintervall $[i,NSV[j+1]-1]$
+				\item hat das Elternintervall den LCP-Wert $q$
+				\item ist $j+1$ der letzte $q$-Index des Elternintervalls
+			\end{itemize}
+		\end{itemize}
+	\end{lemma}
+	\begin{lemma}
+		Der LCP-Wert des Elternintervall von $[i,j]$ ist $\max\{LCP[i],LCP[j+1]\}$.
+	\end{lemma}
+	\subsection{Bottom-up Konstruktion des LCP-Baums}
+	Man definiere $\langle p,a,b,A\rangle$ als das Viertupel mit LCP-Wert $p$, Intervallanfang $a$, -ende $b$ und die Liste der Kindintervalle $A$. Algorithmus 5 aus dem Skript funktioniert in linearer Zeit.
+	\begin{theorem}
+		Sei $top$ das oberste Intervall auf dem Stack und $top_{-1}$ das darunter für ein $k$ der For-Schleife. Bemerke $top.lcp > top_{-1}.lcp$. Dann, bevor $top$ gepoppt wird, gilt \begin{itemize}
+			\item Ist $LCP[k]\leq top_{-1}.lcp$, dann ist $top$ ein Kindintervall von $top_{-1}$. 
+			\item Ist $LCP[k] > top_{-1}.lcp$, dann ist $top$ ein Kindintervall des ersten LCP-Intervall mit LCP-Wert $LCP[k]$, das $k$ enthält. Genauer gesagt, ist $top$ ein Kindintervall von $[top.lb, NSV[k]-1]$.
+		\end{itemize}
+	\end{theorem}
 \end{document}

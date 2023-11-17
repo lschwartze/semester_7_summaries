@@ -407,4 +407,72 @@
 	\begin{theorem}
 		Let $q \in (1,\infty]$ be s.t. $\frac{1}{p} + \frac{1}{q} = 1$. Then the dualspace $(l^p)'$ is isometric isomorph to $l^q$.
 	\end{theorem}
+	\section{Theorem of Hahn-Banach}
+	Let $X$ be a vector space, $X \neq \{0\}$ over $\mathbb{K} = \mathbb{R}$.
+	\subsection{Extension Theorem}
+	Given $U\subset X$ subspace, $l: U \to \mathbb{R}$ linear, is there $L: X \to \mathbb{R}$ linear such that $L|_U = l$? For this we need Zorn's Lemma:
+	\begin{definition}
+		Let $M\neq \varnothing$ be a set and $\leq$ be a partial order on $M$, i.e. $\leq$ satisfies
+		\begin{enumerate}
+			\item reflexiv: $x \leq x$ $\forall x \in M$
+			\item antisymmetric: $x \leq y$ and $y \leq x \Rightarrow x = y$
+			\item transitivity $x \leq y, y \leq z \Rightarrow x \leq z$
+		\end{enumerate}
+	Then
+		\begin{itemize}
+			\item $A \subset M$ is called chain of totally ordered if $\forall x,y \in A$ either $x \leq y$ or $y \leq x$
+			\item $b \in M$ is an upper bound for a chain $A$ if $a \leq b$ for all $a \in A$
+			\item $m \in M$ is called maximal element if \[\forall x \in M \text{ s.t. } m \leq x \Rightarrow x = m\]
+		\end{itemize}
+	\end{definition}
+	\begin{lemma} [Zorn]
+		Let $M\neq \varnothing$ and $\leq$ be a partial order on $M$. If every chain in $M$ has an upper bound in $M$, then there is a maximal element.
+	\end{lemma}
+	\begin{definition}
+		LEt $X$ be a vector space. $p: X \to \mathbb{R}$ is called sublinear if \begin{enumerate}
+			\item $p(\lambda x) = \lambda p(x)$ for all $x \in X, \lambda \geq 0$
+			\item $p(x+y) \leq p(x)+p(y)$ for all $x,y \in X$
+		\end{enumerate}
+	\end{definition}
+	\begin{theorem}[Extension theorem of Hahn-Banach]
+		Let $X$ be a vecorspace over $\mathbb{R}$, $U\subset X$ a subspace and $U\neq X$. Let $p:X \to \mathbb{R}$ be a subspace $l: U \to \mathbb{R}$ be linear s.t. $l(x) \leq p(x) \; \forall x \in U$. Then $\exists L:X \to \mathbb{R}$ linear s.t. $L(x) \leq p(x) \; \forall x \in X$ and $L(x) = l(x) \; \forall x \in U$. $L$ is called extension of $l$.
+	\end{theorem}
+	\underline{Consequences for normed spaces}
+	\begin{theorem}
+		Let $(X,||\cdot ||_X)$, $U \subset X$ a subspace fo $X$, with $U \neq X$. Let $u' \in U' =  L(U,\mathbb{R})$. Then $\exists x' \in X'$ s.t. $||x'||_{X'} = ||u'||_{U'}$ such that $x'(u) = u'(u) \; \forall u \in U$.
+	\end{theorem}
+	\begin{corollary}
+		Let $(X,||\cdot||_X)$, $U\subset X$ be a subspace of $X$ and $x_0 \in X$ s.t. $dist(x_0,U)>0$. Then $\exists x' \in X'$ s.t. $x'|_U = 0$ $\forall u \in U$ and $x'(x_0) = dist(x_0,U)$ with $||x'||_{X'} = 1$. 
+	\end{corollary}
+	\begin{corollary}
+		Let $X,||\cdot||_X)$ and $x_0 \in X$. \begin{enumerate}
+			\item if $x_0 \neq 0$ then $\exists F \in X'$ with $||F||_{X'}=1$ and $F(x_0) = ||x_0||_X$ In particular, for $x \in X$ \[||x||_X = \sup_{F\in X', ||F||_{X'}=1}\left|F(x)\right|\]
+			\item If $F(x_0) = 0$ for all $F\in X'$, then $x_0 = 0$. In particular, $X'$ separates points of $X$.
+			\item $U \subset X$ subspace. Then $U$ is dense in $X$ iff if for $x'\in X'$ s.t. $x'_{|_U} = 0$ it follows $x' = 0$.
+		\end{enumerate}
+	\end{corollary}
+	\subsection{Separation Theorems}
+	\begin{definition}
+		Let $X$ be a vectorspace over $\mathbb{R}$. $A\subset X$ is called convex, if \[\forall x,y \in A, \; \lambda x + (1-\lambda) y \in A, \; \forall \lambda \in [0,1]\]
+	\end{definition}
+	\begin{lemma}
+		Let $C\subset X$ open and convex with $O \in C$. Define $p_C: X \to \mathbb{R}$ such that $p_C(x) = \inf\{\lambda > 0 \text{ s.t. } \frac{x}{\lambda} \in C\}$. This is called the Minkowski functional.\\
+		Then $p_C$ is sublinear and $C = \{x \in X: p_C(x) < 1\}$.
+	\end{lemma}
+	\begin{lemma}
+		Let $(X,||\cdot ||)$ be a normed space and $A\subset X$ be convex and open, $A \neq \varnothing$ and $x_0 \in X\setminus A$, then $\exists F \in X'$ s.t. \[F(x) < F(x_0) \; \forall x \in A\]
+	\end{lemma}
+	\begin{definition}
+		Let $X\neq \{0\}$ be a $\mathbb{R}$-vectorspace. \begin{enumerate}
+			\item $H = \{x \in X: \; f(x) = \alpha\}$ with $f: X \to \mathbb{R}$ linear, $\alpha \in \mathbb{R}$
+			\item $A,B \subset X$ are separated by an affine hyperplane $H$ if $H = \{f = \alpha\}$ and $f(a) \leq \alpha \leq f(b)$ $\forall a \in A\; \forall b \in B$.
+			\item $A,B \subset X$ are strictly separated by an affine Hyperplane $H$ if $\exists \varepsilon > 0$ s.t. $f(a) + \varepsilon \leq \alpha \leq f(b) - \varepsilon$.
+		\end{enumerate}
+	\end{definition}
+	\begin{theorem}[Separation Theorem of Hahn-Banach]
+		Let $(X, ||\cdot ||)$, $A,B$ convex, $A \neq \varnothing$, $b \neq \varnothing$, $A\cap B = \varnothing$ and $A$ or $B$ should be open.. Then $\exists F \in X'$ and $\delta \in \mathbb{R}$ s.t. \[F(a) \leq \delta \leq F(b) \; \forall a \in A, b \in B\]
+	\end{theorem}
+	\begin{theorem}
+		Let $(x,||\cdot ||)$, $A, B$ convex subsets $A \neq \varnothing, B \neq \varnothing$, $A \cap B = \varnothing$. Let $A$ be closed and $B$ be compact. Then $\exists F \in X', \exists \varepsilon > 0$ s.t. $F(a) + \varepsilon \leq F(b) - \varepsilon$ $\forall a \in A, b \in B$.
+	\end{theorem}
 \end{document}

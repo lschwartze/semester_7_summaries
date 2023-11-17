@@ -9,3 +9,5 @@
 \contentsline {subsection}{\numberline {2.1}Algorithmus von Deutsch}{6}{}%
 \contentsline {subsection}{\numberline {2.2}Deutsch-Josza-Problem}{7}{}%
 \contentsline {subsection}{\numberline {2.3}Simon's Algorithmus}{8}{}%
+\contentsline {section}{\numberline {3}Suchalgorithmus von Grover}{9}{}%
+\contentsline {subsection}{\numberline {3.1}Untere Schranke für den Grover-Suchalgorithmus}{11}{}%

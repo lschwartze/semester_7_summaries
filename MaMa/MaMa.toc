@@ -19,3 +19,6 @@
 \contentsline {subsection}{\numberline {2.6}Fundamental Theorem of PAC-learning}{10}{}%
 \contentsline {subsection}{\numberline {2.7}VC-dimension of linear classifiers}{11}{}%
 \contentsline {subsection}{\numberline {2.8}neural networks}{11}{}%
+\contentsline {section}{\numberline {3}stochastic gradient descent}{12}{}%
+\contentsline {subsection}{\numberline {3.1}convexity}{12}{}%
+\contentsline {subsection}{\numberline {3.2}convex optimization}{13}{}%

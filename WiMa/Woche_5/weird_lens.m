@@ -51,7 +51,7 @@ classdef weird_lens < general_lens
              %transform the light source and direction
              rotated_source = obj.rotateVec(light.source-obj.shift,0);
              rotated_direction = obj.rotateVec(light.direction,0);
-             light_transform = lights(rotated_source,rotated_direction,0);
+             light_transform = lights(rotated_source,rotated_direction,0,light.opacity);
              
              %find intersection
              syms z;            

@@ -11,17 +11,18 @@ xticklabels([]);
 yticklabels([]);
 xticks([]);
 yticks([]);
-titles = ["set function lenses", "set planar lenses", "set circular lenses", "set lights", "final experiment"];
+titles = ["set function lenses", "set planar lenses", "set circular lenses","set walls","set mirrors", "set lights", "set light bundels", "final experiment"];
 title(titles(1))
 hold on
 
 % define the function type of the lens
 f = @(x) x.*(x-0.5);
-angle = 45;%360-eps;
+angle = 360-eps;
 use_weird_lens = 0;
 lenses = plane_lens.empty();
 num_of_input_points = 0;
-
+walls = wall.empty();
+mirrors = mirror.empty();
 % collect as many points as desired
 while true
     [x,y,button] = ginput(1);
@@ -33,7 +34,7 @@ while true
     if button == 32
         use_weird_lens = use_weird_lens + 1;
         title(titles(use_weird_lens+1));
-        if use_weird_lens == 4
+        if use_weird_lens == 7
             break;
         end
         num_of_input_points = 0;
@@ -59,18 +60,37 @@ while true
                     circ = circular_lens(previous_lens_point,[x;y], angle);
                     % append to array
                     lenses(end+1) = circ;
-                else
+                elseif use_weird_lens == 3
+                    walls(end+1) = wall(previous_lens_point,[x;y]);
+                elseif use_weird_lens == 4
+                    mirrors(end+1) = mirror(previous_lens_point,[x;y]);
+                elseif use_weird_lens == 5
                     % build light source
                     source = previous_lens_point;
                     % calculate Richtungsvektor
                     direction = [x;y]-source;
                     % normalize
                     norm_direction = direction/norm(direction);
-                    light = lights(source,norm_direction,1);
+                    light = lights(source,norm_direction,1,1);
                     % the function to calculate all reflections belongs to
                     % the lights class
-                    sit = situation(lenses,light);
+                    sit = situation(lenses,light,walls,mirrors);
                     sit.plot_sit()
+                else
+                    % build light bundle
+                    dist = 0.02;
+                    first_source = [previous_lens_point(1); previous_lens_point(2) - 2*dist];
+                    for translation = 0:4
+                         source = [first_source(1); first_source(2) + translation*dist];
+                         direction = [x;y]-previous_lens_point;
+                        % normalize
+                        norm_direction = direction/norm(direction);
+                        light = lights(source,norm_direction,1,1);
+                        % the function to calculate all reflections belongs to
+                        % the lights class
+                        sit = situation(lenses,light,walls,mirrors);
+                        sit.plot_sit()
+                    end
                 end
             otherwise
                 % this cannot mathematically happen

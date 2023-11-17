@@ -198,4 +198,51 @@
 		\underline{Schritt $k$} Generiere $z_k$ mit $z_ka = 0$ das linear unabhängig zu dem Raum erzeugt von den vorherigen $k-1$ Vektoren und $0^n$ ist. Das hat Wahrscheinlichkeit $1-\frac{2^{k-1}}{2^{n-1}}$.\\
 		Wir sehen, dass die Wahrscheinlichkeit $n-1$ solche Vektoren zu generieren \[\prod_{j=1}^{n-1} (1-\frac{2^{j-1}}{2^{n-1}}) \leq \frac{1}{4}\] ist. Wird dieses Experiment $k$ mal wiederholt, so ist die Wahrscheinlichkeit, dass alle Experimente Vektoren produzieren, die linear abhängig sind, $\frac{3}{4}^k \leq \frac{1}{2^{k-2}}$. Bei $k(n-1)$ Stichproben, findet man $a$ mit Wahrscheinlichkeit $\geq 1-\frac{1}{2^{k-2}}^k$. 
 	\end{remark}
+	\section{Suchalgorithmus von Grover}
+	Sei $f:\{0,1\}^n \to \{0,1\}$ und $U_f$ ein Schaltkreis, der $f$ berechnet. Gesucht ist ein $a \in \{0,1\}^n$ mit $f(a) = 1$. Es kann angenommen werden, dass es nur genau ein $a$ mit $f(a) = 1$ gibt. Wir definieren für leichtere Schreibweise $2^n = N$. Wir interessieren uns für die Anzahl an Anfragen an $f$. Im klassischen Fall müssen damit bis zu $N-1$ Anfragen gestellt werden. Im probabilistischen Fall ist der Erwartungswert $\frac{2N-1}{2}$. Im Quantenfall genügen hingegen $\mathcal{O}(\sqrt{N})$ Anfragen. Im Folgenden wird das bewiesen.\\
+	\begin{definition}[$D$ Transformation]
+		\[D = \begin{pmatrix}
+			\frac{2}{N} - 1 & \frac{2}{N} & \dots & \dots & \frac{2}{N}\\
+			\frac{2}{N} & \frac{2}{N} - 1 & \frac{2}{N} & \dots & \frac{2}{N}\\
+			\vdots & & \ddots & & \vdots\\
+			\frac{2}{N} & \dots & \dots & \dots & \frac{2}{N} -1
+		\end{pmatrix}\]
+		Diese Matrix wird Diffusions-Matrix genannt. Man sieht, dass für \[D \begin{pmatrix}
+			\alpha_1\\
+			\vdots\\
+			\alpha_N
+		\end{pmatrix} = \begin{pmatrix}
+		\beta_1\\
+		\vdots\\
+		\beta_N
+	\end{pmatrix}\]
+	Wobei $\beta_i = \frac{2}{N}\sum_{j=1}^N \alpha_k - \alpha_i$. Das heißt für den Durchschnitt der Amplituden $\mu = \sum_{j=1}^N \frac{\alpha_j}{N}$ ist $\beta_i = 2\mu - \alpha_i$.
+	\end{definition}
+	Als Eingabe Qubits dienen wieder $|0^n\rangle$ und $|0\rangle$. Diese werden Hadamard transformiert und das Resultat in $U_f$ eingegeben. Der obere Output von $U_f$ wird $D$ transformiert. $U_f$ mit anschließender $D$ Transformation wird $G$ genannt. Der Grover Algorithmus funktioniert durch $m$-males Anwenden von $G$. Zusammengefasst:
+	\begin{eqnarray*}
+		|0^n\rangle |0\rangle \overset{H}{\to} \frac{1}{\sqrt{N}} \sum_{z \in \{0,1\}^n} |z\rangle \left(\frac{|0\rangle +|1\rangle}{\sqrt{2}}\right) \overset{U_f}{\to} \frac{1}{\sqrt{N}} \sum_{z \in \{0,1\}^n} (-1)^{f(z)}|z\rangle \left(\frac{|0\rangle +|1\rangle}{\sqrt{2}}\right)
+	\end{eqnarray*}
+	Durch $t$-maliges Anwenden von $G$ sind die Werte $\alpha_x^t$ gegeben. Insbesondere ist $\alpha_a^1 = \frac{3}{\sqrt{N}} -\frac{4}{N\sqrt{N}}$ und $\alpha_x^1 = \frac{1}{\sqrt{N}} -\frac{4}{N\sqrt{N}}$ für $x\neq a$. Generell ist \[\alpha_a^t = 2\mu_{t-1} + \alpha_a^{(t+1)} = -\frac{2}{N} \alpha_a^{(t-1)} + \left(1-\frac{2}{N}\right)\alpha_x^{(t-1)}\] wobei $\mu_t$ der Durchschnitt der Amplituden nach $t$ maliger Anwendung von $G$ sei. Lösen liefert $\alpha_a^t = \sin((2t+1)\Theta)$ und $\alpha_x^t = \frac{1}{\sqrt{N-1}}\cos((2t+1)\Theta)$ wobei $sin^2(\Theta) = \frac{1}{N}$. Nun soll die Wahrscheinlichkeit für $\alpha_x^t$ minimiert werden, d.h. gesucht ist ein $\Theta$, sodass $\cos((2t+1)\Theta) = 0$. Für $t = \frac{\pi}{4\Theta} - \frac{1}{2} + m\frac{\pi}{\Theta}$ ist der Cosinus gleich 0. Das heißt für großes $N$ genügt $t = \lfloor \frac{\pi}{4\Theta}\rfloor$ damit der Cosinus ungefähr 0 ist. $t$ ist damit in $\mathcal{O}(\sqrt{N})$.\\
+	Im allgemeinen Fall, wenn $\left|\{x | f(x) = 1\}\right| = M$, dann findet man mit großer Wahrscheinlichkeit ein $x$ mit $f(x) = 1$ in $t = \sqrt{\frac{N}{M}}$ Iterationen. Geometrisch kann man sich den Algorithmus als eine Rotation der Qubits vorstellen.
+	\subsection{Untere Schranke für den Grover-Suchalgorithmus}
+	Für die untere Schranke wird ein Algorithmus $A$ betrachtet, der bildlich gesprochen Fragen an $U_f$ stellen kann. Dafür steht im Folgenden $O$, also Orakel.\\
+	Die Behauptung ist, dass $A$ $\Omega(\sqrt{N})$ Anfragen an $U_f$ stellen muss, um $a$ zu bestimmen. $A$ kann wie folgt geschrieben werden: \[\underbrace{U_TOU_{T-1}...U_1OU_1O}_A|0^n\rangle\] Die Anzahl an Fragen ist daher $T$. Für den Beweis wird das folgende Lemma benötigt:
+	\begin{lemma}
+		Seien $|\phi\rangle = \sum_{i=1}^n \alpha_i |i\rangle$ und $|\psi\rangle = \sum_{i=1}^n \beta_i |i\rangle$ zwei Quantenzustände, sodass \[\sum_{i=1}^n \left|\left|a_i\right|^2 - \left|\beta_i\right|^2\right| > \varepsilon\] dann ist \[\left|\left||\phi\rangle - |\psi \rangle\right|\right| > \frac{\varepsilon}{2}\]
+	\end{lemma}
+	Wir definieren die Funktion $f(z) = 0 \; \forall z$ und das dazugehörige Orakel $O_f$. Wir definieren $|\psi_t\rangle =  U_tOU_{t-1}...U_1OU_1O_A|0^n\rangle = \sum_{i=1}^n \alpha_i^t |i\rangle$. Außerdem definieren wir $q_x(\psi_t) = \left|\alpha_x^t\right|^2$. Man kann sehen, dass \[\sum_{t=1}^{T} \sum_{x \in \{0,1\}^n} q_x(\psi_t) = T = \sum_{x \in \{0,1\}^n} \sum_{t=1}^T q_x(\psi_t) \Rightarrow \; \exists x_0: \; \sum_{x \in \{0,1\}^n} \sum_{t=1}^T q_{x_0}(\psi_t) \leq \frac{T}{N}\]
+	Damit wird eine neue Funktion definiert \[g(x) = \begin{cases}
+		1, \; x = x_0\\
+		0, \; x \neq x_0
+	\end{cases}\]
+	Dann sei $|\psi'_T\rangle = U_TO_gU_{t-1}O_g...U_1O_gU_0|0^n \rangle$. Nach einer Messung erkennt man bereits einen Unterschied in den beiden Schaltkreisen, woraus folgt, dass \[\sum_{i=1}^n \left|\left|\alpha_i\right|^2 - \left|\alpha_i'\right|^2\right| > \varepsilon > 0\] Wir schließen mit obigem Lemma \[|||\psi_T\rangle - |\psi_T'\rangle|| > \frac{\varepsilon}{2}\]
+	Wir definieren aus diesen beiden Zuständen einen neuen Zustand \[|\psi_T\rangle_i = U_TO_gU_{T-1}O_g ... O_gU_iO_fU_{i-1}O_f ... O_fU_1O_fU_0|0^n\rangle\]
+	Wir finden \begin{eqnarray*}
+		\varepsilon < |||\psi_T\rangle - |\psi_T'\rangle|| < |||\psi_T\rangle_T - |\psi_T\rangle_0|| = |||\psi_T\rangle_T - |\psi_T\rangle_i + |\psi_T\rangle_i - |\psi_T\rangle_0|| = ||\sum_{t=1}^T |\psi_T\rangle_t - |\psi_T\rangle_{t-1}||\\
+		\overset{\Delta}{\leq} \sum_{t=1}^T ||\underbrace{|\psi_T\rangle_t - |\psi_T\rangle_{t-1}}_{=E_i}|| = \sum_{t=1}^T ||E_i||
+	\end{eqnarray*}
+	Zur Vereinfachung schreiben wir nun:\\
+	$|\psi_T\rangle_i = \underbrace{U_TO_g ... O_gU_i}_{= U} O_f\underbrace{U_{i-1} ... O_fU_0}_{=|\psi_i\rangle}|0^n\rangle$ und \\
+	$|\psi_T\rangle_{i-1} = \underbrace{U_TO_g ... O_gU_i}_{= U} O_gU_{i-1} ... O_fU_0|0^n\rangle$. Es gilt dann $|\psi_T\rangle_{i-1} = UO_g|\psi_i\rangle = U(|\psi_i\rangle - 2\alpha_{x_0}^i |x_0\rangle)$, also \[\sum_{t=1}^T ||E_i|| \leq \sqrt{\sum_{t=1}^T ||E_i||^2 T} = \sqrt{\sum_{t=1}^T 4|\alpha_{x_0}^i|^2 T} = 2\sqrt{\sum_{i=1}^n q_{x_0}(\psi_i) T} \leq 2\frac{T}{\sqrt{N}}\]
+	Geht man zurück zu oberer Forderung mit $\varepsilon$, so findet man durch gegenüberstellen der beiden Ungleichungen $T = \frac{\varepsilon\sqrt{N}}{4} \in \Omega(\sqrt{N})$.
 \end{document}

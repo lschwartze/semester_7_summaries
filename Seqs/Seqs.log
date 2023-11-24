@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  14 NOV 2023 15:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  21 NOV 2023 15:09
 entering extended mode
 **./Seqs.tex
 (Seqs.tex
@@ -229,7 +229,24 @@ LaTeX Warning: No \author given.
 \tf@toc=\write3
 \openout3 = `Seqs.toc'.
 
- [1] [2] [3] [4] [5] [6] [7] (Seqs.aux) ) 
+ [1] [2] [3] [4] [5] [6]
+Overfull \hbox (7.96725pt too wide) in paragraph at lines 182--183
+\OT1/cmr/bx/n/12 Example 1.4.2. []$[]$ 
+ []
+
+
+Overfull \hbox (4.53963pt too wide) in paragraph at lines 189--191
+[]$\OT1/cmr/m/it/12 . Wenn
+ []
+
+[7]
+Overfull \hbox (0.24615pt too wide) in paragraph at lines 202--203
+[]\OT1/cmr/m/n/12 Die Trans-for-ma-tion kon-vertiert einen String der Lange $\
+OML/cmm/m/it/12 n$ \OT1/cmr/m/n/12 in den String $\OML/cmm/m/it/12 BWT\OT1/cmr/
+m/n/12 [1\OML/cmm/m/it/12 ; n\OT1/cmr/m/n/12 ]$ definiert
+ []
+
+[8] (Seqs.aux) ) 
 Here is how much of TeX's memory you used:
  2896 strings out of 479322
  39594 string characters out of 2856609
@@ -239,4 +256,4 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  67i,7n,74p,984b,301s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Seqs.dvi (8 pages, 24656 bytes).
+Output written on Seqs.dvi (9 pages, 29160 bytes).

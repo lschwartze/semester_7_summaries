@@ -245,4 +245,37 @@
 	$|\psi_T\rangle_i = \underbrace{U_TO_g ... O_gU_i}_{= U} O_f\underbrace{U_{i-1} ... O_fU_0}_{=|\psi_i\rangle}|0^n\rangle$ und \\
 	$|\psi_T\rangle_{i-1} = \underbrace{U_TO_g ... O_gU_i}_{= U} O_gU_{i-1} ... O_fU_0|0^n\rangle$. Es gilt dann $|\psi_T\rangle_{i-1} = UO_g|\psi_i\rangle = U(|\psi_i\rangle - 2\alpha_{x_0}^i |x_0\rangle)$, also \[\sum_{t=1}^T ||E_i|| \leq \sqrt{\sum_{t=1}^T ||E_i||^2 T} = \sqrt{\sum_{t=1}^T 4|\alpha_{x_0}^i|^2 T} = 2\sqrt{\sum_{i=1}^n q_{x_0}(\psi_i) T} \leq 2\frac{T}{\sqrt{N}}\]
 	Geht man zurück zu oberer Forderung mit $\varepsilon$, so findet man durch gegenüberstellen der beiden Ungleichungen $T = \frac{\varepsilon\sqrt{N}}{4} \in \Omega(\sqrt{N})$.
+	\subsection{Anwendungen vom Grover-Algorithmus}
+	\begin{definition}[QSEARCH]
+		Sei $f:\{0,1\}^n \to \{0,1\}^n$ und sei $M = \left|\{x\in \{0,1\}^n| f(x) = 1\}\right|$. Wenn $M\neq 0$, dann nehmen wir an, dass QSEARCH ein $x$ mit $f(x) = 1$ in erwarteter Zeit $\mathcal{O}(\sqrt{\frac{N}{M}})$ findet. Alle solche $x$ sind gleich wahrscheinlich. Wenn $M = 0$, dann hält QSEARCH nicht.
+	\end{definition}
+	\subsubsection{Minimumsproblem}
+	Sei $f:\{0,...,N-1\} \to \{0,...,M\}$ injektiv. Finde $x$, sodass $\forall y \neq x$ gilt $f(x) < f(y)$. Als Komplexitätsmaß wird die Anzahl der Vergleiche herangezogen. Wir werden sehen, dass der Quanten-Ansatz $\Theta(\sqrt{N})$ Vergleiche benötigt.\\
+	Definiere für ein festes $y$ die Funktion \[g_y(x) = \begin{cases}
+		1, f(x)<f(y)
+		0, \text{ sonst}
+	\end{cases}\]
+	Wir definieren den Schaltkreis $U_g$ für $g$ mit den Inputs $x,y$ und einem zusätzlichen Qubit $b$ und den Ausgängen $x,y$ und $b\oplus g_y(x)$. Der Algorithmus funktioniert schließlich wie folgt: 
+	\begin{enumerate}
+		\item Wähle $y\in_R \{0,..,N-1\}$
+		\item REPEAT
+		\item $|\Phi\rangle := (H_n|0^n\rangle) |y\rangle|1\rangle$
+		\item $QSEARCH(g_y(x))$
+		\item $y'$ = MEssung der ersten $n$ Register
+		\item IF $f(y') < f(y)$ THEN $y=y'$
+		\item t=t+1
+		\item UNTIL $t>l$
+		\item AUSGABE $(y,f(y))$
+	\end{enumerate}
+	Dabei ist $l$ ein Parameter, der später fixiert wird.
+	\begin{lemma}
+		Sei $p(q,r)$ die Wahrscheinlichkeit, dass der Algorithmus das $r$-kleinste Element bei $q$ Elementen wählt. Dann ist $p(q,r) = \frac{1}{r}$, wenn $r\leq q$ und $0$ sonst.
+	\end{lemma}
+	\begin{lemma}
+		Die erwartete Anzahl an Fragen an $U_g$ bis das Argminimum $y$ gefunden wird, ist $\mathcal{O}(\sqrt{N})$. 
+	\end{lemma}
+	\subsubsection{Untere Schranke}
+	Sei $g:\{0,...,N-1\} \to \{0,...,2N-1\}$ und $g(i) = i+N(1-f(i))$ wobei $f: \{0,...,N-1\} \to \{0,1\}$. Falls $\forall x$, $f(x) = 0 \Leftrightarrow g(i) = i+N$. Falls $\exists x$, $f(x) = 1$, dann $g(x) = x$. Es gilt \[\min g(x) \geq N \Leftrightarrow \; \forall x\; f(x) = 0\] und \[\min g(x) < N \Leftrightarrow \exists x:\; f(x) = 1\] Würde nun ein Algorithmus existieren, der weniger als $\Omega(\sqrt{N})$ Laufzeit benötigt, dann könnte Grover's Algorithmus genauso verbessert werden, was nicht möglich ist.
+	\subsubsection{Element Distinctness}
+	Sei $f: \{0,...,N-1\} \to \{0,...,M-1\}$ mit $M>N$. Das Problem ist, zu bestimmen, ob $f$ injektiv ist.
 \end{document}

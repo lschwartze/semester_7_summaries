@@ -475,4 +475,91 @@
 	\begin{theorem}
 		Let $(x,||\cdot ||)$, $A, B$ convex subsets $A \neq \varnothing, B \neq \varnothing$, $A \cap B = \varnothing$. Let $A$ be closed and $B$ be compact. Then $\exists F \in X', \exists \varepsilon > 0$ s.t. $F(a) + \varepsilon \leq F(b) - \varepsilon$ $\forall a \in A, b \in B$.
 	\end{theorem}
+\section{Hilbert Spaces}
+	Let $X$ be a vector space over $\mathbb{K}$ where $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$.
+	\subsection{Inner product space}
+	\begin{definition}
+		A map $\langle \cdot , \cdot \rangle$: $X\times X \to \mathbb{K}$ is an inner product on $X$, if \begin{enumerate}
+			\item $\langle x_1+x_2, y \rangle = \langle x_1,y\rangle + \langle x_2,y\rangle$
+			\item $\langle \lambda x,y\rangle = \lambda \langle x,y\rangle$
+			\item $\langle x,y\rangle = \overline{\langle x,y\rangle}$
+			\item $\langle x,y\rangle \geq 0$ and $\langle x,x\rangle = 0 \Leftrightarrow x=0$
+		\end{enumerate}
+		The pair $(X, \langle\cdot,\cdot\rangle)$ is called an inner product space also called a pre-Hilbert-space.\\
+		An inner product is a symmetric bilinear form if $\mathbb{K} = \mathbb{R}$ and a sesquilinear form if $\mathbb{K} = \mathbb{R}$.
+	\end{definition}
+	\begin{theorem} [Cauchy-Schwartz-inequality]
+		In an inner product space we have \[\left|\langle x,y\rangle\right| \leq \sqrt{\langle x,x\rangle} \sqrt{\langle y,y\rangle}\]
+	\end{theorem}
+	\begin{theorem}
+		For an inner product space $X$ we define $||\cdot ||: X \to [0,\infty)$ by $||x|| = \sqrt{\langle x,x\rangle}$. This is a norm.
+	\end{theorem}
+	\begin{definition}
+		Let $X$ be an inner product space. Then $x,y \in X$ are orthogonal if $\langle x,y\rangle = 0$. This is written as $x\bot y$.
+	\end{definition}
+	\begin{corollary}
+		If $x\bot y$, then \[||x+y||^2 = ||x||^2 + ||y||^2\]
+	\end{corollary}
+	\begin{theorem}
+		A normed space is an inner product space, iff $\forall x,y \in X$ the norm satisfies  \[||x+y||^2 + ||x-y||^2 = 2||x||^2 + 2||y||^2\]
+	\end{theorem}
+	\subsection{Hilbert spaces}
+	\begin{definition}
+		Is an inner product space complete w.r.t. to the induced norm, we call it \underline{Hilbert space}. 
+	\end{definition}
+	\begin{theorem}[projection theorem]
+		Let $X$ be a Hilbert space, $A \subset X$ non-empty, convex and closed. Then $\forall x \in X$ \[\exists ! y \in A \text{ s.t. } ||x-y|| = dist(x,A)\]
+		$y$ is called the best approximation or projection of $x$ in $A$.
+	\end{theorem}
+	\begin{theorem}[Characterisation of the bes approximation]
+		Let $X$ be an inner product space, $A\subset X$, $A\neq \varnothing$ and convex and $x\in X$. Then $y$ is the best approximation of $x$ in A iff \[\Re \langle x-y, z-y \rangle \leq 0\; \forall z \in A\]
+	\end{theorem}
+	\begin{definition}
+		Let $X$ be an inner product space, $A\subset X$, then \[A^\bot = \{x\in X: x\bot y \; \forall y \in A\}\] the orthogonal complement of $A$.
+	\end{definition}
+	\begin{remark}
+		$A^\bot$ is a closed subspace. If $(x_n)_{n \in \mathbb{N}} \subset A^\bot$, $x_n \to x$ in $X$, $\forall n \in \mathbb{N}$ we have $\langle x_n,y\rangle = 0 \; \forall y \in A$. Moreover $A\subset (A^\bot)^\bot$.
+	\end{remark}
+	\begin{theorem}
+		Let $X$ be a Hilbert space, $U\subset X$ closed subspace. Then \[\forall x \in X \; \exists ! u \in U \text{ s.t. } ||x-u|| = dist(x,U) = \inf_{z\in U} ||z-u||\]
+		We have $x-u \in U^\bot$ and $X = U \oplus U^\bot$, meaning that $x = u+v$, $u\in U, \; v \in U^\bot$ uniquely. The $u$ is called the orthogonal projection of x in $U$.
+	\end{theorem}
+	\begin{theorem}[Riesz-Fréchet]
+		Let $X \neq \{0\}$ be a Hilbert space. $\forall F \in X' \; \exists ! y \in X$ s.t. $F(x) = \langle x,y\rangle$. Moreover, $||F||_{X'} = ||y||_X$. Equivalently \[J: X \to X', \; (Jy)(x) = \langle x,y\rangle\] is a bijective, anti-linear isometry. In particular, if $X'$ is a Hilbert space, the dual is also a Hilbert space.
+	\end{theorem}
+	\subsection{Orthonormal systems}
+	Let $(X\langle\cdot , \cdot \rangle)$ be an inner product space. 
+	\begin{definition}
+		Let $I \neq \varnothing$ be an index set. A family of vectors $(e_k)_{k\in I} \subset X$ is called an orthonormal system (ONS) if \[\langle e_i,e_j\rangle = \delta_{i,j}\] 
+	\end{definition}
+	\begin{theorem}[Schmidt Orthogonalisation theorem]
+		Let $\{x_i: i \in I\} \subset X, I \subset \mathbb{N}$ be linearly independent vectors. Then $\exists$ ONS $\{e_i: i \in I\}$ s.t. \[span\{x_i: i \in I\} = span\{e_i: i \in I\}\]
+	\end{theorem}
+	\begin{lemma}[Bessel's inequality]
+		Let $\{e_1,...,e_n\}$ be an ONS. $Y = span\{e_1,...,e_n\}$. Then $\forall x \in X$ \[\inf_{y \in Y} ||x-y||^2 = ||x-\sum_{i=1}^n \langle x_i,e_i\rangle||^2 = ||x||^2 - \sum_{i=1}^n \left|\langle x_i, e_i\rangle\right|^2 \geq 0\]
+	\end{lemma}
+	\begin{definition}
+		If $I\subset \mathbb{N}$, $(e_n)_{n\in I}$ ONS, then $\langle x, e_n \angle$ is called the $n$-th Fourier coefficient. of $x$. W.r.t. $(e_n)_{n \in I}$.
+	\end{definition}
+	\begin{definition}
+		An ONS $(e_n)_{n\in \mathbb{N}}, \; I \subset \mathbb{N}$ is called complete in $X$ if \[\overline{span\{e_n: n \in I\}} = X\]
+	\end{definition}
+	\begin{theorem}
+		Any separable Hilbert space $X$ has a complete ONS.
+	\end{theorem}
+	\begin{lemma}
+		Let $X$ be a Hilbert space, $(e_n)_{n \in \mathbb{N}}$ an ONS. Then $\exists y \in X$ s.t. $y = \sum_{n \in \mathbb{N}} \langle x, e_n\rangle e_n$. 
+	\end{lemma}
+	\begin{theorem}
+		Let $X$ be a Hilbert space of infinite dimension, $(e_n)_{n\in \mathbb{N}}$ an orthonormal system. Then the following are equivalent. 
+		\begin{enumerate}
+			\item $(e_n)_{n\in \mathbb{N}}$ is complete
+			\item if $x \in X$ s.t. $\langle x, e_n \rangle = 0 \; \forall n \in \mathbb{N}$, then $x=0$
+			\item $\forall x \in X$, $x = \sum_{n=1}^\infty \langle x,e_n\rangle e_n$ (Fourier series of $x$)
+			\item $\forall x \in X$, $||x||^2 = \sum_{n=1}^\infty \left|\langle x,e_n\rangle\right|^2$. 
+		\end{enumerate}
+	\end{theorem}
+	\begin{corollary}
+		Any separable infinite-dimensional Hilbert space is isometrically isomorphic to $\ell^2$.
+	\end{corollary}
 \end{document}

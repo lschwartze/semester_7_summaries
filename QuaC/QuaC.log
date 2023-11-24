@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  16 NOV 2023 11:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  21 NOV 2023 11:34
 entering extended mode
 **./QuaC.tex
 (QuaC.tex
@@ -259,14 +259,23 @@ Overfull \hbox (68.45146pt too wide) in alignment at lines 240--243
  [][][] []
  []
 
-[12] (QuaC.aux) ) 
+
+Overfull \hbox (21.20999pt too wide) in paragraph at lines 250--251
+\OT1/cmr/bx/n/12 Definition 3.3 \OT1/cmr/m/n/12 (QSEARCH)\OT1/cmr/bx/n/12 . []\
+OT1/cmr/m/n/12 Sei $\OML/cmm/m/it/12 f \OT1/cmr/m/n/12 : \OMS/cmsy/m/n/12 f\OT1
+/cmr/m/n/12 0\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 1\OMS/cmsy/m/n/12 g[] ! f\OT1/c
+mr/m/n/12 0\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 1\OMS/cmsy/m/n/12 g[]$ \OT1/cmr/m
+/n/12 und sei $\OML/cmm/m/it/12 M \OT1/cmr/m/n/12 = []$.
+ []
+
+[12] [13] (QuaC.aux) ) 
 Here is how much of TeX's memory you used:
- 2891 strings out of 479322
- 39513 string characters out of 2856609
+ 2894 strings out of 479322
+ 39575 string characters out of 2856609
  361404 words of memory out of 3000000
- 20342 multiletter control sequences out of 15000+600000
+ 20345 multiletter control sequences out of 15000+600000
  412976 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  67i,13n,74p,1016b,212s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on QuaC.dvi (13 pages, 50432 bytes).
+Output written on QuaC.dvi (14 pages, 55984 bytes).

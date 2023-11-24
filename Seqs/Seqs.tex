@@ -177,4 +177,34 @@
 			\item Ist $LCP[k] > top_{-1}.lcp$, dann ist $top$ ein Kindintervall des ersten LCP-Intervall mit LCP-Wert $LCP[k]$, das $k$ enthält. Genauer gesagt, ist $top$ ein Kindintervall von $[top.lb, NSV[k]-1]$.
 		\end{itemize}
 	\end{theorem}
+	Im Folgenden wird eine Anwendung der Bottom-Up Traversierung von LCP-Intervall-Bäumen dargestellt. Diese können sich zum Beispiel hinter der Funktion \textit{process} im LCP-Intervall-Baum Algorithmus verstecken.
+	\begin{example}
+		\underline{Finde alle Teilstrings eines Strings $S$, die mindestens $p$ und höchstens $q$}\\\underline{mal in $S$ ($2\leq p \leq q$) vorkommen.}\\
+		Idee: Folgender Algorithmus \begin{enumerate}
+			\item process(lastIntervall)
+			\item for each $\langle l, i, j+1, []\rangle in lastInterval.childlist$
+			\item if $p \leq (j-i+1)$ and $q \geq (j-i+1)$
+			\item output $(lastInterval.lcp+1, l, [i,j])$
+		\end{enumerate}
+		Die Interpretation der Ausgabe ist zu verstehen als:\\
+		\underline{Verwende das Intervall $[i,j]$ und betrachte die Präfixe der Länge von $lcp+1$ bis $l$}. Wenn am Ende die Kindliste auf leer gesetzt wird, dann kann man zusätzlich verhindern, dass der gesamte Baum konstruiert wird.
+	\end{example}
+	\subsection{Suffix Tree}
+	Sei $S$ ein String der Länge $n$. Ein Suffix-Baum der Länge $S\$$ ist ein Wurzelbaum $ST(S\$)$ mit den folgenden Eigenschaften \begin{enumerate}
+		\item $ST$ hat $n+1$ viele Blätter nummeriert mit $1$ bis $n+1$.
+		\item Jeder innere Knoten hat mindestens zwei innere Knoten
+		\item Jede Kante hat als Kantenlabel einen nicht leeren Substring von $S\$$
+		\item Für jeden Knoten $\alpha$ und jedes $a \in \Sigma$ gibt es nur eine Kante mit $a\Rightarrow \beta$ mit Label $av$ für einen String $v$ und einen Knoten $\\begin
+		beta$ in ST
+		\item Für das Blatt $i$ ist die Konkatenation der Kantenlabels des Pfades zu $i$ genau der Suffix $S_i$.
+	\end{enumerate}
+	\subsection{Burrows-Wheeler Transformation}
+	Die Transformation konvertiert einen String der Länge $n$ in den String $BWT[1,n]$ definiert durch $BWT[i] = S[SA[i]-1]$ für alle $i$ mit $SA[i]\neq 1$ und $BWT[i] = \$$ sonst.
+	\begin{definition}
+		Ein Substring $w$ von $S$ ist ein Repeat, wenn er mindestens einmal in $S$ vorkommt. Wir definieren die Mengen
+		\[lc(w) = {BWT[k] | i \leq k \leq j}\]
+		\[rc(w) = {S[SA[k] + l] | i \leq k \leq j}\]
+	\end{definition} 
+	Ein Repeat ist supermaximal wenn \[\left|lc(w)\right| = \left|rc(w)\right| = occ(w)\]
+	Ein Repeat ist links-maximal, wenn $\left|lc(w)\right| \geq 2$ und rechts-maximal, wenn $\left|rc(w)\right| \geq 2$. Ein links- und rechts-maximaler Repeat ist maximal.
 \end{document}

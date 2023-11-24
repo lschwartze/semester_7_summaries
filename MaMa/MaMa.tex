@@ -279,12 +279,45 @@
 	\begin{lemma}
 		Let $g: \mathbb{R} \to \mathbb{R}$ be convex and let $x \to w^Tx+b$. Then $f: \mathbb{R}^n \to \mathbb{R}$ defined by $f(x) = g(w^Tx+b)$ is convex as well.
 	\end{lemma}
-	As a consequence from above lemma, $w \mapsto \log(1+e^{-yw°tx})$ is convex.
+	As a consequence from above lemma, $w \mapsto \log(1+e^{-yw^tx})$ is convex.
 	\begin{lemma}
 		Let $C\subset \mathbb{R}^n$ be a convex set, $f_1,...,f_n$ are convex functions from $C$ to $\mathbb{R}$ and weights $w_1,...,w_n \geq 0$, then \[f= \sum_{i=1}^n w_if_i\] is convex.
 	\end{lemma}
 	As a consequence from this lemma, the logistic loss function is convex.
 	\begin{lemma}
 		Let $I$ be some index set and $C$ be a convex set. Let $f_i: C \to \mathbb{R}$ be a family of convex functions. Then \[f:x\mapsto \sup_{i\in I} f_i(x)\] is a convex function.
+	\end{lemma}
+	\subsection{Strong convexity}
+	Let $f: K \to \mathbb{R}$ where $K$ is convex, $\mu>0$ $f$ is $\mu$-strongly convex if \[\frac{\mu}{2}\lambda(1-\lambda)||x-y||_2^2 + f(\lambda x + (1-\lambda)y) \leq \lambda f(x) + (1-\lambda)f(y) \; \forall x,y \in K, \; \lambda \in [0,1]\]
+	\begin{lemma}
+		The map $x\mapsto ||x||_2^2$ is 2-strongly convex.
+	\end{lemma}
+	\begin{lemma}
+		Let $f:K \to \mathbb{R}$ be convex and $g: K \mapsto \mathbb{R}$ $\mu$-strongly convex then \begin{enumerate}
+			\item $f+g$ is also strongly convex
+			\item $c\cdot g$ is $c\cdot \mu$-strongly convex for some $c > 0$.
+		\end{enumerate}
+	\end{lemma}
+	\begin{lemma}
+		Let $f:K \to \mathbb{R}$ be differentiable, $K \subseteq \mathbb{R}^n$ convex and open. Then $f$ is (strongly) convex iff \[f(y) \geq f(x) + \nabla f(x)^T(y-x) (+\frac{\mu}{2}||x-y||_2^2)\]
+	\end{lemma}
+	\subsection{gradient descent}
+	Suppose $\overline{x}$ is the output of the gradient descent to minimize a convex function $f$ where the global minimum is located at $x^*$. Then \[f(\overline{x}) - f(x^*) = \varepsilon\] where $\varepsilon \sim e^{-t}$. However in Machine Learning, where large datasets are regularly used, computing one gradient can take a very large amount of resources, hence we need another solution.\\
+	To compute the direction in which to iterate, pick $(x,y) \in S$ at random and use $\nabla L_{(x,y)}(w)$ which is in expectation the same value as the gradient in the normal gradient descent algorithm. This is called the stochastic gradient descent. Instead of computing \[\frac{1}{\left|S\right|} \sum_{(x,y) \in S} \nabla L_{(x,y)}(w)\] as in the classical gradient descent, we compute \[\frac{1}{\left|M\right|} \sum_{(x,y) \in M} \nabla L_{(x,y)}(w)\] for a small subset $M$ of $S$.
+	\subsection{convergence of stochastic gradient descent}
+	We make the following assumptions: \begin{itemize}
+		\item the loss function is differentiable
+		\item the loss function is $\mu$-strongly convex
+		\item $\sup_{w} ||\nabla L_{(x,y)}(w)||^2 \leq B$ for all $(x,y) \in S$.
+	\end{itemize}
+	The learning rate is defined by \[\eta_1 \geq \eta_2 \geq ... > 0 \text{ s.t. } \sum_{t=1}^\infty \eta_t = \infty \text{ but } \sum_{t=1}^\infty \eta_t^2 < \infty\]
+	\begin{theorem}
+		Under these assumptions \[\mathbb{E}_{1,...,t} [||w^{(t+1)} - w^*||_2^2] \to 0 \text{ as } t \to \infty\] where $w^*$ is the global minimum.
+	\end{theorem}
+	\begin{lemma}
+		Define $\varepsilon = \mathbb{E}_{1,...,t-1} [||w^{(t)} - w^*||_2^2]$. Then \[\varepsilon_t \leq \varepsilon_{t-1}(1-\eta_{t-1}\mu) + \eta_{t-1}^2B\]
+	\end{lemma}
+	\begin{lemma}
+		\[\varepsilon_{T'+k+1}\leq \varepsilon_{T'}\prod_{t=T'}^{T'+k}(1-\eta_t\mu) + \sum_{t=T'}^{T'+k}\eta_t^2B\]
 	\end{lemma}
 \end{document}

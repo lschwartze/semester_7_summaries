@@ -11,3 +11,6 @@
 \contentsline {subsection}{\numberline {2.3}Simon's Algorithmus}{8}{}%
 \contentsline {section}{\numberline {3}Suchalgorithmus von Grover}{9}{}%
 \contentsline {subsection}{\numberline {3.1}Untere Schranke für den Grover-Suchalgorithmus}{11}{}%
+\contentsline {subsection}{\numberline {3.2}Anwendungen vom Grover-Algorithmus}{12}{}%
+\contentsline {subsubsection}{\numberline {3.2.1}Minimumsproblem}{12}{}%
+\contentsline {subsubsection}{\numberline {3.2.2}Untere Schranke}{13}{}%

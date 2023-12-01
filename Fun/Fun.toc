@@ -1,28 +1,33 @@
 \babel@toc {english}{}
-\contentsline {section}{\numberline {1}metric spaces}{2}{}%
-\contentsline {subsection}{\numberline {1.1}metric spaces}{2}{}%
-\contentsline {subsection}{\numberline {1.2}Topology in metric spaces}{2}{}%
-\contentsline {subsection}{\numberline {1.3}separability and completion}{4}{}%
-\contentsline {subsection}{\numberline {1.4}Continuity}{4}{}%
-\contentsline {subsection}{\numberline {1.5}Compact sets}{5}{}%
-\contentsline {subsection}{\numberline {1.6}Theorem of Baire}{6}{}%
-\contentsline {section}{\numberline {2}Normal spaces and Banach spaces}{6}{}%
-\contentsline {subsection}{\numberline {2.1}definitions}{7}{}%
-\contentsline {subsection}{\numberline {2.2}Example: $l^p$-spaces}{7}{}%
-\contentsline {subsection}{\numberline {2.3}Finite dimensional normed spaces}{8}{}%
-\contentsline {subsection}{\numberline {2.4}On the closure of $\overline {B_1(0)}$}{8}{}%
-\contentsline {section}{\numberline {3}A question from approximation theory}{9}{}%
-\contentsline {subsection}{\numberline {3.1}Theorem of Stone-Weierstrass}{9}{}%
-\contentsline {subsection}{\numberline {3.2}Applications}{10}{}%
-\contentsline {section}{\numberline {4}Continuous linear maps}{11}{}%
-\contentsline {subsection}{\numberline {4.1}Continuity of linear maps}{11}{}%
-\contentsline {subsection}{\numberline {4.2}Operatornorm and dual space}{12}{}%
-\contentsline {subsection}{\numberline {4.3}Neumann series}{12}{}%
-\contentsline {subsection}{\numberline {4.4}The dual space of $l^p$}{13}{}%
-\contentsline {section}{\numberline {5}Theorem of Hahn-Banach}{13}{}%
-\contentsline {subsection}{\numberline {5.1}Extension Theorem}{14}{}%
-\contentsline {subsection}{\numberline {5.2}Separation Theorems}{15}{}%
-\contentsline {section}{\numberline {6}Hilbert Spaces}{16}{}%
-\contentsline {subsection}{\numberline {6.1}Inner product space}{16}{}%
-\contentsline {subsection}{\numberline {6.2}Hilbert spaces}{16}{}%
-\contentsline {subsection}{\numberline {6.3}Orthonormal systems}{17}{}%
+\contentsline {section}{\numberline {1}metric spaces}{3}{}%
+\contentsline {subsection}{\numberline {1.1}metric spaces}{3}{}%
+\contentsline {subsection}{\numberline {1.2}Topology in metric spaces}{3}{}%
+\contentsline {subsection}{\numberline {1.3}separability and completion}{5}{}%
+\contentsline {subsection}{\numberline {1.4}Continuity}{5}{}%
+\contentsline {subsection}{\numberline {1.5}Compact sets}{6}{}%
+\contentsline {subsection}{\numberline {1.6}Theorem of Baire}{7}{}%
+\contentsline {section}{\numberline {2}Normal spaces and Banach spaces}{7}{}%
+\contentsline {subsection}{\numberline {2.1}definitions}{8}{}%
+\contentsline {subsection}{\numberline {2.2}Example: $l^p$-spaces}{8}{}%
+\contentsline {subsection}{\numberline {2.3}Finite dimensional normed spaces}{9}{}%
+\contentsline {subsection}{\numberline {2.4}On the closure of $\overline {B_1(0)}$}{9}{}%
+\contentsline {section}{\numberline {3}A question from approximation theory}{10}{}%
+\contentsline {subsection}{\numberline {3.1}Theorem of Stone-Weierstrass}{10}{}%
+\contentsline {subsection}{\numberline {3.2}Applications}{11}{}%
+\contentsline {section}{\numberline {4}Continuous linear maps}{12}{}%
+\contentsline {subsection}{\numberline {4.1}Continuity of linear maps}{12}{}%
+\contentsline {subsection}{\numberline {4.2}Operatornorm and dual space}{13}{}%
+\contentsline {subsection}{\numberline {4.3}Neumann series}{13}{}%
+\contentsline {subsection}{\numberline {4.4}The dual space of $l^p$}{14}{}%
+\contentsline {section}{\numberline {5}Theorem of Hahn-Banach}{14}{}%
+\contentsline {subsection}{\numberline {5.1}Extension Theorem}{15}{}%
+\contentsline {subsection}{\numberline {5.2}Separation Theorems}{16}{}%
+\contentsline {section}{\numberline {6}Hilbert Spaces}{17}{}%
+\contentsline {subsection}{\numberline {6.1}Inner product space}{17}{}%
+\contentsline {subsection}{\numberline {6.2}Hilbert spaces}{17}{}%
+\contentsline {subsection}{\numberline {6.3}Orthonormal systems}{18}{}%
+\contentsline {section}{\numberline {7}Spectral theorem for self-adjoint compact operators}{19}{}%
+\contentsline {subsection}{\numberline {7.1}Adjoint in Hilbert spaces}{20}{}%
+\contentsline {subsection}{\numberline {7.2}compact operators}{20}{}%
+\contentsline {subsection}{\numberline {7.3}Spectrum}{21}{}%
+\contentsline {subsection}{\numberline {7.4}Spectral theorem for self-adjoint compact operators}{22}{}%

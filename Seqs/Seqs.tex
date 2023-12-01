@@ -202,9 +202,40 @@
 	Die Transformation konvertiert einen String der Länge $n$ in den String $BWT[1,n]$ definiert durch $BWT[i] = S[SA[i]-1]$ für alle $i$ mit $SA[i]\neq 1$ und $BWT[i] = \$$ sonst.
 	\begin{definition}
 		Ein Substring $w$ von $S$ ist ein Repeat, wenn er mindestens einmal in $S$ vorkommt. Wir definieren die Mengen
-		\[lc(w) = {BWT[k] | i \leq k \leq j}\]
-		\[rc(w) = {S[SA[k] + l] | i \leq k \leq j}\]
+		\[lc(w) = \{BWT[k] | i \leq k \leq j\}\]
+		\[rc(w) = \{S[SA[k] + l] | i \leq k \leq j\}\]
 	\end{definition} 
 	Ein Repeat ist supermaximal wenn \[\left|lc(w)\right| = \left|rc(w)\right| = occ(w)\]
-	Ein Repeat ist links-maximal, wenn $\left|lc(w)\right| \geq 2$ und rechts-maximal, wenn $\left|rc(w)\right| \geq 2$. Ein links- und rechts-maximaler Repeat ist maximal.
+	Mithilfe der bottom-up Traversierung soll nun ein Algorithmus entwickelt werden, der alle supermaximalen Repeats bestimmt. Es fällt auf, dass der rc-Wert für den durch ein LCP-Intervall bestimmten Substring gleich occ ist, wenn das LCP-Intervall kein Kind hat. Der lc Wert kann ganz leicht mit einer Hashmap auf die Buchstaben mit occ verglichen werden.
+	\begin{definition}
+		Ein Repeat ist links-maximal, wenn $\left|lc(w)\right| \geq 2$ und rechts-maximal, wenn $\left|rc(w)\right| \geq 2$. Ein links- und rechts-maximaler Repeat ist maximal.\\
+	\end{definition}
+	\begin{lemma}
+		Jeder rechts-maximale Repeat korrespondiert zu einem LCP-Intervall.
+	\end{lemma}
+	Wenn maximale Repeats gesucht werden, so ist die Rechts-Maximalität bereits gegeben. Die Links-Maximalität ist noch leichter. Um lineare Laufzeit zu gewinnen, muss die Links-Maximalität der Kindintervalle an die Elternintervalle weitergegeben werden.\\
+	Speichere die größte Position lastdiff mit $1\leq lastdiff \leq i-1$ an der ein Buchstabe in $BWT[1...i-1]$ festgestellt wurde, d.h. \[BWT[lastdiff-1] \neq BWT[lastdiff]\]
+	\begin{lemma}[Berechnung des längsten Repeats]
+		Um den längsten Repeat zu bestimmen, genügt es, einmal über die LCP Tabelle zu iterieren und den maximalen LCP Wert zu bestimmen. Es wird der String ausgegeben, der an der Stelle des Maximums mit der Länge des LCP Werts steht. Es kann in konstanter Zeit darauf geachtet werden, dass jeder Repeat nur einmal ausgegeben wird.
+	\end{lemma}
+	\subsection{De Bruijn Sequenzen}
+	\begin{definition}
+		Eine De Bruijn Sequenz der Ordnung $k$ ist ein zyklischer String, der jedes String aus $\Sigma^k$ genau einmal enthält. Zyklisch bedeutet hierbei, dass der Teilstring am Ende beginnen und am Anfang enden kann. Ein zyklischer De Bruijn String kann in einen nicht zyklischen String konvertiert werden, indem die ersten $k-1$ Zeichen wieder am Ende angehängt werden.
+	\end{definition}
+	\begin{definition}[De Bruijn Graph]
+		Der De Bruijn Graph für $k$ über das Alphabet $\Sigma$ enthält einen Knoten für jeden String aus $\Sigma^{k-1}$. Eine gerichtete Kante $(u,v)$ existiert genau dann, wenn es einen String $w \in \Sigma^k$ sodass $u$ ein Präfix und $v$ ein Suffix von $w$ ist. Von jedem Knoten gehen genau $\left|\Sigma\right|$ Kanten aus.
+	\end{definition}
+	Eine lineare De Bruijn Sequenz hat Länge $n=\left|\Sigma\right|^k+k-1$ und der maximale LCP Wert $m$ wird an mehreren Stellen in der LCP Tabelle angenommen. 
+	\begin{lemma}
+		Die gesamte Ausgabelänge des Algorithmus zu Berechnung aller längsten Repeats für eine De Bruijn Sequenz $S$ der Ordnung $k$ ist $\Omega(n\log n)$, wobei $n = 2^k+k-1$.
+	\end{lemma}
+\section{komprimierte Ganztext Indizes}
+	\subsection{Burrows-Wheeler Transformation}
+	Die BWT für einen String $S$ entsteht aus einer Rotationmatrix des Strings. Dafür wird in Zeile 1 $S$ geschrieben, in Zeile 2 der Suffix $S_2$ gefolgt von $S[1]$ und so weiter.\\
+	Anschließend werden die Zeilen lexikografisch sortiert. Die letzte Spalte $L$ dieser Matrix ist die BWT. Das Problem dieser Konstruktion ist, dass die Laufzeit super-linear ist.
+	\begin{definition}
+		Sei $L$ wie oben die letzte Spalte und $F$ die erste.
+		Die Funktion $LF$: $\{1,...,n\} \to \{1,...,n\}$ ist wie folgt definiert:\\
+		Ist $L[i] = c$ ist die $k$-te Wiederholung des Characters $c$, dann wird $LF(i)$ auf das $j$ gesetzt, wo in Spalte $F$ die $k$-te Wiederholung von $c$ steht. Um die Stelligkeit des Buchstabens a priori zu wissen, und die Laufzeit linear zu halten, wird das C-Array erstellt. Das C-Array enthält an der Stelle des Buchstaben $c$ die Anzahl aller Buchstaben in der $F$-Spalte, die kleiner sind, als $c$.
+	\end{definition}
 \end{document}

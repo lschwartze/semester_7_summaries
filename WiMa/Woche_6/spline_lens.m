@@ -16,7 +16,7 @@ classdef spline_lens < general_lens
             obj.Points = sortMatrix(:,2:end-1);
             obj.kind = kind;
             obj.param = param(:);
-            obj.Coeffs = obj.coeffSpline;
+            obj.Coeffs = obj.coeffSpline();
             obj.draw_lens()
         end
         

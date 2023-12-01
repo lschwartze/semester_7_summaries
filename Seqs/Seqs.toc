@@ -8,3 +8,6 @@
 \contentsline {subsection}{\numberline {1.4}Bottom-up Konstruktion des LCP-Baums}{7}{}%
 \contentsline {subsection}{\numberline {1.5}Suffix Tree}{8}{}%
 \contentsline {subsection}{\numberline {1.6}Burrows-Wheeler Transformation}{8}{}%
+\contentsline {subsection}{\numberline {1.7}De Bruijn Sequenzen}{9}{}%
+\contentsline {section}{\numberline {2}komprimierte Ganztext Indizes}{10}{}%
+\contentsline {subsection}{\numberline {2.1}Burrows-Wheeler Transformation}{10}{}%

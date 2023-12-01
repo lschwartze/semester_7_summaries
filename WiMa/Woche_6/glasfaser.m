@@ -20,10 +20,10 @@ param = [1;1];
 x_values = linspace(0,1,10); 
 y_values = rand(1,10)./10 + 0.5-cable_width;
 Points = [x_values; y_values];
-lower_lens = spline_lens(Points,kind,param,"fibre");
+lower_lens = spline_lens(Points,kind,param,"fibre",1,5);
 y_values = y_values+cable_width;
 Points = [fliplr(x_values); fliplr(y_values)];
-upper_lens = spline_lens(Points,kind,param,"fibre");
+upper_lens = spline_lens(Points,kind,param,"fibre",1,5);
 fibre = [upper_lens; lower_lens];
 lenses = [lower_lens;upper_lens];
 

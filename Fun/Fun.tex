@@ -562,4 +562,94 @@
 	\begin{corollary}
 		Any separable infinite-dimensional Hilbert space is isometrically isomorphic to $\ell^2$.
 	\end{corollary}
+	\section{Spectral theorem for self-adjoint compact operators}
+	We only deal with Hilbert spaces.
+	\subsection{Adjoint in Hilbert spaces}
+	Let $(X,\langle\cdot, \cdot \rangle)$, $(Y,\langle\cdot, \cdot \rangle)$, $T \in L(X,Y)$. Let $y \in Y$. Consider the map \[X\ni x \mapsto \langle Tx,y\rangle_Y\] 
+	This map is linear and bounded.\[\left|\langle Tx,y\rangle_Y\right| \overset{CS}{\leq} ||Tx||_Y||y||_Y \leq ||T||||x||_X||y||_Y\] Thus it is an element of $X'$. By the theorem of Riesz-Fréchet \[\exists! T^*y \in X \text{ s.t. } \langle x,T^*y\rangle_X= \langle Tx,y\rangle_Y \; \forall x \in X\]
+	This defines a map $T^*: Y \to X$ with $y \mapsto T^*y$.
+	\begin{definition}
+		$T^*$ is the Hilbert space adjoint of $T$. 
+	\end{definition}
+	\begin{lemma}
+		$T^* \in L(Y,X)$ and $||T^*|| = ||T||$. 
+	\end{lemma}
+	\begin{lemma}
+		Let $(X,\langle\cdot ,\cdot \rangle_X)$, $(Y, \langle \cdot , \cdot \rangle_Y)$, $(Z,\langle \cdot, \cdot \rangle_Z)$ be Hilbert spaces. Let $T \in L(X,y)$, $S \in L(Y,Z)$ and $\lambda \in \mathbb{K}$. Then \begin{enumerate}
+			\item $(S\circ T)^* = T^*S^*$
+			\item $(\lambda T)^* = \overline{\lambda}T^*$
+			\item $(T^*)^* = T$ 
+		\end{enumerate}
+	\end{lemma}
+	\begin{definition}
+		Let $(X,\langle\cdot ,\cdot \rangle_X)$ be a Hilbert space  and $T\in L(X)$. $T$ is called self-adjoint if $T^* = T$
+	\end{definition}
+	\begin{lemma}
+		\begin{itemize}
+			\item If $\mathbb{K} = \mathbb{C}$, $T$ is self-adjoint $\Leftrightarrow \langle Tx,x\rangle_X \in \mathbb{R} \; \forall x \in X$
+			\item If $T$ is self-adjoint, then $||T|| = \sup_{x \in X, ||x||_X=1} \left|\langle Tx, x\rangle\right|$ 
+		\end{itemize}
+	\end{lemma}
+	\subsection{compact operators}
+	Here $X$, $Y$ can be only Banach spaces and $X,Y \neq \{0\}$.
+	\begin{definition}
+		$f: X \to Y$ is compact if f maps bounded sets in precompact sets.
+	\end{definition}
+	\begin{lemma}
+		Let $T: X \to Y$ be linear. Then $T$ is compact iff $T(B_1(0))$ is precompact in $Y$.
+	\end{lemma}
+	\noindent\textbf{Notation:} $K(X,Y) = \{T: X \to Y $ linear and compact$\}$ and $K(X) = K(X,X)$.
+	\begin{remark}
+		$T \in K(X,Y) \Rightarrow T \in L(X,Y)$.
+	\end{remark}
+	\begin{lemma}
+		\begin{enumerate}
+			\item $T \in L(X,Y)$, $S\in L(Y,Z)$. If $T$ or $S$ is compact, then the composition is compact.
+			\item $K(X,Y)$ is a closed subspace of $L(X,Y)$. In particular $K(X,Y)$ is a Banach space.
+		\end{enumerate}
+	\end{lemma}
+	\begin{definition}
+		\begin{itemize}
+			\item Let $H$ be a Hilbert space and $T\in L(X)$. Then $T$ is called self-adjoint if \[\langle Tx,y\rangle = \langle x,Ty\rangle \; \forall x,y \in X\]
+			\item Let $X,Y$ be Banach spaces then, $T\in L(X,Y)$ compact $\Leftrightarrow T(B_1(0))$ is precompact.
+		\end{itemize}
+	\end{definition}
+	\begin{lemma}
+		$T\in L(X,Y)$ is compact iff $\forall (x_n)_{n\in \mathbb{N}} \subset X$ bounded $(T(x_n))_{n\in \mathbb{N}}$ admits a convergent subsequence.
+	\end{lemma}
+	\subsection{Spectrum}
+	Let $X$ be a Banach space.
+	\begin{definition}
+		Let $T\in L(X)$. \begin{itemize}
+			\item the resolvent set of $T$ is \[\rho(T) = \{\lambda \in \mathbb{K}: (\lambda \cdot Id - T)^{-1}\in L(X)\}\subset \mathbb{K}\]
+			while $\sigma(T) = \mathbb{K}\setminus \rho(T)$ is the spectrum of $T$.
+			\item the resolvent map $R: \rho(T) to L(X)$ is defined by $\lambda \mapsto (\lambda Id - T)^{-1}$
+			\item the spectrum of $T$ is divided into \[\sigma(T) = \sigma_p(T)\cup \sigma_C(T) \cup \sigma_r(T)\] where \begin{itemize}
+				\item $\sigma_P(T) = \{\lambda \in \sigma(T): \ker (\lambda Id - T) \neq \{0\}\}$ is the point spectrum
+				\item $\sigma_C(T) = \{\lambda \in \sigma(T)\setminus \sigma_P(T): Im (\lambda Id- T) \neq X \text{ but } \overline{Im (\lambda Id - T)} = X\}$
+				\item $\sigma_r(T) = \sigma(T) \setminus (\sigma_P(T) \cup \sigma_C(T))$.
+			\end{itemize}
+		\item the elements of the point spectrum are called eigenvalues and $x \in X\setminus \{0\}: (I\lambda Id - T)(x) = 0$ is called eigenvector associated ot $\lambda$.
+		\end{itemize}
+	\end{definition}
+	\begin{theorem}
+		For $T\in L(X)$ \begin{enumerate}
+			\item $\rho(T)$ is open.
+			\item $\sigma(T)$ is compact and \[\sup_{\lambda \in \sigma(T)} \left|\lambda\right| \leq \lim_{m \to \infty} ||T^m||^{\frac{1}{m}} = r(T)\] is the spectral radius. In particular $r(T) \leq ||T||$
+		\end{enumerate}
+	\end{theorem}
+	\subsection{Spectral theorem for self-adjoint compact operators}
+	Let $X$ be a Hilbert space.
+	\begin{lemma}
+		Let $T \in K(X)$ self-adjoint. Then $||T||$ or $-||T||$ is an eigenvalue of $T$. 
+	\end{lemma}
+	\begin{lemma}
+		Let $T \in L(X)$ be self-adjoint. Then all eigenvalues are real and eigenvectors corresponding to different eigenvalues are orthogonal.
+	\end{lemma}
+	\begin{lemma}
+		Let $T \in L(X)$. If $M \subset X$ is a closed subspace s.t. $TM\subset M$, then $M^\bot$ is invariant under $T^*$.
+	\end{lemma}
+	\begin{theorem}
+		Let $X$ be a Hilbert space, $T\in K(X)$ self-adjoint. Then $\exists (\phi_n)_{n \in I} \subset X, \; I\subset \mathbb{N}, \text{ ONS and } \exists (\lambda_n)_{n \in I} \subset \mathbb{R}$ s.t. $\forall x \in X$ \[Tx = \sum_{n \in I} \lambda_n \langle x, \phi_n\rangle \phi_n\] In particular $T\phi_n = \lambda_n \phi_n \; \forall n \in \mathbb{N}$. If $I$ is infinite, then $\lambda_n \to 0$.
+	\end{theorem}
 \end{document}

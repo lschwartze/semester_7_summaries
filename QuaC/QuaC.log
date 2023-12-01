@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  21 NOV 2023 11:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  30 NOV 2023 11:37
 entering extended mode
 **./QuaC.tex
 (QuaC.tex
@@ -268,14 +268,26 @@ mr/m/n/12 0\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 1\OMS/cmsy/m/n/12 g[]$ \OT1/cmr/m
 /n/12 und sei $\OML/cmm/m/it/12 M \OT1/cmr/m/n/12 = []$.
  []
 
-[12] [13] (QuaC.aux) ) 
+[12] [13] [14]
+Underfull \hbox (badness 10000) in paragraph at lines 300--301
+
+ []
+
+[15]
+Overfull \hbox (1.19432pt too wide) in paragraph at lines 311--312
+[]\OT1/cmr/m/n/12 Dieser Al-go-rith-mus findet einen Fak-tor mit Wahrschein-lic
+hkeit $\OMS/cmsy/m/n/12  []$\OT1/cmr/m/n/12 , durch $\OML/cmm/m/it/12 k$\OT1/c
+mr/m/n/12 -fache Wieder-
+ []
+
+[16] [17] (QuaC.aux) ) 
 Here is how much of TeX's memory you used:
- 2894 strings out of 479322
- 39575 string characters out of 2856609
+ 2898 strings out of 479322
+ 39613 string characters out of 2856609
  361404 words of memory out of 3000000
- 20345 multiletter control sequences out of 15000+600000
- 412976 words of font info for 64 fonts, out of 8000000 for 9000
+ 20347 multiletter control sequences out of 15000+600000
+ 413677 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  67i,13n,74p,1016b,212s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on QuaC.dvi (14 pages, 55984 bytes).
+Output written on QuaC.dvi (18 pages, 71280 bytes).

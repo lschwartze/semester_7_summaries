@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  21 NOV 2023 15:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  1 DEC 2023 11:38
 entering extended mode
 **./Seqs.tex
 (Seqs.tex
@@ -246,7 +246,18 @@ OML/cmm/m/it/12 n$ \OT1/cmr/m/n/12 in den String $\OML/cmm/m/it/12 BWT\OT1/cmr/
 m/n/12 [1\OML/cmm/m/it/12 ; n\OT1/cmr/m/n/12 ]$ definiert
  []
 
-[8] (Seqs.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 211--212
+
+ []
+
+[8]
+Overfull \hbox (5.91763pt too wide) in paragraph at lines 216--217
+[][]\OT1/cmr/m/n/12 Wenn max-i-male Re-peats gesucht wer-den, so ist die Rechts
+-Maximalitat bere-its gegeben.
+ []
+
+[9] [10] (Seqs.aux) ) 
 Here is how much of TeX's memory you used:
  2896 strings out of 479322
  39594 string characters out of 2856609
@@ -256,4 +267,4 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  67i,7n,74p,984b,301s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Seqs.dvi (9 pages, 29160 bytes).
+Output written on Seqs.dvi (11 pages, 36280 bytes).

@@ -261,7 +261,7 @@
 		\item REPEAT
 		\item $|\Phi\rangle := (H_n|0^n\rangle) |y\rangle|1\rangle$
 		\item $QSEARCH(g_y(x))$
-		\item $y'$ = MEssung der ersten $n$ Register
+		\item $y'$ = Messung der ersten $n$ Register
 		\item IF $f(y') < f(y)$ THEN $y=y'$
 		\item t=t+1
 		\item UNTIL $t>l$
@@ -278,4 +278,43 @@
 	Sei $g:\{0,...,N-1\} \to \{0,...,2N-1\}$ und $g(i) = i+N(1-f(i))$ wobei $f: \{0,...,N-1\} \to \{0,1\}$. Falls $\forall x$, $f(x) = 0 \Leftrightarrow g(i) = i+N$. Falls $\exists x$, $f(x) = 1$, dann $g(x) = x$. Es gilt \[\min g(x) \geq N \Leftrightarrow \; \forall x\; f(x) = 0\] und \[\min g(x) < N \Leftrightarrow \exists x:\; f(x) = 1\] Würde nun ein Algorithmus existieren, der weniger als $\Omega(\sqrt{N})$ Laufzeit benötigt, dann könnte Grover's Algorithmus genauso verbessert werden, was nicht möglich ist.
 	\subsubsection{Element Distinctness}
 	Sei $f: \{0,...,N-1\} \to \{0,...,M-1\}$ mit $M>N$. Das Problem ist, zu bestimmen, ob $f$ injektiv ist.
+	\section{Shor Algorithmus}
+	\subsection{Diskrete Fourier Transformation}
+	Ein Vektor $(x_0,...,x_{N-1})$ wird durch DFT transformiert auf $(y_0,...,y_{n-1})$ wobei \[y_j = \sum_{k=0}^{N-1} \exp\left(\frac{2\pi ijk}{N}\right)x_k = \sum_{k=0}^{N-1} x_k(w_{k,N})^j\] wobei definiert wird \[\exp\left(\frac{2\pi ik}{N}\right):= w_{k,N}\]
+	Mit $\exp\left(\theta i\right) = \cos(\theta) + i \sin(\theta)$ kann die Darstellung weiter vereinfacht werden. Die Transformation kann auf eine Matrixmultiplikation zurückgeführt werden. Mit der Fast Fourier Transformation (FFT) kann diese in $\mathcal{O}(N\log N)$ Zeit ausgeführt werden.
+	\subsection{Quantum Fourier Transformation}
+	Diese ist definiert durch \[|j\rangle \overset{QFT}{\to} \frac{1}{\sqrt{N}}\sum_{k=0}^{N-1}(w_{k,N})^j|k\rangle\] Insbesondere \[\sum_{j=0}^{N-1} x_j|j\rangle \overset{QFT}{\to} \frac{1}{\sqrt{N}} \sum_{j=0}^{N-1}x_j\sum_{k=0}^{N-1} (w_{k,N})^j|j\rangle = \frac{1}{\sqrt{N}}\sum_{k=0}^{N-1}\sum_{j=0}^{N-1}x_j(w_{k,N})^j|x\rangle = \frac{1}{\sqrt{N}} \sum_{k=0}^{N-1} y_k |k\rangle\]
+	Diese kann man wieder als Matrix $F_{N\times N}$ schreiben, wobei \[(F_{N\times N})_{a,b} = \frac{1}{\sqrt{N}}(w_{1,N})^{ab}\]
+	Diese kann in kleinere Matrizen zerlegt werden. Dafür schreiben wir \[|j\rangle = |j_1,...,j_N\rangle \; j_i \in \{0,1\}\]
+	Die Darstellung als Quantenschaltkreis ist kompliziert. Wir schreiben \[b(0.j_l...,j_N) = \sum_k=l^{N}j_k\frac{1}{2^{k-l+1}}\] und bemerken $b(0.j_1...j_N) = j$. Die QFT kann nun geschrieben werden als \[QFT(|j\rangle) = \frac{1}{\sqrt{N}}(|0\rangle + e^{2\pi i b(0.j_N)}|1\rangle)(|0\rangle + e^{2\pi i b(0.j_{N-1}j_N)}|1\rangle) ... (|0\rangle + e^{2\pi i b(0.j_1...j_N)}|1\rangle)\]
+	\subsection{Algorithmus für die Faktorisierung}
+	Sei $N \in \mathbb{N}$ teilbar. Gesucht sind $x \in \mathbb{N}\setminus\{1,N\}$ sodass $x|N$. Die besten klassischen Algorithmen brauchen $\mathcal{O}(2^{\left|N\right|})$, wobei $\left|N\right|$ die Anzahl der Bits von $N$ ist, d.h. $\left|N\right| \sim \log N$. Dieses Problem ist Grundlage für viele andere Probleme, so zu, Beispiel das Ordnungsproblem: \begin{definition}[Ordnungsproblem]
+		Gegeben $Y, N \in \mathbb{N}$, $Y<N$ und $ggT(Y,N) = 1$. Finde \[\arg\min_r \{Y^r \equiv 1 \mod N\}\] So ein $r$ muss existiert immer, denn $Y$ und $N$ sind teilerfremd.
+	\end{definition}
+	\begin{lemma}
+		Sei $N\in \mathbb{N}$ teilbar. Falls $\exists x$ sodass $x^2 \equiv 1 \mod N$ und $x \not\equiv 1 \mod N$ und $x \not \equiv -1 \mod N$, dann $ggT(x,N) \neq 1$ und $ggT(x,N) \neq N$.
+	\end{lemma}
+	\begin{lemma}
+		Sei $N = p_1^{e^1}p_2^{e_2}...p_m^{e_m}$ die Primfaktorzerlegung von $N$. Im Allgemeinen können wir annehmen $N\neq 2$. Definiere $r_Y$ als die Ordnung $ord(Y,N)$ eines Elementes $Y$. Unter Gleichverteilung wähle der Elemente $Y$ mit $ggT(Y,N) = 1$ gilt \[\mathbb{P}[r_Y \text{ gerade und } Y^{\frac{r_Y}{2}} \not \equiv \pm 1 \mod N] \geq 1-2^{-m} \geq \frac{1}{2}\]
+	\end{lemma}
+	Auf dieser Basis kann ein Algorithmus für die Faktorisierung gefunden werden:\\
+	\begin{enumerate}
+		\item Eingabe $N$
+		\item Ausgabe Faktor von $N$ oder ? falls keiner existiert
+		\item IF $N$ gerade Then Ausgabe 2
+		\item ELSE WÄHLE $y \in _R [3,...,N-1]$
+		\item IF $ggT(N,Y) > 1$ Then Ausgabe 
+		\item ELSE $r_Y = ord(Y,N)$
+		\item IF $r_Y$ gerade und $y^{\frac{r_Y}{2}} \not \equiv \pm 1 \mod N$ Then Ausgabe $ggT(N, y^\frac{r_Y}{2}+1)$
+		\item ELSE Ausgabe ?
+	\end{enumerate}
+	Dieser Algorithmus findet einen Faktor mit Wahrscheinlichkeit $\geq \frac{1}{2}$, durch $k$-fache Wiederholung kann die Fehlerwahrscheinlichkeit klein gemacht werden.
+	\subsection{Algorithmus für das Ordnungsproblem}
+	Gegeben $Y,N$ mit $ggT(Y,N) = 1$. Es sei $Q>>N$ (z.B. $Q = N^2$), $n = \left|N\right|$ und $q = \left|Q\right|$ Als Eingabe fungieren zwei Register $|0^q\rangle$ und $|0^n\rangle$. Nun wird \begin{enumerate}
+		\item Fourier Transformation auf das erste Register angewandt, dann erhält man \[\frac{1}{\sqrt{Q}}\sum_{k=0}^{Q-1}|k\rangle |0^n\rangle\] Das ist eigentlich eine Hadamard Transformation
+		\item die modulare Potenzfunktion $f_{Y,N}(k) = Y^k \mod N$ auf Register 2 berechnet \[\frac{1}{\sqrt{Q}} \sum_{k=0}^{Q-1} |k\rangle |Y^k \mod N\rangle\]
+		\item eine Messung auf dem zweiten Register durchgeführt. \[\frac{1}{\sqrt{A}}\sum_{j=0}^{A-1}|jr+k_0\rangle |Y^{k_0} \mod N\rangle \] für $A=\frac{Q}{r}$. Wenn $r$ die Ordnung ist, dann gibt es nämlich $r$ unterschiedliche Werte für $Y^k\mod N$.
+		\item QFT auf dem ersten Register angewandt. \[\frac{1}{\sqrt{Q}}\sum_{l=0}^{Q-1} \left(\frac{1}{\sqrt{A}} \sum_{j=0}^{A-1} e^{\frac{2\pi i(jr+k_0)l}{Q}}|l\rangle |Y^k \mod N\rangle\right)\]
+		\item eine Messung auf dem ersten Register ausgeführt. Dadurch erhält man ein $l$ mit Wahrscheinlichkeit \[\left|\frac{1}{\sqrt{QA}}\sum_{j=0}^{A-1} e^{\frac{2\pi i(jr+k_0)l}{Q}}\right|^2 = \frac{1}{QA}\left|e^{\frac{2\pi i k_0 l}{Q}} \sum_{j=0}^{A-1} e^\frac{2\pi i j r l}{Q}\right|^2 = \frac{1}{QA}\left|\sum_{j=0}^{A-1} e^\frac{2\pi i j r l}{Q}\right|^2\] weil $$\left|e^{\frac{2\pi i k_0 l}{Q}}\right|^2 = \left(\cos^2\theta + \sin^2 \theta\right)^2 = 1$$
+	\end{enumerate}
 \end{document}

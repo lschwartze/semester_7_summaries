@@ -51,7 +51,6 @@ while true
                 Points = [Points, [x;y]];
                 plot(x,y,"b+")
         else
-
             switch mod(num_of_input_points,2)
                 % first lens point
                 case 0

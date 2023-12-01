@@ -320,4 +320,25 @@
 	\begin{lemma}
 		\[\varepsilon_{T'+k+1}\leq \varepsilon_{T'}\prod_{t=T'}^{T'+k}(1-\eta_t\mu) + \sum_{t=T'}^{T'+k}\eta_t^2B\]
 	\end{lemma}
+	\section{neural networks}
+	\subsection{back propagation}
+	We now introduce a method to train a neural network with SGD.\\
+	For that we define a matrix $W$ which collects all weights and biases. Assume we have $K$ layers. At the input we have $x \in \mathbb{R}^{n_0}$. The first layer produces \[g^{(1)}(x) = W^{(1)}x+b^{(1)}\] but the output of the first hidden layer is \[f^{(1)}(x) = \sigma_1(g^{(1)}(x))\] where $\sigma$ is the activation function, which is ReLU for the hidden layer and the logistic loss function for the output. This is easily generalized for the $l$-th hidden layer. We generally prefer the notation $g^{(k)} = w^{(k)}f^{(k-1)} + b^{(k)}$ because the $x$-term is always the same, so we omit it. We generally define the dimension of the $k$-th layer by $n_k$. In particular $n_K = 1$. We need to compute the values of \[\frac{\partial L_{(x,y)}}{\partial w^{(k)}_{i,h}} \text{ and } \frac{\partial L_{(x,y)}}{\partial b_j^{(k)}}\]
+	Starting at the output, we have \[f_1^{(K)} = \sigma_K(g^{(K)}_1) = \sigma_K(W^{(K)}f^{(K-1)}+b_1^K)\]
+	Also, $L_{(x,y)} = l(y,f_1^{(K)})$. We find \[\frac{\partial L_{(x,y)}}{\partial b_1^{(k)}} = \frac{\partial L_{(x,y)}}{\partial f_1^{(K)}} \cdot \frac{\partial f_1^{(K)}}{\partial g_1^{(K)}}\cdot \frac{\partial g_1^{(K)}}{\partial b_1^{(k)}}\] and \[\frac{\partial L_{(x,y)}}{\partial w^{(k)}_{1,h}} = \frac{\partial L_{(x,y)}}{\partial f_1^{(K)}} \cdot \frac{\partial f_1^{(K)}}{\partial g_1^{(K)}}\cdot \frac{\partial g_1^{(K)}}{\partial w^{(k)}_{1,h}}\] where the two common terms in the calculations are defined as $\delta_1^{(K)}$. In particular, we find \[\frac{\partial L_{(x,y)}}{\partial b_1^{(k)}} = \delta_1^{(K)}\] and \[\frac{\partial L_{(x,y)}}{\partial w^{(k)}_{1,h}} = \delta_1^{(K)}\cdot f_h^{(K-1)}\]
+	We know concentrate on the $k$-th layer for an arbitrary $k$. Define $$\delta^{(k)} = \nabla_{g^{(k)}} L_{(x,y)} = \left(\frac{\partial L_{(x,y)}}{\partial g_1^{(k)}}, \dots , \frac{\partial L_{(x,y)}}{\partial g_{n_k}^{(k)}}\right)$$
+	This the shows \[\frac{\partial L_{(x,y)}}{\partial b_h^{(k)}} = \frac{\partial L_{(x,y)}}{\partial g_h^{(k)}}\cdot \frac{\partial g_h^{(k)}}{\partial b_h^{(k)}} = \delta_h^{(k)}\] and \[\frac{\partial L{(x,y)}}{\partial w_{h,i}^{(k)}} = \frac{\partial L_{(x,y)}}{\partial wg_h^{(k)}} \cdot \frac{\partial g_h^{(k)}}{\partial w_{h,i}^{(k)}} = \delta_h^{(k)}f_i^{(k-1)}\]
+	We hence want to figure out how we can compute the $\delta$. \[\delta_h^{(k)} = \frac{\partial L_{(x,y)}}{\partial g_h^{(k)}} = \sum_{i=1}^{n_{k+1}}\frac{\partial L_{(x,y)}}{\partial g_i^{(k+1)}}\cdot \frac{\partial g_i^{(k+1)}}{\partial g_h^{(k)}} = \sum_{i=1}^{n_{k+1}} \delta_i^{(k+1)}\cdot \frac{\partial g_i^{(k+1)}}{\partial g_h^{(k)}}\]
+	But now $g_i^{(k+1)} = \left(W^{(k+1)}f^{(k)}\right)_i + b_i^{(k+1)}$ and $f^{(k)} = \sigma_k(g^{(k)})$. For the calculation of $\delta$ we need \[\frac{\partial g_i^{(k+1)}}{\partial g_h^{(k)}} = \frac{\partial g_i^{(k+1)}}{\partial f_h^{(k)}} \frac{\partial f_h^{(k)}}{\partial g_h^{(k)}} = w_{i,h}^{(k+1)}\cdot \sigma_k(f_h^{(k)})\] which implies that \[\delta_h^{(k)} = \sum_{i=1}^{n_{k+1}} \delta_i^{(k+1)}\cdot w_{i,h}^{(k+1)}\cdot \sigma_k'(f_h^{(k)}) = \left(W^{(k+1)T}\cdot \delta^{(k+1)}\right)_h\cdot \sigma_k'(f_h^{(k)})\]
+	Generally, we can write \[\delta^{(k)} = \left(W^{(k+1)T}\cdot \delta^{(k+1)}\right) \odot \sigma_k^*(f^{(k)})\] where $\odot$ is the Hadamard matrix product defined by \[(A\odot B)_{ij} = A_{ij}\cdot B_{ij}\]
+	\subsection{Loss functions for neural networks}
+	The following loss function are options \begin{itemize}
+		\item square loss: $L = \frac{1}{\left|S\right|} \sum_{(x,y) \in S} \left|y-f_1^{(K)}(x)\right|^2$
+		\item cross entropy loss: $L = -\frac{1}{\left|S\right|} \sum_{(x,y) \in S} y\cdot \log(f_1^{(K)}(x)) + (1-y)\log(1-f_1^{(K)}(x))$
+	\end{itemize}
+	Both are non-negative. One can show, that the second function is better for fast learning using the back propagation algorithm.
+	\begin{definition}[soft max]
+		Soft max is an activation function for the output layer that does not return a fixed class but rather a probability distribution over all possible classes. It is defined by the mapping of $z = (z_1,...,z_k) \in \mathbb{R}^k$ to $[0,1]^k$ under \[z \mapsto \left(\frac{e^{z_i}}{\sum_{j=1}^k e^{z_j}}\right)\]
+		Usually one should use log-likelihood loss \[L = - \frac{1}{\left|S\right|} \sum_{(x,y) \in S} \sum_{j=1}^{n_j} \log f_j^{(K)}(x)\] 
+	\end{definition}
 \end{document}

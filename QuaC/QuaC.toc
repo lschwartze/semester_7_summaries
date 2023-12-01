@@ -14,3 +14,9 @@
 \contentsline {subsection}{\numberline {3.2}Anwendungen vom Grover-Algorithmus}{12}{}%
 \contentsline {subsubsection}{\numberline {3.2.1}Minimumsproblem}{12}{}%
 \contentsline {subsubsection}{\numberline {3.2.2}Untere Schranke}{13}{}%
+\contentsline {subsubsection}{\numberline {3.2.3}Element Distinctness}{14}{}%
+\contentsline {section}{\numberline {4}Shor Algorithmus}{14}{}%
+\contentsline {subsection}{\numberline {4.1}Diskrete Fourier Transformation}{14}{}%
+\contentsline {subsection}{\numberline {4.2}Quantum Fourier Transformation}{14}{}%
+\contentsline {subsection}{\numberline {4.3}Algorithmus für die Faktorisierung}{15}{}%
+\contentsline {subsection}{\numberline {4.4}Algorithmus für das Ordnungsproblem}{16}{}%

@@ -288,7 +288,7 @@
 	Diese kann in kleinere Matrizen zerlegt werden. Dafür schreiben wir \[|j\rangle = |j_1,...,j_N\rangle \; j_i \in \{0,1\}\]
 	Die Darstellung als Quantenschaltkreis ist kompliziert. Wir schreiben \[b(0.j_l...,j_N) = \sum_k=l^{N}j_k\frac{1}{2^{k-l+1}}\] und bemerken $b(0.j_1...j_N) = j$. Die QFT kann nun geschrieben werden als \[QFT(|j\rangle) = \frac{1}{\sqrt{N}}(|0\rangle + e^{2\pi i b(0.j_N)}|1\rangle)(|0\rangle + e^{2\pi i b(0.j_{N-1}j_N)}|1\rangle) ... (|0\rangle + e^{2\pi i b(0.j_1...j_N)}|1\rangle)\]
 	\subsection{Algorithmus für die Faktorisierung}
-	Sei $N \in \mathbb{N}$ teilbar. Gesucht sind $x \in \mathbb{N}\setminus\{1,N\}$ sodass $x|N$. Die besten klassischen Algorithmen brauchen $\mathcal{O}(2^{\left|N\right|})$, wobei $\left|N\right|$ die Anzahl der Bits von $N$ ist, d.h. $\left|N\right| \sim \log N$. Dieses Problem ist Grundlage für viele andere Probleme, so zu, Beispiel das Ordnungsproblem: \begin{definition}[Ordnungsproblem]
+	Sei $N \in \mathbb{N}$ teilbar. Gesucht sind $x \in \mathbb{N}\setminus\{1,N\}$ sodass $x|N$. Die besten klassischen Algorithmen brauchen $\mathcal{O}(2^{\left|N\right|})$, wobei $\left|N\right|$ die Anzahl der Bits von $N$ ist, d.h. $\left|N\right| \approx \log N$. Dieses Problem ist Grundlage für viele andere Probleme, so zu, Beispiel das Ordnungsproblem: \begin{definition}[Ordnungsproblem]
 		Gegeben $Y, N \in \mathbb{N}$, $Y<N$ und $ggT(Y,N) = 1$. Finde \[\arg\min_r \{Y^r \equiv 1 \mod N\}\] So ein $r$ muss existiert immer, denn $Y$ und $N$ sind teilerfremd.
 	\end{definition}
 	\begin{lemma}
@@ -317,4 +317,39 @@
 		\item QFT auf dem ersten Register angewandt. \[\frac{1}{\sqrt{Q}}\sum_{l=0}^{Q-1} \left(\frac{1}{\sqrt{A}} \sum_{j=0}^{A-1} e^{\frac{2\pi i(jr+k_0)l}{Q}}|l\rangle |Y^k \mod N\rangle\right)\]
 		\item eine Messung auf dem ersten Register ausgeführt. Dadurch erhält man ein $l$ mit Wahrscheinlichkeit \[\left|\frac{1}{\sqrt{QA}}\sum_{j=0}^{A-1} e^{\frac{2\pi i(jr+k_0)l}{Q}}\right|^2 = \frac{1}{QA}\left|e^{\frac{2\pi i k_0 l}{Q}} \sum_{j=0}^{A-1} e^\frac{2\pi i j r l}{Q}\right|^2 = \frac{1}{QA}\left|\sum_{j=0}^{A-1} e^\frac{2\pi i j r l}{Q}\right|^2\] weil $$\left|e^{\frac{2\pi i k_0 l}{Q}}\right|^2 = \left(\cos^2\theta + \sin^2 \theta\right)^2 = 1$$
 	\end{enumerate}
+	\begin{example}
+		Es sei $N=15$ und $Y=7$. gesucht wird $Ord(Y,N) = \min_r \{Y^r \equiv 1 \mod N\}$. Es gilt \begin{itemize}
+			\item $Y = 7$
+			\item $Y^2 \equiv 4$
+			\item $Y^3 \equiv 13$
+			\item $Y^4 \equiv 1$, d.h. der Algorithmus müsste $r = 4$ finden
+		\end{itemize}
+		Wir wählen jetzt $Q>>N$, z.B. $Q = 2^8$ und da $N < 2^4$, also $n=4$ und $q=8$, beginnen wir mit der Eingabe \[|0^4\rangle|0^8\rangle \to \frac{1}{\sqrt{2^8}} \sum_{k=0}^{Q-1} |k\rangle|0^n\rangle\]
+		Nun berechnen wird die modulare Potenzfunktion auf dem zweiten Qubit und erhalten \[\frac{1}{\sqrt{2^8}}\sum_{k=0}^{Q-1} |k\rangle |Y^k \mod N\rangle\] Wir wissen bereits, dass das zweite Qubit daher nur die Werte $7,4,13$ und $1$ annehmen kann. Insbesondere wissen wir $A =\frac{Q}{r} = 64$. Nun wird das zweite Qubit gemessen, erhält man z.B. als Wert $m=7$, so korrespondiert das zu dem Term \[\frac{1}{\sqrt{64}}\sum_{j=0}^{63} |jr+1\rangle |7\rangle\]
+		Nun wird eine Quanten-Fourier-Transformation auf das erste Qubit angewandt und man erhält \[\frac{1}{2^8} \sum_{l=0}^{63}\left(\frac{1}{8}\sum_{j=0}^{63} e^{\frac{2\pi i (4j+1)l}{2^8}}|l\rangle |7\rangle\right)\]
+		Nun wird auf dem ersten Qubit gemessen und wir erhalten den Wert $l$ mit Wahrscheinlichkeit \[\mathbb{P}(l) = \frac{1}{QA}\left|\sum_{j=0}^{A-1} \left(e^{\frac{2\pi i rl}{Q}}\right)^j\right|^2\]
+		Das ist eine geometrische Summe, für die gilt \[\sum_{j=0}^{A-1} c^j = \frac{1-c^A}{1-c}\] für $\left|c\right|<1$, was in unserem Fall erfüllt ist. Nun gibt es zwei Fälle:\\
+		\underline{Fall 1:} $r$ teilt $Q$, d.h. $A = \frac{Q}{r}$.\\
+		Dann \[\sum_{j=0}^{A-1} \left(e^{\frac{2\pi i rl}{Q}}\right)^j = \sum_{j=0}^{A-1} \left(e^{\frac{2\pi i l}{A}}\right)^j = \begin{cases}
+			A, \text{ falls } e^{\frac{2 \pi i l}{A}} = 1 \text{ und } \frac{l}{A} \in \mathbb{N}                     \\
+			\frac{1-\left(e^{\frac{2 \pi i l}{A}}\right)^A}{1-\left(e^{\frac{2 \pi i l}{A}}\right)} = 0 \text{ sonst}
+		\end{cases}\]
+		Wir messen daher nur solche $l$ mit $\frac{lr}{Q} \in \mathbb{N}$ und alle sind gleich wahrscheinlich. Nun gilt also $l \in \{0,1,...,Q-1\}$, wobei $lr = Qm$ für ein $m \in \mathbb{Q}$. D.h. $lr \in \{0,Q,2Q,...,mQ,...,(r-1)Q\}$ induziert eine Gleichverteilung in $m$.\\
+		Tatsächlich wissen wir, dass $r=4$, also ist die Situation folgende: $l = 2^6m$ und wegen $l \in \{0, 2^6, 2\cdot 2^6, 3\cdot 2^6\}$ gilt $m \in \{0,1,2,3\}$. Ist nun $ggT(m,r) = 1$, so ist $r$ der Nenner von $\frac{l}{Q}$. Nun ist die Frage, mit welcher Wahrscheinlichkeit $ggT(m,r) = 1$ für $m \in \{0,1,...,r-1\}$ gilt.\\
+		$\rightarrow$ falls $m$ eine Primzahl ist, so gilt trivial $ggT(m,r) = 1$. Da die Anzahl der Primzahlen kleiner $n$ ungefähr durch $\frac{n}{\ln n}$ gegeben ist, gilt \[\mathbb{P}(ggT(m,r) = 1) \geq \mathbb{P}(m \text{ prim}) \geq \frac{\frac{r}{\ln r}}{r} = \frac{1}{\ln r} \geq \frac{1}{\ln N}\] Führen wir diesen Algorithmus zum Beispiel $200\cdot \ln N$ mal aus, so ist der Fehler $<2^{-100}$.\\
+		\underline{Fall 2:} $r$ teilt nicht $Q$, d.h. $A = \lceil \frac{Q}{r}\rceil \neq \frac{Q}{r}$.\\
+		Falls $lr \mod Q \approx 0$, oder konkreter, falls \[-\frac{r}{2} \leq lr \mod Q \leq \frac{r}{2}\]
+		Genau $r$ Werte $l$ erfüllen $-\frac{r}{2} \leq l \mod Q \leq \frac{r}{2}$. Für solche Werte ist $$e^{\frac{2\pi i l r }{Q}} = e^{\frac{2\pi i(Q\cdot k + m)}{Q}} = e^{\frac{2\pi i m}{Q}}$$ für ein $m$ mit $-\frac{r}{2} \leq m \leq \frac{r}{2}$. Wir schließen, dass \[\mathbb{P}(\text{Messung = }l) = \frac{1}{QA}\left|\sum_{j=0}^{A-1}\left(e^{\frac{2\pi i m}{Q}}\right)^j\right|^2 \geq \frac{1}{QA} \left|\sum_{j=0}^{A-1}\left(e^{\frac{2\pi i \frac{r}{2}}{Q}}\right)^j\right|^2 = \frac{1}{QA}\left|\frac{1-e^{\frac{\pi i r A}{Q}}}{1-e^{\frac{\pi i r}{Q}}}\right|^2\]
+		An dieser Stelle können die Exponentialdarstellungen in $\cos \theta + i \sin \theta$ umgeschrieben werden, wodurch man \[\frac{1}{QA}\left(\frac{1+\cos^2 \theta - 2\cos \theta + \sin^2 \theta}{1 + \cos^2 \gamma - 2\cos \gamma + \sin^2 \gamma}\right) = \frac{1}{QA} \frac{1-\cos\left(\frac{\pi r A}{Q}\right)}{1 - \cos \left(\frac{\pi r}{A}\right)} = \frac{1}{QA}\frac{\sin^2 \frac{\pi r A}{2Q}}{\sin^2 \frac{\pi r}{2 Q}} \approx \frac{4Q}{\pi^2Ar^2} \approx \frac{4}{\pi^2 r}\]
+		Wir schließen, dass die Wahrscheinlichkeit der Messung eines $l$ mit $-\frac{r}{2} \leq l \mod Q \leq \frac{r}{2}$ mindestens $\frac{4}{\pi^2}$ ist.\\
+		Da wir außerdem wissen, dass $\left|lr-mQ\right|\leq \frac{r}{2}$ erhalten wir $\left|\frac{l}{Q} - \frac{m}{r}\right| \leq \frac{1}{2Q}$. Darauf kann folgendes Lemma verwendet werden.
+		\begin{lemma}
+			Es gibt höchstens ein Paar $(a,b)$ mit \[\left|\frac{l}{Q} - \frac{a}{b}\right| \leq \frac{1}{2Q}\] mit $b<N$ und $Q\geq N^2$.
+		\end{lemma}
+		\begin{proof}
+			Falls $(a,b)$, $(a',b')$ mit $\frac{a}{b} > \frac{a'}{b'}$ und $b,b' \leq N$, dann ist $\frac{a}{b} - \frac{a'}{b'} = \frac{ab'-a'b}{bb'}\leq \frac{1}{Q}$. Nun gilt $ab'-a'b > 0$ und $bb' < N^2 < Q$, wodurch der Widerspruch gezeigt ist.
+		\end{proof}
+		Für die Darstellung wird die Methode der Continued fractions eingeführt. Für $\alpha \in \mathbb{R}$ ist $$\alpha = \alpha_0 + \frac{1}{\alpha_1 + \frac{1}{\alpha_2 + \frac{1}{\alpha_3 + ...}}}$$. Für diese Darstellung gilt, dass falls $\alpha = \frac{p}{q} \in \mathbb{Q}$, dann konvergiert die CF Darstellung von $\alpha$ in $\mathcal{O}(\max\{\left|p\right|, \left|q\right|)\}$ vielen Schritten. Insbesondere ist $CF_n(\alpha) = \frac{p_n}{q_n}$ im Allgmeinen die beste Approximation von $\alpha$ mit Nenner $\leq q_n$.\\
+		Auf das Ordnungsproblem angewandt, finden wir also $CF_k(\frac{l}{Q}) = \frac{p_k}{q_k}$ mit $q_k < N$, also $\frac{p_k}{q_k} = \frac{m}{r}$. Falls nun $ggT(m,r) = 1$, dann ist $r' = q_k$. Das ist aber nur ein Kandidat für $r$. An dieser Stelle kann getestet werden, ob $Y^{r'} \equiv 1 \mod N$. Falls nicht ist $r' \leq r$ und der Algorithmus kann wiederholt werden.
+	\end{example}
 \end{document}

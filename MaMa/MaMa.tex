@@ -341,4 +341,40 @@
 		Soft max is an activation function for the output layer that does not return a fixed class but rather a probability distribution over all possible classes. It is defined by the mapping of $z = (z_1,...,z_k) \in \mathbb{R}^k$ to $[0,1]^k$ under \[z \mapsto \left(\frac{e^{z_i}}{\sum_{j=1}^k e^{z_j}}\right)\]
 		Usually one should use log-likelihood loss \[L = - \frac{1}{\left|S\right|} \sum_{(x,y) \in S} \sum_{j=1}^{n_j} \log f_j^{(K)}(x)\] 
 	\end{definition}
+	\underline{Benefits of Cross Entropy loss}\\
+	This is generally defined by \[-\frac{1}{\left|S\right|} \sum_{(x,y) \in S} (y\cdot \log h(x) + (1-y)\log (1-h(x)))\]
+	Now, let $p,q$ be probability distributions. We define \[H(p,q) = -\mathbb{E}_p [\log q] = -\sum_{\omega \in \Omega} p(\omega) \log q(\omega)\]
+	Now let $h$ be a classifier. $h(x)$ is the confidence that $x$ is class 1. We define \[q(h(x)) = \begin{cases}
+		h(x), y = 1\\
+		1-h(x), y = 0
+	\end{cases}\]
+	The hidden distribution that generates $(x,y)$ is now denoted by $p$. Then the marginal probability is \[p(x) = p((x,0)) + p((x,1))\]
+	This allows us to rewrite the cross-entropy-loss \[L = - \frac{1}{\left|S\right|} \sum_{(x,y) \in S} \log q(y|x)\]
+	Consider \[\mathbb{E}_{S \sim p^m} [L] = \mathbb{E}_{(x_1,y_1) \sim p} ... \mathbb{E}_{(x_m,y_m)\sim p} [L] = - \frac{1}{\left|S\right|} \sum_{i=1}^m \sum_{(x_i,y_i) \sim p} [\log q(y_i|x_i)] = - \mathbb{E}_{(x,y) \sim p}[\log q(y|x)]\]
+	This can now be pulled apart along the marginal distribution and one gets the cross entropy again. This is the intuition for the following \[\min_h L \to \min_h \mathbb{E}_x[H(p(\cdot | x), q(\cdot |x))]\] This is minimal iff \[H(p(\cdot | x), q(\cdot |x))\] is minimal for all $x\in X$. This can be further seen to be equivalent to minimizing the so-called Kullback-Leibler-divergence which is a measure of how similar the two distributions $p$ and $q$ are. This moves the cross-entropy towards the Bayes-classifier.
+	\begin{definition}[Kullback-Leibler]
+		$D_{KL}(p||q) = \mathbb{E}_p[\log(p/q)] = \mathbb{E}_p[\log p] - \mathbb{E}_p[\log q] = \sum_{\omega \in \Omega} p(\omega) \log(\frac{p(\omega)}{q(\omega))})$. If $q(\omega) = 0$, then $p(\omega) = 0$ and we define this value to be 0.
+	\end{definition}
+	It can be seen that $D_{KL}$ is non-negative and if $D_{KL}(p||q) = 0$, then $p=q$ almost everywhere. Also $D_{KL} (p||q)\neq D_{KL}(q||p)$. 
+	\begin{theorem}
+		Let $p,q$ be two discrete probability distributions. Then \begin{itemize}
+			\item $D_{KL}(p||q) \geq 0$
+			\item if $D_{KL}(p||q) = 0$ then $p=q$
+		\end{itemize}
+	\end{theorem}
+	\subsection{local minima}
+	We now need to make sure the SGD actually works to train neural networks. We know that it works well for differentiable and convex functions but the loss of a neural network is neither of those.\\
+	Differentiability is no large concern. We only need a one-sided derivative which exists for functions such as ReLU. It is very unlikely that the not differentiable point is hit exactly. But why doesn't SGD get trapped in a local minimum?\\
+	As a matter of fact, that actually can happen. But we can empirically see that a over-parameterised NN only rarely gets trapped. This is not mathematically proven and still is a field of research.\\
+	For the following we need three different kinds of matrix product. 
+	\begin{definition}
+		\begin{itemize}
+			\item The Hadamard product. This has been defined above and is simply the component-wise multiplication.
+			\item The Kronecker-product. Two matrices $A$ and $B$ of not necessarily the same dimension are multiplied like in the tensor-product $A\otimes B$.
+			\item The Khatari-Rao product. Let $A$ and $B$ have the same number of columns. Then \[A\circ B = (A_{1}\otimes B_{1}, A_{2}\otimes B_{2} ... A_{n}\otimes B_{n})\] where $A_{i}$ is a simpler notation for the $i$-th column of $A$.
+		\end{itemize}
+	\end{definition}
+	\begin{lemma}
+		Let $k,l,N \in \mathbb{N}$ and $kl \geq N$. Then for almost all $(A,B)$ with $A \in \mathbb{R}^{k\times N}$ and $B \in \mathbb{R}^{l\times N}$ it holds for the Khatari-Rao product that $rank(A\circ B) = N$.
+	\end{lemma}
 \end{document}

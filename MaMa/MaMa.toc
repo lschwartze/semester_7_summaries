@@ -28,3 +28,4 @@
 \contentsline {section}{\numberline {4}neural networks}{15}{}%
 \contentsline {subsection}{\numberline {4.1}back propagation}{15}{}%
 \contentsline {subsection}{\numberline {4.2}Loss functions for neural networks}{17}{}%
+\contentsline {subsection}{\numberline {4.3}local minima}{19}{}%

@@ -238,4 +238,29 @@
 		Die Funktion $LF$: $\{1,...,n\} \to \{1,...,n\}$ ist wie folgt definiert:\\
 		Ist $L[i] = c$ ist die $k$-te Wiederholung des Characters $c$, dann wird $LF(i)$ auf das $j$ gesetzt, wo in Spalte $F$ die $k$-te Wiederholung von $c$ steht. Um die Stelligkeit des Buchstabens a priori zu wissen, und die Laufzeit linear zu halten, wird das C-Array erstellt. Das C-Array enthält an der Stelle des Buchstaben $c$ die Anzahl aller Buchstaben in der $F$-Spalte, die kleiner sind, als $c$.
 	\end{definition}
+	\subsection{Datenkompression}
+	Die BWT bietet sich für Datenkompression an, da direkt auf die Liste eine Lauflängen-Codierung angewandt werden kann.
+	Als erstes müssen wir uns überlegen, wie die BWT zurück in den ursprünglichen String $S$ transformiert werden kann. Das funktioniert mit der LF-Abbildung. Der String wird von hinten nach vorne konstruiert. Das letzte Zeichen (immer als \$ angenommen) wird also als erstes gesetzt. Der Algorithmus funktioniert wie folgt. \begin{enumerate}
+		\item $S[n] \gets \$$
+		\item $j \gets 1$
+		\item for $i\gets n-1$ down to 1
+		\item $S[i]\gets BWT[j]$
+		\item $j \gets LF(i)$
+	\end{enumerate} 
+	Um die Korrektheit des Algorithmus zu zeigen, muss nur folgendes Lemma bewiesen werden.
+	\begin{lemma}
+		Wenn Zeile $i$ der sortierten Matrix $M$ das Suffix $j$ enthält, so enthält Zeile $LF[i]$ das Suffix $S_{j-1}$.
+	\end{lemma}
+	\noindent Mit der Rückwärtskonstruktion kann nun die move-to-front-Codierung (MTF) eines Strings $L\in \Sigma^n$ eingeführt werden. Diese wird auf die BWT angewandt.
+	\begin{itemize}
+		\item initialisiere eine Liste $\ell$ der Zeichen aus $\Sigma$ in aufsteigender Ordnung
+		\item for $i\gets 1$ to $n$
+		\item $R[i] \gets$ Anzahl der Zeichen vor dem Zeichen $L[i]$ in der Liste $\ell$
+		\item bewege Zeichen $L[i]$ an den Anfang der Liste $\ell$
+	\end{itemize}
+	Auch die MTF kann wieder decodiert werden, in diesem Fall wieder zurück in die BWT, bzw. die Spalte $L$. Als Eingabe bekommen wir die Spalte $R$. \begin{enumerate}
+		\item for $i \gets 1$ to $n$
+		\item $L[i] \gets \ell[R[i]+1]$
+		\item bewege Zeichen $L[i]$ an den Anfang der Liste $\ell$
+	\end{enumerate}
 \end{document}

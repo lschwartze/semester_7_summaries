@@ -11,3 +11,4 @@
 \contentsline {subsection}{\numberline {1.7}De Bruijn Sequenzen}{9}{}%
 \contentsline {section}{\numberline {2}komprimierte Ganztext Indizes}{10}{}%
 \contentsline {subsection}{\numberline {2.1}Burrows-Wheeler Transformation}{10}{}%
+\contentsline {subsection}{\numberline {2.2}Datenkompression}{10}{}%

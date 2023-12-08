@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  1 DEC 2023 11:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  5 DEC 2023 15:41
 entering extended mode
 **./Seqs.tex
 (Seqs.tex
@@ -257,7 +257,13 @@ Overfull \hbox (5.91763pt too wide) in paragraph at lines 216--217
 -Maximalitat bere-its gegeben.
  []
 
-[9] [10] (Seqs.aux) ) 
+[9]
+Overfull \hbox (7.1566pt too wide) in paragraph at lines 254--255
+[]\OT1/cmr/m/n/12 Mit der Ruckwart-skon-struk-tion kann nun die move-to-front
+-Codierung (MTF) eines Strings
+ []
+
+[10] [11] (Seqs.aux) ) 
 Here is how much of TeX's memory you used:
  2896 strings out of 479322
  39594 string characters out of 2856609
@@ -267,4 +273,4 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  67i,7n,74p,984b,301s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Seqs.dvi (11 pages, 36280 bytes).
+Output written on Seqs.dvi (12 pages, 40968 bytes).

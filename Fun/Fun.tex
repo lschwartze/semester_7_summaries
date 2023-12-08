@@ -650,6 +650,47 @@
 		Let $T \in L(X)$. If $M \subset X$ is a closed subspace s.t. $TM\subset M$, then $M^\bot$ is invariant under $T^*$.
 	\end{lemma}
 	\begin{theorem}
-		Let $X$ be a Hilbert space, $T\in K(X)$ self-adjoint. Then $\exists (\phi_n)_{n \in I} \subset X, \; I\subset \mathbb{N}, \text{ ONS and } \exists (\lambda_n)_{n \in I} \subset \mathbb{R}$ s.t. $\forall x \in X$ \[Tx = \sum_{n \in I} \lambda_n \langle x, \phi_n\rangle \phi_n\] In particular $T\phi_n = \lambda_n \phi_n \; \forall n \in \mathbb{N}$. If $I$ is infinite, then $\lambda_n \to 0$.
+		Let $X$ be a Hilbert space, $T\in K(X)$ self-adjoint. Then $\exists$ ONS $ (\phi_n)_{n \in I} \subset X, \; I\subset \mathbb{N}, \text{ and } \exists (\lambda_n)_{n \in I} \subset \mathbb{R}$ s.t. $\forall x \in X$ \[Tx = \sum_{n \in I} \lambda_n \langle x, \phi_n\rangle \phi_n\] In particular $T\phi_n = \lambda_n \phi_n \; \forall n \in \mathbb{N}$. If $I$ is infinite, then $\lambda_n \to 0$.
+	\end{theorem}
+	\begin{corollary}
+		Let $X$ be a separable Hilbert space with $\dim X = \infty$ and $T \in K(X)$ self-adjoint. Then $\exists$ a complete ONS $(e_n)_{n \in \mathbb{N}}$ of eigenvectors of $T$. In particular $\forall x \in X$ \[Tx = \sum_{n=1}^\infty \lambda_n \langle x,e_N\rangle e_n\]
+		with $\lambda_n$ being the corresponding eigenvalue to $e_n$.
+	\end{corollary}
+\section{Reproducing kernel Hilbert spaces}
+	\subsection{Definitions}
+	Here, we again use $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$. Further $X\neq \varnothing$ is simply a set. Also \[F(X,\mathbb{K}) = \{f: X \to \mathbb{K} \text{ a map}\}\]
+	This is a vector space.
+	\begin{definition}
+		$H\subset F(X,\mathbb{K})$ is a reproducing kernel Hilbert space (RKHS) on $X$ if \begin{enumerate}
+			\item $H$ is a subspace of $F(X,\mathbb{K})$
+			\item $\exists \langle \cdot , \cdot \rangle: H\times H \to \mathbb{K}$ inner product, s.t. $(H,\langle \cdot, \cdot \rangle)$ is a Hilbert space
+			\item $\forall x \in X$ the linear map $E_x: H\to \mathbb{K}$ with $E_x(f) = f(x)$ (the evaluation operator) is well-defined and bounded. 
+		\end{enumerate}
+	\end{definition}
+	Let $\Omega \subset \mathbb{R}^n$ open, $H = L^2(\Omega)$ is not a RKHS since evaluation at a point does not make sense for $f \in L^2(\Omega)$.\\
+	If $H$ is a RKHS, the evaluation operator $E_x \in H' \; \forall x \in X$. For $x \in X$, by Riesz-Fréchet $\exists! k_x \in H$ s.t. $E_x(F) = \langle f,k_x\rangle \; \forall f \in H$.
+	\begin{definition}
+		The function \[K:X\times X \to \mathbb{K}\]\[(x,y) \mapsto \langle k_y, k_x\rangle\]
+		is called reproducing kernel of $H$. 
+	\end{definition}
+	\begin{remark}
+		For $x,y \in X$ and $\mathbb{K} = \mathbb{C}$ \[K(x,y) = \langle k_y,k_x\rangle = \overline{\langle k_x,k_y\rangle} = \overline{K(y,x)}\] while if $\mathbb{K} = \mathbb{R}$ the kernel is symmetric. Further \[||E_x||^2 = ||k_x||^2 = \langle k_x,k_x\rangle = K(x,x) \geq 0\]
+	\end{remark}
+	\subsection{Theorem of Moore-Aronszajn}
+	\begin{lemma}
+		Let $H$ be a RKHS on $X$ with kernel $K$. Then $\forall n \in \mathbb{N}$ and $\forall \{x_1,...,x_n\}\subset X$ the matrix \[(K(x_i,x_j))^n\] is a positive semidefinite matrix, i.e. \[\sum_{i,j=1}^n \alpha_j K(x_j,x_i)\overline{\alpha_i} \geq 0 \; \forall \alpha \in \mathbb{K}^n\]
+	\end{lemma}
+	\begin{theorem}[Moore-Aronszajn]
+		Let $X \neq \varnothing$, $K:X\times X \to \mathbb{K}$ s.t. \begin{enumerate}
+			\item if $\mathbb{K} = \mathbb{C} \; K(x,y) = \overline{K(y,x)}$ and if $\mathbb{K} = \mathbb{R} \; K(x,y) = K(y,x) $
+			\item $K$ is positive semidefinite 
+		\end{enumerate}
+		Then there exists a (unique) RKHS on $K$ with kernel $K$. Notation: $H(K)$.
+	\end{theorem}
+	\subsection{An application}
+	\underline{Interpolation:} Let $\{x_1,...,x_n\} \subset X$ be distinct points. $\lambda_1,...,\lambda_n \in \mathbb{C}$ not necessarily distinct. Let $H$ be a RKHS on $X$.\\
+	\underline{AIM:} Find $f \in H$ s.t. the least square error \[J(f) = \sum_{i=1}^n \left|f(x_i) - \lambda_i\right|^2\] is minimal at $f$ and among all minimizers we want the one with minimal norm. 
+	\begin{theorem}
+		Let $H$ be a RKHS on $X$. $\{x_1,...,x_n\} \subset X$ distinct points in $X$. $A:= (K(x_i,x_j))$ a $n\times n$-matrix. $v = (\lambda_1,...,\lambda_n)^T \in \mathbb{K}^n$. Then $\exists w \in \mathbb{K}^n$ s.t. $v-Aw \in \ker(A)$ and \[H \ni f:= \sum_{i=1}^n w_ik_{x_i}\] satisfies \[J(f) = \inf_{g \in H} J(g)\] We have $k_{x_i} = K(\cdot,x_i)$ and $f$ is the unique minimizer of minimal norm. 
 	\end{theorem}
 \end{document}

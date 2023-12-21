@@ -263,4 +263,30 @@
 		\item $L[i] \gets \ell[R[i]+1]$
 		\item bewege Zeichen $L[i]$ an den Anfang der Liste $\ell$
 	\end{enumerate}
+	\subsection{Constant-time rank/select queries}
+	\begin{theorem}
+		Ein Bit-Vektor $B$ kann in linearer Zeit so vorverarbeitet werden, dass die folgenden Abfragen in konstanter Zeit geschehen
+		\begin{itemize}
+			\item $rank_b(B,i)$ gibt die Anzahl der Vorkommen von $b$ in $B[1,...,i]$ zurück
+			\item $select_b(B,i)$ gibt die Position des $i$-ten Vorkommens von $b$ in $B[1,...,n]$ zurück
+		\end{itemize}
+	\end{theorem}
+	\noindent Für einen Text $T$ über ein Alphabet $\Sigma$ kann die rank und select Abfrage auf die Algorithmen für Bit-Arrays zurückgeführt werden.
+	\subsection{Backward search}
+	Wir führen eine Methode ein, um ein Muster effizient in einem String zu suchen. Das geschieht mit der sogenannten Rückwärts-Suche. Wenn wir einen String $P$ der Länge $m$ suchen, dann wird zunächst das $P[m]$-Intervall $I$ bestimmt. Das funktioniert mithilfe des $C$-Arrays. Um anschließend innerhalb der Grenzen $lb$ und $rb$ nach $P[m-1,m]$ zu suchen, bestimmen wir das erste und letzte Vorkommen ($p,q$) von $P[m-1]$ in $I$. Das $P[m-1,m]$-Intervall liegt dann bei $LF(p)$ bis $LF(q)$. Diese Werte können in der Tat berechnet werden, ohne vorher explizit $p$ und $q$ bestimmen zu müssen. Falls $p$ im Intervall liegt, so gilt $LF(p) = C[c] + rank_c(BWT,p) = C[c]+rank_c(BWT,lb-1)+1 := i$. Genauso gilt $LF(q) = C[c] + rank_c(BWT,rb):= j$.\\
+	Läge $p$ nicht im Intervall, so würde $i>j$ gelten. Das wird in Folgendem Algorithmus zusammengefasst:\\
+	\begin{enumerate}
+		\item $i\gets 1, \, j\gets n, \, k \gets m$
+		\item while $i\leq j$ and $k\geq 1$
+		\item $c\gets P[k]$
+		\item $i\gets C[c] + rank_c(BWT,i-1)+1$
+		\item $j\gets C[c] + rank_c(BWT,j)$
+		\item $k\gets k-1$
+		\item endwhile
+		\item if $i\leq j$
+		\item return interval [i,j]
+		\item endif
+		\item return $\bot$ 
+	\end{enumerate} 
+	Dieser Suchalgorithmus hat Laufzeit $\mathcal{O}(m)$. Das ist die theoretische Untergrenze der Laufzeit.
 \end{document}

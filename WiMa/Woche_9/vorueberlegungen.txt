@@ -1,0 +1,13 @@
+gegeben sei Dreieck T definiert durch die Punkte A,B,C mit beliebiger Dimension
+
+Schwerpunkt: S = 1/3(A+B+C)
+Fläche: Heron Formel. Definiere a = ||B-A||, b = ||C-B||, c = ||C-A||, s = 1/2(a+b+c). Dann Fläche = sqrt(s(s-a)(s-b)(s-c)) 
+Normale: N = cross(B-A, C-A)
+
+Licht ist gegeben als L = S + t*D. Gesucht ist P in T mit P = S+t*D für ein reelles t.
+-> finde heraus, ob Licht parallel zur Ebene des Dreiecks verläuft: Produkt von S und N ist 0
+-> beliebiges P in T kann mit Konvex-Kombination geschrieben werden: P = uA+vB+wC
+wobei u+v+w = 1, d.h. P = (1-v-w)A + vB + wC = A + v(B-A) + w(C-A)
+Setze S+t*D = A + v(B-A) + w(C-A) und löse nach t,v,w.
+
+Notwendiges Kriterium für Sichtbarkeit: Gerade zwischen Beobachter und Schwerpunkt schneidet keine anderen Dreiecke

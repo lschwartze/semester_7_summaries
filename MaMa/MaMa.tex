@@ -360,6 +360,7 @@
 		Let $p,q$ be two discrete probability distributions. Then \begin{itemize}
 			\item $D_{KL}(p||q) \geq 0$
 			\item if $D_{KL}(p||q) = 0$ then $p=q$
+			\item typically $D_{KL}(p||q) \neq D_{KL}(q||p)$
 		\end{itemize}
 	\end{theorem}
 	\subsection{local minima}
@@ -377,4 +378,56 @@
 	\begin{lemma}
 		Let $k,l,N \in \mathbb{N}$ and $kl \geq N$. Then for almost all $(A,B)$ with $A \in \mathbb{R}^{k\times N}$ and $B \in \mathbb{R}^{l\times N}$ it holds for the Khatari-Rao product that $rank(A\circ B) = N$.
 	\end{lemma}
+	We now introduce a matrix of perturbations called $\varepsilon$ which can be applied to any step of a neural network. Using $X$ as a training set, a neural network with leaky ReLU on the single hidden layer, no acctivation function on the output layer and MSE as a loss function, the following theorem holds.
+	\begin{theorem}
+		For almost all $(X,\varepsilon)$, all differentiable local minima are global minima (i.e. MSE $= 0$).
+	\end{theorem} 
+	\subsection{ReLU networks and piece-wise affine functions}
+	A function $f: \mathbb{R}^n \to \mathbb{R}^m$ is called piece-wise affine if there are finitely many polyhedra $Q_1,...,Q_s$ s.t. $\mathbb{R}^n = \bigcup_{i=1}^s Q_i$ and $f|_{Q_i}$ is affine. The smallest such $s$ is called the piece-number of $f$.
+	\begin{theorem}
+		The function computed by a (leaky) ReLU network with linear or (leaky) ReLU output layer is a piece-wise affine function.
+	\end{theorem}
+	\begin{lemma}
+		Let $f,g$ be piece-wise affine functions with piece-numbers $k$ and $l$ respectively. Then \begin{itemize}
+			\item $f+g$ has piece-number at most $k+l$
+			\item $f\circ g$ has piece-number at most $kl$
+		\end{itemize}
+	\end{lemma}
+	\begin{theorem}
+		Let $N$ be a (leaky) ReLU neural network with one input, one output and $L-1$ hidden layers s.t. layer $l$ has $n_l$ nodes. Set $\overline{n} = \sum_{l=1}^{L} n_l$. The $N$ computes a piece-wise affine function with piece-number at most \[2^L \prod_{l=1}^{L}n_l \leq \left(\frac{2\overline{n}}{L}\right)^L\]
+	\end{theorem}
+	\begin{theorem}
+		A function $f$ is continuous piece-wise affine iff there are affine functions $g_i, h_i ,\; i=1,....,N$ s.t. \[f(x) = \max_i g_i(x) - \max_j h_j(x) \; \forall x \in \mathbb{R}^n\]
+	\end{theorem}
+	\begin{theorem}
+		For all functions $f$ such as in the last theorem, there exists a ReLU network with linear activation at the output node of $2N$ layers and s.t. every layer has at most $6N + 4$ that realises $f$. 
+	\end{theorem}
+	\begin{definition}
+		The following uses the terms below
+		\begin{itemize}
+			\item ReLU network: a neural network that uses ReLU activation in every hidden layer except the output where there is no activation
+			\item depth number of layers except the input
+			\item width: largest number of neurons in any layer
+		\end{itemize}
+	\end{definition}
+	\begin{lemma}[1]
+		The function $\binom{x_1}{x_2} \mapsto \max(x_1,x_2)$ can be computed by a ReLU network of depth 2 and width 3. 
+	\end{lemma}
+	\begin{lemma}[2]
+		Let $N_1$ be a ReLU network of depth $d_1$ and width $w_1\geq 2$ and $N_2$ be a ReLU network of depth $d_2$ and width $w_2 \geq 2$ such that both have only one output node. Then we can compute $N_1+N_2$ with a ReLU network of depth $\leq \max(d_1,d_2)$ and width $\leq w_1+w_2$.
+	\end{lemma}
+	\begin{lemma}[3]
+		Let $N_1$ be a ReLU network of depth $d_1 \geq 1$ and width $w_1 \geq 2$ and $N_2$ be a ReLU network of depth $d_2 \geq 1$ and $w_2 \geq 2$ and $N_1: \mathbb{R}^n \to \mathbb{R}^k$ and $N_2: \mathbb{R}^k \to \mathbb{R}^l$. Then $N_2 \circ N_1$ can be computed by a ReLU network of depth $d_1+d_2-1$ and width $\max(w_1,w_2)$.
+	\end{lemma}
+	\begin{lemma}[4]
+		Let $g_1,...,g_N: \mathbb{R}^n \to \mathbb{R}$ be functions that can be computed by ReLU networks of depth $\leq d$ and width $\leq w$. Then \[x \mapsto \max_i g_i(x)\] can be computed by a ReLU network of depth $\leq d$ and width $\leq w+2n$.
+	\end{lemma}
+	The collection of these lemmas allows for an easy proof of the above theorem.
+	\subsection{Universal approximators}
+	\begin{theorem}
+		For every continuous function $f:\mathbb{R}^n \to \mathbb{R}$ and $\varepsilon > 0$ There is a ReLU network $N$ of width $\leq 6n+4$ but perhaps large depth s.t. \[\sup_{x\in [0,1]^n} \left|f(x)-N(x)\right| \leq \varepsilon\]
+	\end{theorem}
+	\begin{theorem}
+		Let $f: \mathbb{R}^n \to \mathbb{R}$ be Lebesgue-measurable. Then there is a ReLU network $n$ of width $\leq n+4$ and perhaps large depth s.t. \[\int_{\mathbb{R}} \left|f(x) - N(x)\right|\, d\lambda(x) \leq \varepsilon\]
+	\end{theorem}
 \end{document}

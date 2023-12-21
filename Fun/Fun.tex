@@ -693,4 +693,146 @@
 	\begin{theorem}
 		Let $H$ be a RKHS on $X$. $\{x_1,...,x_n\} \subset X$ distinct points in $X$. $A:= (K(x_i,x_j))$ a $n\times n$-matrix. $v = (\lambda_1,...,\lambda_n)^T \in \mathbb{K}^n$. Then $\exists w \in \mathbb{K}^n$ s.t. $v-Aw \in \ker(A)$ and \[H \ni f:= \sum_{i=1}^n w_ik_{x_i}\] satisfies \[J(f) = \inf_{g \in H} J(g)\] We have $k_{x_i} = K(\cdot,x_i)$ and $f$ is the unique minimizer of minimal norm. 
 	\end{theorem}
+\section{Theorems on continuous linear maps}
+	\subsection{uniform boundedness}
+	We need the theorem of Baire a lot in this chapter, so we recall it.
+	\begin{theorem}[Baire's theorem]
+		Let $(X,d)$ be a complete metric space and $(U_n)_{n \in \mathbb{N}}$ s.t. $U_n \subset X$ is open and dense $\forall n \in \mathbb{N}$. Then \[\bigcap_{n \in \mathbb{N}} U_n\] is dense in $X$.
+	\end{theorem}
+	\begin{corollary}
+		Let $(X,d)$ be a complete metric space, $(A_n)_{n \in \mathbb{N}}$ s.t. $A_n$ closed $\forall n \in \mathbb{N}$ and $X = \bigcup_{n \in \mathbb{N}}A_n$. Then $\exists N \in \mathbb{N}$ s.t. $A_N$ has an interior point.
+	\end{corollary}
+	\begin{theorem}[uniform boundedness principle]
+		Let $X \neq \varnothing$ be a complete metric space, $Y$ a normed space. Let $F \subset C^0(X,Y)$ s.t. $$\sup_{f \in F} ||f(x)||_Y < \infty \; \forall x \in X$$ Then $\exists x_0 \in X$ and $\exists r_0 > 0$ s.t. \[\sup_{x \in \overline{B_{r_0}(x_0)}} \sup_{f \in F} ||f(x)||_Y < \infty\]
+	\end{theorem}
+	\begin{theorem}[Banach-Steinhaus]
+		Let $X$ Banach space, $Y$ normed space, $\mathcal{T} \subset L(X,Y)$ family such that \[\sup_{T \in \mathcal{T}} ||Tx||_Y < \infty \; \forall x \in X\] Then $\mathcal{T}$ is a bounded set in $L(X,Y)$ i.e. \[\sup_{T \in \mathcal{T}} ||T||_{L(X,Y)} < \infty\]
+	\end{theorem}
+	\begin{lemma}
+		Let $X$ be a Banach space, $Y$ a normed space, $(T_n)_{n \in \mathbb{N}} \subset L(X,Y)$ s.t. $\forall x \in X$, $T_nx$ converges in $Y$. Then $T:X\to Y$ with $x \mapsto \lim_{n \to \infty} T_nx$ is linear and continuous.
+	\end{lemma}
+	\subsection{open map theorem}
+	\begin{definition}
+		Let $(X,d_X)$, $(Y,d_Y)$ be open metric spaces and $f: X \to Y$. Then $f$ is called open if $\forall U \in X$ open $f(U) \subset Y$ is open.
+	\end{definition}
+	\begin{remark}
+		Let $f: X \to Y$ be bijective. Then $f$ is an open map iff $f^{-1}$ is continuous.
+	\end{remark}
+	\noindent\underline{Attention:} $f$ continuous and bijective $\not \implies$ $f^{-1}$ is continuous. A counterexample is $f: [0,1] \cup (2,3] \to [0,2]$ where \[f(x) = \begin{cases}
+		x, & x \in [0,1]\\
+		x-1, & x \in (2,3]
+	\end{cases}\]
+	\begin{lemma}
+		Let $T: X \to Y$ be linear, $X,Y$ normed spaces. \begin{enumerate}
+			\item $T$ is open iff $\exists \delta > 0$ s.t. $T(B_1(0)) \supset B_\delta(0)$
+			\item $T$ open $\Rightarrow$ $T$ is surjective
+		\end{enumerate}
+	\end{lemma}
+	\begin{theorem}[open map theorem]
+		If $X$, $Y$ are Banach spaces, $T \in L(X,Y)$ s.t. $T$ surjective, then $T$ is open.
+	\end{theorem}
+	\begin{theorem}[theorem of the inverse]
+		Let $X$, $Y$ be Banach-spaces, $T \in L(X,Y)$ bijective, then $T^{-1}$ is continuous and in fact $T^{-1} \in L(Y,X)$.
+	\end{theorem}
+	\begin{corollary}
+		Let $X$, $Y$ be Banach. Then any bijective map $T\in L(X,Y)$ is an isomorphism.
+	\end{corollary}
+	\begin{remark}
+		$T\in L(X)$ where $X$ Banach then \[\rho(T) = \{\lambda \in \mathbb{K}: (\lambda ID - T)^{-1} \in L(X)\} = \{\lambda \in \mathbb{K}: \lambda Id - T \text{ bijective}\}\]
+	\end{remark}
+	\begin{theorem}
+		Let $X,Y$ be Banach. Then $\mathcal{S} = \{T \in L(X,Y): T \text{ surjective}\}$ is open in $L(X,Y)$.
+	\end{theorem}
+	\subsection{Closed graph theorem}
+	We work with the graph of an operator. Recall that, given $(X, ||\cdot ||_X), (Y, ||\cdot ||_Y)$, we can look at the normed space $X\times Y$ equipped with $||(x,y)||_{X\times Y} = ||x||_X + ||y||_Y$.
+	\begin{definition}
+		Let $T:X \to Y$ linear. \begin{enumerate}
+			\item $G(T) = \{(x,y) \in X \times Y: y = Tx\}$ is the graph of $T$
+			\item $T$ is called a closed linear operator if $G(T)$ is closed.
+		\end{enumerate}
+	\end{definition}
+	\begin{remark}
+		\begin{itemize}
+			\item If $X,Y)$ are Banach spaces, then so is $X\times Y$
+			\item $G(T)$ is a subspace of $X\times Y$ and in particular a Banach space
+		\end{itemize}
+	\end{remark}
+	\begin{lemma}
+		$T$ is a closed linear operator $\iff \; \forall (x_n)_{n \in \mathbb{N}} \subset X$ s.t. $x_n \to x$ and $Tx_n \to y$, then necessarily $Tx = y$. 
+	\end{lemma}
+	\begin{theorem}[closed graph theorem]
+		Let $X$ and $Y$ Banach, $T:X\to Y$ linear. Then $T$ is a linear closed operator iff $T$ is continuous (bounded).
+	\end{theorem}
+	\begin{remark}
+		If $X,Y$ Banach, $T:X \to Y$ linear, then $T$ is continuous \begin{itemize}
+			\item iff $\forall (x_n)_{n\in \mathbb{N}} \subset X$ s.t. $x_n \to x$ in $X$ then $Tx_n \to Tx$ in $Y$
+			\item iff $\forall (x_n)_{n \in \mathbb{N}} \subset X$ s.t. $x_n \to x$ and $Tx_n \to y$.
+		\end{itemize} 
+	\end{remark}
+	\begin{definition}
+		Let $X,Y$ be normed spaces and $D\subset X$ a subspace. $T:D\to Y$ linear is called closed if $\forall (x_n)_{n \in \mathbb{N}} \subset D$ s.t. $x_n \to x$ and $Tx_n \to y$ then $x \in D$ and $Tx = y$.
+	\end{definition}
+	\begin{lemma}
+		Let $X,Y$ be Banach spaces, $D\subset X$, $T:D \to Y$ linear and clsoed. Define \[||\cdot ||_T : D \to [0,\infty)\] where \[||x||_T = ||x||_X + ||Tx||_Y\] called the graph norm. Then $||\cdot ||_T$ is a norm, $(D||\cdot||_T)$ is a Banach space and \[T: (D,||\cdot||_T) \to (Y,||\cdot||_Y)\] is continuous.
+	\end{lemma}
+	\subsection{Consequences}
+	A central question in mathematics concerns the solvability of equations. Let $X,Y$ be any sets and $f:X\to Y$. Given $y \in Y$ is there an $x \in X$ s.t. $f(x) = y?$.\\
+	Here $x$ and $Y$ are normed spaces and $T:X\to Y$ linear. The open map theorem implies that for Banach spaces $X$ and $Y$, $T:X\to Y$ linear bijective and continuous, then $T^{-1}:Y \to X$ is also continuous. As a consequence, the solution of $Tx = y$ depends continuously on $Y$. Further $\{T \in L(X,Y): T \text{ surjective}\}$ is open in $L(X,Y)$, when $X$ and $Y$ are Banach. With the Neumann series, we get
+	\begin{theorem}
+		If $X,Y$ Banach, \[A = \{T \in L(X,Y): T \text{ is an isomorphism}\}\] is open in $L(X,Y)$. I.e. if $T\in L(X,Y)$ isomorphism $\Rightarrow \exists \rho > 0$ s.t. $\forall S \in L(X,Y)$ s.t. $||S-T|| < \rho$ then $S$ is an isomorphism. 
+	\end{theorem}
+\section{$L^p$-spaces}
+	\subsection{Definitions}
+	Let $(\Omega, \mathcal{A}, \mu)$ be a measure space.
+	\begin{definition}
+		$$\mathcal{L}^p(\Omega, \mu) = \{f \in \mathcal{M}(\Omega, \mathbb{R}): |f|^p \; \mu-\text{integrable}\}$$ for $1\leq p < \infty$ and \[\mathcal{L}^\infty = \{f \in \mathcal{M}(\Omega, \mathbb{R}): \exists N \in \mathcal{A}: \, \mu(N) = 0: \, \sup_{x \in \Omega\setminus N} |f(x)| < \infty\}\]
+		We define the functions \[||f||_p = \left(\int_{\Omega}|f(x)|^p \, d\mu\right)^{1/p}\] and \[||f||_\infty = \text{esssup} |f| = \inf_{N \in \mathcal{A}, \mu(N) = 0} \left(\sup_{x \in \Omega\setminus N}|f(x)\right)\]
+	\end{definition}
+	\begin{lemma}
+		For $p \in [1,\infty]$, $\mathcal{L}^p(\Omega, \mu)$ are vector spaces. The Hölder and Minkowski inequalities hold. But $||f||_p = 0 \not \Rightarrow f \equiv 0$. In general, only $f = 0$ $\mu$-a.e.
+	\end{lemma}
+	We define the equivalence relation $\sim$: $f\sim g$ iff $f = g$ $\mu$-a.e.
+	\begin{definition}
+		For $p \in [1,\infty]$ \[L^p(\Omega, \mu) = \mathcal{L}^p/\sim = \{[f]: f \in \mathcal{L}^p\}\]
+	\end{definition}
+	\begin{theorem}[Fischer-Riesz]
+		For $p \in [1,\infty]$, $(L^p(\Omega, \mu), ||\cdot ||_p)$ is a Banach space. For $p = 2$, $L^2$ is a Hilbert space where \[\langle f,g\rangle = \int_{\Omega} f(x)g(x) \, d\mu(x)\]
+	\end{theorem}
+	\begin{remark}
+		If $(f_k)_{k \in \mathbb{N}}$ Cauchy in $(L^p(\Omega, \mu), ||f||_p)$ then $\exists f \in L^p(\Omega, \mu)$ s.t. $f_k \to f$ in $L^p(\Omega, \mu)$ $\not \Rightarrow f_k \to f$ pointwise $\mu$-a.e.\\
+		But $\exists$ subsequence $f_{k_j} \to f$ $\mu$-a.e.
+	\end{remark}
+	\subsection{Approximation in $L^p$}
+	In $\mathbb{R}^n$ with Lebesgue measure: $\Omega \subset \mathbb{R}^n$ measurable, $L^p(\Omega) = L^p(\Omega, \lambda^n)$.
+	\begin{definition}
+		For $f:\Omega \to \mathbb{R}$ continuous \[\text{supp}(f) = \overline{\{x \in \Omega: \, f(x) \neq 0\}}\] is called the support of $f$.
+	\end{definition}
+	\begin{definition}
+		Let $C^0_0(\Omega, \mathbb{R}) = \{f: \Omega \to \mathbb{R}: f \text{ is continuous and } supp(f) = k \text{ compact and } \exists \Omega' \subset \Omega \text{ open s.t. } k \subset \Omega'\}$ the space of continuous functions with support compactly contained in $\Omega$.
+	\end{definition}
+	\begin{theorem}
+		Let $\Omega \subset \mathbb{R}^n$ open, $1\leq p < \infty$. Then $C^0_0(\Omega)$ is dense in $L^p(\Omega)$
+	\end{theorem}
+	\begin{definition}
+		Similarly we define \[C_0^k = \{f: \Omega \to \mathbb{R}: \, f \in C^k(\Omega) \text{ and } f \in C_0^0(\Omega; \mathbb{R})\}\] the space of $k$-times continuously differentiable functions with compact support in $\Omega$ and $C_0^\infty(\Omega) = \bigcap_{k \in \mathbb{N}} C_0^k(\Omega)$ called the set of test functions.
+	\end{definition}
+	\begin{definition}
+		Define $\phi: \mathbb{R}^n \to \mathbb{R}$ where \[\phi(x) = \begin{cases}
+			c\cdot \exp(-\frac{1}{1-||x||^2}), & ||x||<1\\
+			0, & \text{ otherwise}
+		\end{cases}
+		\]
+		Where $c>0$ is s.t. \[\int_{\mathbb{R}^n} \phi(x)\,dx = 1\]
+		Further, for $\varepsilon>0$, $\phi_\varepsilon:\mathbb{R}^n \to \mathbb{R}$ is defined by \[\phi_\varepsilon(x) = \frac{1}{\varepsilon^n} \phi\left(\frac{x}{\varepsilon}\right)\]
+		Then $\int_{\mathbb{R}^n} \phi_\varepsilon(x)\,dx = 1$.
+	\end{definition}
+	\begin{definition}
+		For $f\in L^1(\Omega), \, \varepsilon>0$ and $f_\varepsilon: \mathbb{R}^n \to \mathbb{R}$ be defined by \[f_\varepsilon(x) = \int_{\Omega} \phi_\varepsilon(x-y)f(y)\,dy\] called the smoothing of $f$.
+	\end{definition}
+	\begin{remark}
+		This is an example of a convolution. For $f,g:\mathbb{R}^n \to \mathbb{R}$ integrable \[\int_{\mathbb{R}^n} f(x-y)g(y)\,dy = f*g(x) = g*f(x)\] is the convolution of $f$ and $g$
+	\end{remark}
+	\begin{lemma}
+		Let $\Omega \subset \mathbb{R}^n$ open $f \in L^1(\Omega)$, $\varepsilon>0$. Then $f\varepsilon \in C^\infty(\mathbb{R}^n)$. If $supp(f) = k\subset\Omega$ compact then for $\varepsilon < dist(k,\partial \Omega)$, $f_\varepsilon \in C_0^\infty(\Omega)$.
+	\end{lemma}
 \end{document}

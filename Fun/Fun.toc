@@ -35,3 +35,11 @@
 \contentsline {subsection}{\numberline {8.1}Definitions}{22}{}%
 \contentsline {subsection}{\numberline {8.2}Theorem of Moore-Aronszajn}{23}{}%
 \contentsline {subsection}{\numberline {8.3}An application}{24}{}%
+\contentsline {section}{\numberline {9}Theorems on continuous linear maps}{24}{}%
+\contentsline {subsection}{\numberline {9.1}uniform boundedness}{24}{}%
+\contentsline {subsection}{\numberline {9.2}open map theorem}{25}{}%
+\contentsline {subsection}{\numberline {9.3}Closed graph theorem}{26}{}%
+\contentsline {subsection}{\numberline {9.4}Consequences}{27}{}%
+\contentsline {section}{\numberline {10}$L^p$-spaces}{27}{}%
+\contentsline {subsection}{\numberline {10.1}Definitions}{27}{}%
+\contentsline {subsection}{\numberline {10.2}Approximation in $L^p$}{28}{}%

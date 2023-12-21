@@ -29,3 +29,5 @@
 \contentsline {subsection}{\numberline {4.1}back propagation}{15}{}%
 \contentsline {subsection}{\numberline {4.2}Loss functions for neural networks}{17}{}%
 \contentsline {subsection}{\numberline {4.3}local minima}{19}{}%
+\contentsline {subsection}{\numberline {4.4}ReLU networks and piece-wise affine functions}{20}{}%
+\contentsline {subsection}{\numberline {4.5}Universal approximators}{21}{}%

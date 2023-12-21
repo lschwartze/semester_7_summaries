@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  8 DEC 2023 13:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  19 DEC 2023 13:39
 entering extended mode
 **./MaMa.tex
 (MaMa.tex
@@ -247,7 +247,7 @@ m/n/12 E[]\OML/cmm/m/it/12 :::\U/msb/m/n/12 E[]\OT1/cmr/m/n/12 [\OML/cmm/m/it/1
 m/m/it/12 x\OT1/cmr/m/n/12 )]
  []
 
-[18] [19] (MaMa.aux) ) 
+[18] [19] [20] [21] (MaMa.aux) ) 
 Here is how much of TeX's memory you used:
  2899 strings out of 479322
  39583 string characters out of 2856609
@@ -257,4 +257,4 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  67i,14n,74p,880b,243s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on MaMa.dvi (20 pages, 75808 bytes).
+Output written on MaMa.dvi (22 pages, 84340 bytes).

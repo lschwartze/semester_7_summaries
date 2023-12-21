@@ -12,3 +12,5 @@
 \contentsline {section}{\numberline {2}komprimierte Ganztext Indizes}{10}{}%
 \contentsline {subsection}{\numberline {2.1}Burrows-Wheeler Transformation}{10}{}%
 \contentsline {subsection}{\numberline {2.2}Datenkompression}{10}{}%
+\contentsline {subsection}{\numberline {2.3}Constant-time rank/select queries}{11}{}%
+\contentsline {subsection}{\numberline {2.4}Backward search}{11}{}%

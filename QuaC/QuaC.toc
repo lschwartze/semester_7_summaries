@@ -20,3 +20,5 @@
 \contentsline {subsection}{\numberline {4.2}Quantum Fourier Transformation}{14}{}%
 \contentsline {subsection}{\numberline {4.3}Algorithmus für die Faktorisierung}{15}{}%
 \contentsline {subsection}{\numberline {4.4}Algorithmus für das Ordnungsproblem}{16}{}%
+\contentsline {section}{\numberline {5}Problem der verborgenen Untergruppe}{20}{}%
+\contentsline {subsection}{\numberline {5.1}Graphenautomorphie Problem}{22}{}%

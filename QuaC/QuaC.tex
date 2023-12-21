@@ -352,4 +352,51 @@
 		Für die Darstellung wird die Methode der Continued fractions eingeführt. Für $\alpha \in \mathbb{R}$ ist $$\alpha = \alpha_0 + \frac{1}{\alpha_1 + \frac{1}{\alpha_2 + \frac{1}{\alpha_3 + ...}}}$$. Für diese Darstellung gilt, dass falls $\alpha = \frac{p}{q} \in \mathbb{Q}$, dann konvergiert die CF Darstellung von $\alpha$ in $\mathcal{O}(\max\{\left|p\right|, \left|q\right|)\}$ vielen Schritten. Insbesondere ist $CF_n(\alpha) = \frac{p_n}{q_n}$ im Allgmeinen die beste Approximation von $\alpha$ mit Nenner $\leq q_n$.\\
 		Auf das Ordnungsproblem angewandt, finden wir also $CF_k(\frac{l}{Q}) = \frac{p_k}{q_k}$ mit $q_k < N$, also $\frac{p_k}{q_k} = \frac{m}{r}$. Falls nun $ggT(m,r) = 1$, dann ist $r' = q_k$. Das ist aber nur ein Kandidat für $r$. An dieser Stelle kann getestet werden, ob $Y^{r'} \equiv 1 \mod N$. Falls nicht ist $r' \leq r$ und der Algorithmus kann wiederholt werden.
 	\end{example}
+\section{Problem der verborgenen Untergruppe}
+	\begin{definition}
+		Eine Gruppe wird als $(G,\circ)$ notiert. Diese erfüllt Assoziativität, die Existenz eines neutralen Elements und die Existenz eines inversen Elements. Eine Untergruppe $H<G$ ist eine abgeschlossene Teilmenge.
+	\end{definition}
+	\begin{definition}[Graph Automorphie]
+		Für einen Graphen $B = (V,E)$ sei $G$ die Menge der Automorphismen auf $G$. Dabei ist $f: V \to V$ bijektiv ein Automorphismus, wenn $\forall u,v \in V$ gilt $uv \in E$ genau dann, wenn $f(u)f(v) \in E$. $G$ ist auch eine Gruppe.
+	\end{definition}
+	\noindent Eine Untergruppe $H$ zerlegt $G$ in Nebenklassen $G = \bigcup_{g \in G} gH$ wobei $gH = \{gh : h \in H\}$.
+	\begin{lemma}
+		Sei $G$ eine Gruppe und $H<G$. $\forall g_1,g_2 \in G$ gilt $g_1H = g_2H \Leftrightarrow g_1^{-1}h_2 \in H$.
+	\end{lemma}
+	\begin{lemma}
+		Sei $G$ eine endliche Gruppe, $H<G$. Dann haben alle Nebenklassen genau $\left|H\right|$ viele Elemente.
+	\end{lemma}
+	Mit diesen Informationen beschäftigen wir uns nun mit dem Problem der verborgenen Untergruppe.\\
+	Gegeben sei eine endliche Gruppe $G$ und $f:G \to \{0,1\}^n$ mit einem Black-Box Schaltkreis. $f$ habe die Eigenschaft, dass eine Untergruppe $H$ existiere sodass \[\forall g \in G\; \forall h \in H\; f(g) = f(gh)\] $f$ ist also konstant in jeder Nebenklasse aber $\forall g_1 \neq g_2$ und $g_1H \neq g_2H$ soll \[f(g_1) \neq f(g_2)\] Die Aufgabe ist nun, $H$ zu finden.\\
+	Man kann sehen, dass viele bereits bekannte Probleme auf das Problem der verborgenen Untergruppe zurückführbar sind.
+	\begin{remark}[Simon]
+		Hier ist gegeben $f:\{0,1\}^n \to \{0,1\}^n$ und $\exists a$ sodass $f(x) = f(x\oplus a)$. Man soll $a$ finden.\\
+		Sei nun $G = \mathcal{F}_2^n$ mit der bitweisen Operation $\oplus$. $G$ ist eine Gruppe. Definiert man nun $H = \{0^n,a\}$, so ist $H$ eine Untergruppe und es gilt $f(gh) = f(g)$ für alle $h \in H$. Außerdem ist $G = x_1H \cup x_2H \cup ... \cup x_NH$ mit $x_i \neq x_j \oplus a$ für alle $i \neq j$. Es handelt sich also um ein Untergruppen Problem, das man lösen kann, wenn $H$ gefunden wird.
+	\end{remark}
+	\begin{remark}[Bernstein-Varizani]
+		Gegeben ist $f:\{0,1\}^n \to \{0,1\}$ und es existiert ein $a$ sodass $f(x) = xa$. Die Aufgabe ist, $a$ zu finden.\\
+		Wir definieren nun $G = \mathcal{F}_2^n$ wieder mit der bitweisen Paritätsfunktion $\oplus$. Wir definieren \[H = \{x \in \{0,1\}^n | x\bot a\} = \{x \in \{0,1\}^n | x\cdot a = 0\}\]
+		$H$ ist eine Untergruppe und da $G$ endlich und $G = x_1H \cup x_2H \cup ... \cup x_NH$ gilt für jedes $x_i$: \[f(x_i\oplus h) = (x_i\oplus h)a = x_i \cdot a \oplus \underbrace{h \cdot a}_{=0} = f(x_i)\] Die andere Eigenschaft ist trivial auch erfüllt und damit ist auch dieses Problem auf das Untergruppenproblem rückführbar.
+	\end{remark}
+	\begin{remark}[Shor]
+		Gegeben $Y,N$ mit $ggT(Y,N) = 1$. Finde $\min\{r|Y^r \equiv 1\}$.\\
+		Wir definieren $G = (\mathbb{Z},+)$ mit der Addition als unsere Gruppe. Es sei $H = \{rm | m \in \mathbb{Z}\}$. Die Nebenklassen von $H$ sind dann $\mathbb{Z} = r\mathbb{Z} \cup 1+r\mathbb{Z} \cup ... \cup (r-1) + r\mathbb{Z}$. Außerdem sei $f_N(x) = Y^x\mod N$.\\
+		Gilt $x \in a+r\mathbb{Z}$, dann ist $f(x) = f(a+rk) = Y^{a+rk}\mod N = Y^a \mod N \cdot\underbrace{ Y^{rk} \mod N}_{=1} = f(a)$. Andererseits für $a\neq b < r$ würde gelten, wenn $f(a) = f(b)$, dass \[Y^a \mod N = Y^b \mod N\] und damit wäre $Y^{a-b} = 1 \mod N$. Da man o.B.d.A. von $a > b$ ausgehen kann, gilt, dass $r = a-b < r$, was einen Widerspruch darstellt, oder dass $a=b$, was auch einen Widersprich darstellt. Also lässt sich auch dieses Problem auf das Untergruppenproblem reduzieren. 
+	\end{remark}
+	\begin{theorem}
+		Ist $G$ abelsch, dann ist das HSP für $G$  in BQP.
+	\end{theorem}
+	\begin{lemma}
+		Sei $G = (G\mathbb{F}_2^n, \oplus)$. Sei $H<G$ und $H^\bot = \{h \in G | g\cdot h = 0 \; \forall g \in G\}$.  Für $y \in G\mathbb{F}_2^n$ gilt \[\sum_{h \in H} (-1)^{hy} = \begin{cases}
+			\left|H\right|, & y \in H^\bot\\
+			0, & \text{ sonst}
+		\end{cases}\]
+	\end{lemma}
+	Wir geben nun einen Algorithmus an, der ein Element aus $H^\bot$ findet. \[|0^n\rangle |0^n\rangle \overset{H}{\to} \frac{1}{\sqrt{2^n}} \sum_{x \in \{0,1\}^n} |x\rangle |0^n\rangle \overset{U_f}{\to} \frac{1}{\sqrt{2^n}}\sum_{x \in \{0,1\}^n} |x\rangle |f(x)\rangle\] Sei nun $T$ eine Menge mit einem Element aus jeder Nebenklasse von $H$. Dann gilt \[\left|T\right| = \frac{\left|G\right|}{\left|H\right|} = \frac{2^n}{\left|H\right|}\] Es gilt darum weiter \[\frac{1}{\sqrt{2^n}}\sum_{x \in \{0,1\}^n} |x\rangle |f(x)\rangle = \frac{1}{\sqrt{2^n}}\sum_{g \in T} \sum_{x \in H} |g\oplus x\rangle |f(g)\rangle \overset{H}{\to} \frac{1}{\sqrt{2^n}} \sum_{g \in T} \sum_{x \in H} \frac{1}{\sqrt{2}^n} \sum_{y \in \{0,1\}^n} (-1)^{(g\oplus x)y}|y\rangle |f(g)\rangle\]\[ = \frac{1}{2^n} \sum_{g \in T} \sum_{y \in \{0,1\}^n} (-1)^{gy}\sum_{x \in H} (-1)^xy|y\rangle|f(g)\rangle = \frac{\left|H\right|}{2^n} \sum_{g \in T} \sum_{y\in H^\bot} (-1)^{gy}|y\rangle |f(g)\rangle\]
+	Nun wird auf dem ersten Qubit gemessen und man erhält $y \in H^\bot$ mit Wahrscheinlichkeit $$\sum_{g \in T} \left(\frac{\left|H\right|}{2^n} (-1)^{gy}\right)^2 = \sum_{g \in T} \frac{\left|H\right|^2}{2^{2n}} = \frac{\left|T\right| \left|H\right|^2}{2^{2n}} = \frac{\left|H\right|}{2^n}$$ Insbesondere können alle $y \in H1\bot$ mit der gleichen Wahrscheinlichkeit gemessen werden. Hat $H^\bot$ nun die Dimension $d$, messen wird $d$ Vektoren $y$ um \[\mathbb{P}[\text{alle Vektoren sind linear unabhängig}] \geq \frac{1}{4}\]
+	\subsection{Graphenautomorphie Problem}
+	Wir wissen bereits, dass sich dieses Problem als HSG Problem darstellen lässt. Allerdings unterscheidet sich die Formulierung von den meisten anderen insofern, dass die erzeugt Gruppe nicht abelsch ist.\\
+	Formal definiert ist ein Automorphismus eine Abbildung $\phi: V \to V$ wobei $\forall u,v \in V$ gilt $(u,v) \in E \iff (\phi(u),\phi(v)) \in E$. Die Menge der Automorphismen ist eine Untergruppe der Menge der Permutationen auf $V$. Insbesondere kann ein $f: \{\text{Permutationen} \to \{0,1\}^n\}$ definiert werden, sodass $f(\phi) = \phi(G)$. Ist $\phi$ ein Automorphismus, dann gilt $\phi(G)=G$. Die Fragestellung kann nun formuliert werden als\\
+	Gegeben $G$, existiert eine nicht-trivialer Automorphismus auf $V(G)$?\\
+	Dieses Problem ist eng verwandt mit dem Graphisomorphismus Problem, denn $G$ und $H$ sind isomoprh $\iff \left|AUT(G\cup H)\right| = 2\left|AUT(G)\right|\left|AUT(H)\right|$.
 \end{document}

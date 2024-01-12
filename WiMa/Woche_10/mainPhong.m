@@ -3,7 +3,7 @@ clc, clear, close all
 % WS 23/24
 
 %% Parameter fuer die Berechnung der Szene
-geometry_resolution = 100; % Feinheit der Diskretisierung der Szene
+geometry_resolution = 50; % Feinheit der Diskretisierung der Szene
 
 
 %% Setze Parameter fuer Beleuchtung
@@ -47,7 +47,7 @@ plotGrid(coord,elem,elem2obj,auge,s,n)
 %% Berechne Sichtbarkeit aller Dreiecke zueinander
 
 tic
-[vis, elem_vis] = getVisibility(coord,elem,elem2obj,coord2obj,s,n);
+[vis, elem_vis] = getVisibilityBB(coord,elem,elem2obj,coord2obj,s,n);
 toc
 
 % Plotte Ausgangs-Szene (nur die sichtbaren Elemente)

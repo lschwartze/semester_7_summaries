@@ -47,7 +47,6 @@ function [vis,elem_vis] = getVisibility(coord,elem,elem2obj,coord2obj,s,n)
     vis(idx) = 0;
     
     elem_vis = elem(vis == 1, :);
-    % doesIntersect(elem2obj, vis, t2, light_centroid, s, coord);
     t2A = elem(full,1);
     t2B = elem(full,2);
     t2C = elem(full,3);

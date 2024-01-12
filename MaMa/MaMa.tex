@@ -33,7 +33,7 @@
 	\end{titlepage}
 	\tableofcontents
 	\newpage
-\section{Classification Learning}
+	\section{Classification Learning}
 	\subsection{vocabulary}
 	\begin{itemize}
 		\item domain set $X$: set of possible inputs
@@ -43,7 +43,7 @@
 		\item training set $S \subseteq X$: pairs $(x,y)$ of data points $x$ and labels $y$
 		\item classifier $h$: function $X \to Y$
 	\end{itemize}
-
+	
 	\subsection{loss and error}
 	Let $h$ be a classifier $h: X \to Y$.\\
 	\begin{itemize}
@@ -52,9 +52,9 @@
 			0, \text{ if } y = y'\\
 			1, \text{ if } y \neq y'
 		\end{cases}\]
-	\item training error: \[L_S(h) = \frac{1}{\left|S\right|} \sum_{(x,y) \in S} l(y,h(x))\]
+		\item training error: \[L_S(h) = \frac{1}{\left|S\right|} \sum_{(x,y) \in S} l(y,h(x))\]
 	\end{itemize}
-
+	
 	\begin{example}
 		Let $X = \mathbb{R}^2$ and $Y = \{-1,1\}$. The easiest function is a linear classifier that splits $X$ in two parts and characterizes data points accordingly. For the general case of $X = \mathbb{R}^n$, $w \in \mathbb{R}^n$ and $b \in \mathbb{R}$ we have:
 		\[h_{w,b} = sgn(w^Tx + b)\] 
@@ -83,7 +83,7 @@
 	\begin{lemma}
 		For all training sets $S \subseteq \mathbb{R}^n \times \{-1,1\}$ it holds that \[\frac{1}{\left|S\right|} \sum_{(x,y) \in S} h_{0-1}(y,h_w(x)) \leq \frac{1}{\left|S\right|} \sum_{(x,y) \in S} -log_2(\phi_{sig}(yw^Tx))\]
 	\end{lemma}
-
+	
 	\subsection{training error and real life}
 	A classifier is only good, if it performs good on new data. To test your classifier you need to evaluate the classifier on data it hasn't seen during training. This is called the test error. The question now is, how the data should be split into test and training data. This is a difficult question and should be evaluated for each use case separately. A part from the training set should also be used for validation if there are degrees of freedom in the chosen classifier.
 	
@@ -144,8 +144,8 @@
 			\text{large if picture shows cat or dog}\\
 			\text{small if not}
 		\end{cases}$ where $p$ is a picture. Instead $D$ is defined on $X\times Y$ because there might be some uncertainty in $X$\\
-	\item iid: data points of the training set are drawn from $D$ independently
-	\item $D$ is fixed 
+		\item iid: data points of the training set are drawn from $D$ independently
+		\item $D$ is fixed 
 	\end{itemize}
 	A classifier $h^*: X \to Y$ works well on new data if \[L_D(h^*) = \mathbb{E}_{(x,y)\sim D}[l(y,h^*(x))]\] is small. This is called true risk or generalization error. For classification using the zero-one-loss this simplifies to \[L_D(h^*) = \mathbb{P}_{(x,y)\sim D}[h^*(x)\neq y]\]
 	\subsection{Bayes error and classifier}
@@ -154,7 +154,7 @@
 	\begin{theorem}
 		For all classifiers $h: X \to Y$ it holds that \[L_D(h) \geq L_D(h_{bayes})\]
 	\end{theorem}
-
+	
 	\section{PAC learning}
 	Let $H$ be a set of classifiers. Draw a training set $S$ from $D$. The goal is to minimize $h_S = \arg\min\limits_{h \in H}L_S(h)$. This is called the method of empirical risk minimization.
 	\subsection{empirical risk minimisation}
@@ -233,7 +233,7 @@
 			\item with probability $\geq \frac{1}{7}$ and a choice of training set $S$ with $\left|S\right| = m$ we have: \[L_D(A(S)) \geq \frac{1}{8}\]
 		\end{enumerate}
 	\end{theorem}
-
+	
 	\subsection{VC-dimension of linear classifiers}
 	\begin{theorem}
 		The class of linear classifiers in $\mathbb{R}^d$ \[H = \{x\mapsto sgn(w^Tx): \; w \in \mathbb{R}^d\}\]
@@ -430,4 +430,45 @@
 	\begin{theorem}
 		Let $f: \mathbb{R}^n \to \mathbb{R}$ be Lebesgue-measurable. Then there is a ReLU network $n$ of width $\leq n+4$ and perhaps large depth s.t. \[\int_{\mathbb{R}} \left|f(x) - N(x)\right|\, d\lambda(x) \leq \varepsilon\]
 	\end{theorem}
+	\begin{theorem}[Hanin]
+		Let $f: \mathbb{R}^n \to \mathbb{R}$ be a continuous piecewise affine function. If \[f(x) = \max_i g_i(x) - \max_j h_j(x)\] with $i,j \in \{1,...,N\}$ then there is a ReLU network $F$ with linear output layer of depth at most $3N$ and width $2n+8$ such that $F(x) = f(x)$.
+	\end{theorem}
+	\subsection{Deep neural networks vs. shallow neural networks}
+	In the following we consider the saw-tooth function. Define $\Delta: \mathbb{R} \to \mathbb{R}$ by \[\Delta: x \mapsto \begin{cases}
+		2x, & x \in [0,1/2]\\
+		2-2x & x \in (1/2, 1]\\
+		0 & x \notin [0,1]
+	\end{cases}\]
+	For any $n \in \mathbb{N}$ we can easily see, that $\Delta^n$ is an iteration of spikes. $\Delta$ is a piece-wise affine function with piece number 4.
+	\begin{lemma}
+		For $l \geq 1$ we have that $$\Delta^l(x) = \begin{cases}
+			2^lx-k+1, & x \in [(k-1)\frac{1}{2^l},k\frac{1}{2^l}] \text{ for odd } k\in\{1,...,2^l\}\\
+			-2^lx+k, & x \in [(k-1)\frac{1}{2^l},k\frac{1}{2^l}] \text{ for even } k \in \{1,...,2^l\}\\
+			0, & x \notin [0,1]
+		\end{cases}$$
+		It is a piecewise affine functions with piece-number $2+2^l$.
+	\end{lemma}
+	We now try to calculate $\Delta$ via a ReLU neural network.
+	\begin{lemma}
+		$\Delta(x) = 2(ReLU(x)-2ReLU(x-\frac{1}{2})+ReLU(x-1))$.
+	\end{lemma}
+	\begin{lemma}
+		$\Delta^l$ can be realised by a ReLU network with $2l$ layers and $4n$ neurons.
+	\end{lemma}
+	\begin{theorem}[Telgarsky]
+		Let $L\geq 2$ and $l=L^2+4$.
+		\begin{enumerate}
+			\item $\Delta^l$ can be computed by a ReLU network with $\leq 2L^2+8$ layers and $\leq 4L^2 + 16$ neurons.
+			\item for every ReLU network $N$ with at most $L$ layers and at most $2^L$ neurons it holds that \[\int_{[0,1]} \left|N(x)-\Delta^l(x)\right| dx \geq \frac{1}{32}\]
+		\end{enumerate}
+	\end{theorem}
+	\subsection{Overconfident neural networks}
+	\begin{theorem}
+		Let $N$ be a ReLU network with softmax output layer and let \[f:\mathbb{R}^n \to \mathbb{R}^K\] be the piecewise affine function such that $N$ computes the function $soft\circ f$, where $soft$ is the softmax function. Let $Q_1,...,Q_s$ be the pieces of $f$ and let $f|_{Q_t}$ be described by the affine function $x \mapsto A^{(t)}x+b^{(t)}$. If for all $t=1,...,s$ the matrix $A^{(t)}$ does not have identical rows, then for almost every $x\in\mathbb{R}^n$ there exists a class $k\in \{1,...,K\}$ such that the confidence of $N$ that $\alpha x$ lies in $k$ tends to $1$ as $\alpha \to \infty$, i.e. \[\lim\limits_{\alpha \to \infty} \frac{e^{f_k(\alpha x)}}{\sum_{l=1}^{K} e^{f_l(\alpha x)}} = 1\]
+	\end{theorem}
+	\begin{lemma}
+		Let $f: \mathbb{R}^n \to \mathbb{R}^m$ be a piecewise affine function with pieces $Q_1,...,Q_s.$ For every $x \in \mathbb{R}^n$ there is an $\alpha \geq 1$ and a piece $Q_t$ such that $\beta x \in Q_t$ fpr all $\beta \geq \alpha$.
+	\end{lemma}
+	\subsection{convolutions}
+	
 \end{document}

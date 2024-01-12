@@ -43,3 +43,7 @@
 \contentsline {section}{\numberline {10}$L^p$-spaces}{27}{}%
 \contentsline {subsection}{\numberline {10.1}Definitions}{27}{}%
 \contentsline {subsection}{\numberline {10.2}Approximation in $L^p$}{28}{}%
+\contentsline {subsection}{\numberline {10.3}Separability of $L^p$}{30}{}%
+\contentsline {subsection}{\numberline {10.4}Dualspace of $L^p(\Omega )$, $p \in [1,\infty )$}{30}{}%
+\contentsline {section}{\numberline {11}Reflexive Spaces and Weak Convergence}{31}{}%
+\contentsline {subsection}{\numberline {11.1}Reflexive Spaces}{31}{}%

@@ -66,11 +66,11 @@
 		Wir definieren weiter eine Qubit-Norm $||\cdot||: \mathbb{C}^n \to \mathbb{C}$ durch \[|||\phi \rangle || = \sqrt{\langle \phi | \phi \rangle}\]
 		Dabei heißt ein Vektor $\phi$ unitär, wenn $|||\phi \rangle|| = 1$.
 	\end{definition}
-
+	
 	\begin{definition}
 		Wir definieren zu den Vektoren $|0\rangle$ und $|1\rangle$ eine Dualbasis durch $$|\nearrow\rangle = \frac{1}{\sqrt{2}}\binom{1}{1}$$ und $$|\searrow\rangle = \frac{1}{\sqrt{2}}\binom{1}{-1}$$. Dies ist eine Orthonormalbasis.
 	\end{definition}
-
+	
 	\begin{definition}(Tensorprodukt)
 		Seien $x = \binom{x_1}{x_2}$ und $y = \binom{y_1}{y_2}$ zwei Vektoren. Das Tensorprodukt ist definiert als \[x \otimes y = \begin{pmatrix}
 			x_1y_1\\
@@ -83,10 +83,10 @@
 			\vdots & & \vdots\\
 			a_{m,1} & \dots & a_{m,n}
 		\end{pmatrix}\] und eine beliebig dimensionale Matrix $B$ angewandt werden durch \[A \otimes B = \begin{pmatrix}
-		a_{1,1}B & \dots & a_{1,n}B\\
-		\vdots & & \vdots\\
-		a_{m,1}B & \dots & a_{m,n}B
-	\end{pmatrix}\]
+			a_{1,1}B & \dots & a_{1,n}B\\
+			\vdots & & \vdots\\
+			a_{m,1}B & \dots & a_{m,n}B
+		\end{pmatrix}\]
 	\end{definition}
 	Wenn mehrere Qubits $|\phi\rangle = \binom{\alpha}{\beta}$ und $|\psi\rangle =  \binom{\gamma}{\delta}$ vorliegen, dann schreiben wir \[|\phi\rangle |\psi\rangle = |\phi \psi \rangle = |\phi\rangle \otimes |\psi\rangle \in \mathbb{C}^4\]
 	Wird $|\phi^n\rangle$ geschrieben, so ist damit das $n$-fache Tensorprodukt von $|\phi\rangle$ gemeint. 
@@ -99,7 +99,7 @@
 			\item $(|u\rangle \otimes |v\rangle , |w\rangle \otimes |x\rangle) = (|u\rangle\otimes|w\rangle , |v\rangle\otimes|x\rangle)$
 		\end{enumerate}
 	\end{lemma}
-
+	
 	\subsection{Quantenschaltkreise}
 	Diese unterscheiden sich von klassischen Schaltkreisen insofern, dass Operationen reversibel sind. In klassischen Schaltkreisen ist das nicht der Fall, da zum Beispiel bei einer $\land$ Verknüpfung mit Ergebnis 0 nicht auf die Eingabewerte rückgeschlossen werden kann. Quantenschaltkreise können verwendet werden um sowohl klassische als auch probabilistische Schaltkreise zu modellieren.
 	\begin{theorem} [no cloning satz]
@@ -212,11 +212,11 @@
 			\vdots\\
 			\alpha_N
 		\end{pmatrix} = \begin{pmatrix}
-		\beta_1\\
-		\vdots\\
-		\beta_N
-	\end{pmatrix}\]
-	Wobei $\beta_i = \frac{2}{N}\sum_{j=1}^N \alpha_k - \alpha_i$. Das heißt für den Durchschnitt der Amplituden $\mu = \sum_{j=1}^N \frac{\alpha_j}{N}$ ist $\beta_i = 2\mu - \alpha_i$.
+			\beta_1\\
+			\vdots\\
+			\beta_N
+		\end{pmatrix}\]
+		Wobei $\beta_i = \frac{2}{N}\sum_{j=1}^N \alpha_k - \alpha_i$. Das heißt für den Durchschnitt der Amplituden $\mu = \sum_{j=1}^N \frac{\alpha_j}{N}$ ist $\beta_i = 2\mu - \alpha_i$.
 	\end{definition}
 	Als Eingabe Qubits dienen wieder $|0^n\rangle$ und $|0\rangle$. Diese werden Hadamard transformiert und das Resultat in $U_f$ eingegeben. Der obere Output von $U_f$ wird $D$ transformiert. $U_f$ mit anschließender $D$ Transformation wird $G$ genannt. Der Grover Algorithmus funktioniert durch $m$-males Anwenden von $G$. Zusammengefasst:
 	\begin{eqnarray*}
@@ -352,7 +352,7 @@
 		Für die Darstellung wird die Methode der Continued fractions eingeführt. Für $\alpha \in \mathbb{R}$ ist $$\alpha = \alpha_0 + \frac{1}{\alpha_1 + \frac{1}{\alpha_2 + \frac{1}{\alpha_3 + ...}}}$$. Für diese Darstellung gilt, dass falls $\alpha = \frac{p}{q} \in \mathbb{Q}$, dann konvergiert die CF Darstellung von $\alpha$ in $\mathcal{O}(\max\{\left|p\right|, \left|q\right|)\}$ vielen Schritten. Insbesondere ist $CF_n(\alpha) = \frac{p_n}{q_n}$ im Allgmeinen die beste Approximation von $\alpha$ mit Nenner $\leq q_n$.\\
 		Auf das Ordnungsproblem angewandt, finden wir also $CF_k(\frac{l}{Q}) = \frac{p_k}{q_k}$ mit $q_k < N$, also $\frac{p_k}{q_k} = \frac{m}{r}$. Falls nun $ggT(m,r) = 1$, dann ist $r' = q_k$. Das ist aber nur ein Kandidat für $r$. An dieser Stelle kann getestet werden, ob $Y^{r'} \equiv 1 \mod N$. Falls nicht ist $r' \leq r$ und der Algorithmus kann wiederholt werden.
 	\end{example}
-\section{Problem der verborgenen Untergruppe}
+	\section{Problem der verborgenen Untergruppe}
 	\begin{definition}
 		Eine Gruppe wird als $(G,\circ)$ notiert. Diese erfüllt Assoziativität, die Existenz eines neutralen Elements und die Existenz eines inversen Elements. Eine Untergruppe $H<G$ ist eine abgeschlossene Teilmenge.
 	\end{definition}
@@ -399,4 +399,68 @@
 	Formal definiert ist ein Automorphismus eine Abbildung $\phi: V \to V$ wobei $\forall u,v \in V$ gilt $(u,v) \in E \iff (\phi(u),\phi(v)) \in E$. Die Menge der Automorphismen ist eine Untergruppe der Menge der Permutationen auf $V$. Insbesondere kann ein $f: \{\text{Permutationen} \to \{0,1\}^n\}$ definiert werden, sodass $f(\phi) = \phi(G)$. Ist $\phi$ ein Automorphismus, dann gilt $\phi(G)=G$. Die Fragestellung kann nun formuliert werden als\\
 	Gegeben $G$, existiert eine nicht-trivialer Automorphismus auf $V(G)$?\\
 	Dieses Problem ist eng verwandt mit dem Graphisomorphismus Problem, denn $G$ und $H$ sind isomoprh $\iff \left|AUT(G\cup H)\right| = 2\left|AUT(G)\right|\left|AUT(H)\right|$.
+	\section{Endliche Quantenautomaten}
+	\begin{definition}[endlicher Automat]
+		Ein klassischer Automat, genannt 1DFA ist gegeben als \[A = (Q, \Sigma, \delta, z_0, E)\] wobei \begin{itemize}
+			\item $Q$ die Menge der Zustände
+			\item $\Sigma$ das Alphabet
+			\item $\delta : Q\times \Sigma \to Q$ die Überführungsfunktion
+			\item $z_0$ der Anfangszustand
+			\item und $E\subset Q$ die Menge der Endzustände ist
+		\end{itemize}
+		$\delta$ kann für ein $a \in \Sigma$ als Matrix beschrieben werden, durch \[(M_a)_{j,i} = \begin{cases}
+			1, & \delta(q_i, a) = q_j\\
+			0, & \text{ sonst}
+		\end{cases}\]
+		wobei $q_i, q_j$ Zustände in $Q$ seien. Diese können weiter als Vektoren geschrieben werden, wodurch $\delta$ mit einer Matrixmultiplikation dargestellt werden kann.\\
+		Probabilistische Automaten verallgemeinern die 1DFA dadurch, dass ein Übergang beim Lesen eines Buchstabens $\sigma \in \Sigma$ mehrere Zustände annehmen kann. Jeder Übergang ist einer Wahrscheinlichkeit zugeordnet. In diesem Modell ist ein Zustand wieder ein Vektor, wobei die Komponenten jedem möglichen Zustand eine Wahrscheinlichkeit zuordnen. Ein Zustand für $Q = \{q_1,q_2\}$ der Form $\binom{1/2}{1/2}$ wäre also mit 50\%-iger Wahrscheinlichkeit $q_1$ und genauso $q_2$. Die Übergangsmatrix ist dann auch anders definiert:\\
+		Es gilt $\delta(q_i,a,q_j) = \mathbb{P}[q_i \overset{a}{\to} q_j]$. Für $a \in \Sigma$ ist $(M_a)_{j,i} = \delta(q_i,a,q_j)$
+	\end{definition}
+	\begin{definition}
+		Ein endlicher Quantenautomat, genannt 1QFA, ist definiert durch ein Tupel \[A = (Q,\Sigma,\delta,q_0,E_a,E_r)\] wobei \begin{itemize}
+			\item $Q$ die Menge der Zustände,
+			\item $\Sigma$ das Alphabet,
+			\item $\delta$ die Übergangsfunktion,
+			\item $q_0$ der Startzustand,
+			\item $E_a$ die Menge der akzeptierenden Zustände,
+			\item $E_r$ die Menge der verwerfenden Zustände ist.
+		\end{itemize}
+		Insbesondere muss als $E_a,E_r \subset Q$ mit $E_a \cap E_r = \varnothing$ gelten. $E_n = Q\setminus (E_a \cup E_r)$ ist de Menge der Messzustände. Wir definieren die Basiszustände $|q_i\rangle$ mit $q_i \in Q$. Möglich sind aber auch Quantenzustände $|q\rangle = \sum_{q_i \in Q} \alpha_i |q_i\rangle$ mit $\alpha_i \in \mathbb{C}$.  
+		Weiter gilt $\delta: Q\times \Sigma \times Q \to \mathbb{C}$ mit $\delta(q_i,a,q_j)$ ist die Amplitude von $q_j$ im erreichten Quanten-Zustand. Damit ist für $a \in \Sigma$ \[(M_a){j,i} = \delta(q_i,a,q_j)\] und $M_a$ ist unitär. Einen Übergang kann man auch über einen linearen Operator $V_a$ definieren. Dabei ist \[V_a|q\rangle= \sum_{q' \in Q} \delta(q,a,q')|q'\angle\] wobei $\sum_{q' \in Q} \left|\delta(q,a,q')\right|^2 = 1$. Dafür wird $a$ aus dem Arbeitsalphabet $\Gamma = \Sigma \cup \{\#, \$\}$. Diese sind als Start- und Endbuchstaben gedacht und sind unabhängig von $\Sigma$.
+	\end{definition}
+	Wir führen nun ein, wie Messungen mit 1QFA funktionieren.
+	\subsection{Messung nach Lesen von jedem Symbol}
+	Es gilt $Q = E_a \cup E_r \cup E_n$. Ein Zustand $|\psi\rangle$ wird gemessen und man erreicht einen von drei Fällen. Ist das Ergebnis der Messung in $E_a$ wird akzeptiert und angehalten, ist es in $E_r$ wird verworfen und angehalten und ist das Ergebnis in $E_n$, so wird normiert und weiter gemacht.\\
+	Sei $|\psi\rangle = \alpha_0 |q_0\angle + \alpha_1|q_1\rangle + \alpha_2|q_2\rangle + \alpha_3|q_3\rangle$ ein konkreter Zustand. Sei weiter $E_a = \{q_0\}, E_r = \{q_1\}, E_n = \{q_2,q_3\}$. Mit Wahrscheinlichkeit $\left|\alpha_0\right|^2$ wird akzeptiert, mit Wahrscheinlichkeit $\left|\alpha_1\right|^2$ wird verworfen und mit Wahrscheinlichkeit $\left|\alpha_2\right|^2 + \left|\alpha_3\right|^2$ wird weiter gerechnet. Der Folgezustand müsste im letzten Fall normiert werden und hat damit die Form \[(\alpha_2|q_2\rangle + \alpha_3|q_3\rangle)/\sqrt{\left|\alpha_2\right|^2 + \left|\alpha_3\right|^2}\]
+	\subsection{Beschreibung der Berechnung}
+	Wir betrachten Tupel der Form $(|\psi\rangle, p_a, p_r)$ vom Zustand und den bisherigen Halte-Wahrscheinlichkeiten. Am Anfang ist daher der Zustand $(|q_0\rangle, 0, 0)$. Lesen von $b \in \Sigma$ ist darstellbar als die Überführung zu \[(T_b|q_0\rangle,p_a,p_r)\]
+	
+	\begin{definition}
+		Ein 1QFA $A$ akzeptiert $L\subset \Sigma^*$ mit Wahrscheinlichkeit $\frac{1}{2}+\varepsilon$, wenn \begin{enumerate}
+			\item $x\in L$ impliziert, $\mathbb{P}(A \text{ akzeptiert}) \geq \frac{1}{2} + \varepsilon$, wobei $x = b_1b_2...b_n$ und damit \[T_\$T_{b_n}...T_{b_2}T_{b_1}T_\#(|q_0\rangle,0,0) = (|\psi\rangle, p_a, p_r)\] und damit $p_a \geq \frac{1}{2}+\varepsilon$ gelten muss. 
+			\item $x\notin L$ impliziert $p_r \geq \frac{1}{2}+\varepsilon$.
+		\end{enumerate}
+	\end{definition}
+	\begin{theorem}
+		$1QFA \subsetneq REG$.
+	\end{theorem}
+	Die Frage ist nun, ob man Quantenautomaten stärker machen kann, um alle regulären Sprachen abzudecken.
+	\subsection{Der Two-Way-Quanten-Automat}
+	Wir beginnen zuerst mit dem klassischen Pendant.
+	\begin{definition}[2DFA]
+		Ein 2-DFA ist definiert wie ein 1DFA mit \[\delta: Q\times \Gamma \to Q\times \{L,N,R\}\] wobei $L,N,R$ die Richtungen der dazugehörigen Turingmaschine sind. Dieses Modell ist aber nicht stärker als die 1DFA. 
+	\end{definition}
+	\begin{definition}[2QFA]
+		Sei $Q = \{q_0,...,q_n\}$. Im eindimensionalen Fall waren die Basiszustände definiert als $|q_i\rangle$. Im zweidimensionalen Fall sind die Basiszustände definiert durch $|q,i\rangle$ mit $q\in Q, \; i \in \{1,...,n\}$. $q$ ist dabei ein Zustand und $i$ eine Position im Eingabestring. Die Übergangsfunktion $\delta$ wird definiert durch \[\delta: Q \times \Gamma \times Q\times \{-1,0,1\} \to \mathbb{C}\]
+		Die Funktion der 1QFA erfüllte auch die Orthogonalitätseingeschaft \[\delta(q_1,b,q')\delta(q_2,b,q')^* = \begin{cases}
+			1, & q_1 = q_2\\
+			0, & q_1\neq q_2
+		\end{cases}\]
+		Die Funktion für 2QFA muss die selbe Eigenschaft erfüllen.\\
+		Wir zerlegen die Übergangsfunktion in zwei Teile. Der erste Teil kümmert sich um die Zustände und ist gleich definiert wie im Falle eines 1QFA. Die Richtung wird definiert durch \[D:Q\to \{-1,0,1\}\]
+		Im Allgemeinen sei $D(q,i) = (q,i+d \mod n)$ für $d \in \{-1,0,1\}$. 
+	\end{definition}
+	\begin{theorem}
+		Ein 2QFA kann nicht reguläre Sprachen erkennen. Es gilt \[1QFA \subsetneq REG \subsetneq 2QFA\]
+	\end{theorem}
 \end{document}

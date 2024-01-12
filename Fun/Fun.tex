@@ -48,11 +48,11 @@
 			\item $d(x,z) \leq d(x,y) + d(y,z) \; \forall x,y,z \in X$
 		\end{enumerate}
 	\end{definition}
-
+	
 	\begin{remark}($d$ admits only positive values)\\
 		\[0 = d(x,x) \leq d(x,y) + d(y,x) = 2d(x,y)\]
 	\end{remark}
-
+	
 	\begin{example}
 		\begin{enumerate}
 			\item $d_2(x,y) = ||x-y||_2$
@@ -66,7 +66,7 @@
 	\begin{definition} (convergence)\\
 		A sequence $(x_n)_{n \in \mathbb{N}}$ in a metric space $(X,d)$ is said to be convergent to $x \in X$ if \[x_n \to x \text{ in } (X,d)\] or \[\lim\limits_{n \to \infty} x_n = x \text{ in } (x,d)\]
 	\end{definition}
-
+	
 	\subsection{Topology in metric spaces}
 	Let $(X,d)$ be a metric space.
 	\begin{definition}
@@ -76,7 +76,7 @@
 			\item $A \subset X$ is closed if $X \setminus A$ is open.
 		\end{enumerate}
 	\end{definition}
-
+	
 	\begin{theorem} (metric spaces are topological spaces)\\
 		Let $\mathcal{T}$ be the set of open subsets of $X$. Then \begin{enumerate}
 			\item $\varnothing, X \in \mathcal{T}$
@@ -84,7 +84,7 @@
 			\item if $\{U_i\}_{i \in I} \subset \mathcal{T}$, then $\bigcup_{i \in I} \in \mathcal{T}$
 		\end{enumerate}
 	\end{theorem}
-
+	
 	\begin{remark}
 		\begin{enumerate}
 			\item $\varnothing, X$ are closed
@@ -92,16 +92,16 @@
 			\item arbitrary intersections of closed sets is closed
 		\end{enumerate}
 	\end{remark}
-
+	
 	\begin{lemma}
 		$A \subset X$ is closed iff $\forall$ convergent sequences $(x_n)_{n \in \mathbb{N}} \subset A$ the limit point is in $A$.
 	\end{lemma}
-
+	
 	\begin{definition}
 		For $M \subset X$ we define \[\overline{M} = \bigcap\limits_{A \supset M, \; A \text{ closed}}\] as the closure of $M$ and \[\overset{°}{M} = \bigcup\limits_{O \subset M, \; O \text{ open}}\] as the interior of $M$.\\
 		$\partial M = \overline{M} \setminus \overset{°}{M}$ is the boundary of $M$
 	\end{definition}
-
+	
 	\noindent\underline{Attention:}\\
 	Define the closed ball as $\overline{B}_r(a) = \{y \in X: \; d(y,a) \leq r\}$. Then in general $\overline{B_r(a)} \neq \overline{B}_r(a)$.\\
 	Example: Take $X \neq \varnothing$ and the trivial metric $d$. Then \[B_1(a) = \{a\} = \overline{B_1(a)}\] but $\overline{B}_1(a) = X$.
@@ -114,37 +114,37 @@
 			\item $X$ is called separable if $X$ has a countable dense subset.
 		\end{enumerate}
 	\end{definition}
-
+	
 	\begin{remark}
 		$M$ is dens in $X$ iff \[\forall x \in X \; \forall \varepsilon > 0 \; \exists y \in M \text{ s.t. } d(x,y) < \varepsilon\]
 	\end{remark}
-
+	
 	\begin{definition}
 		\begin{enumerate}
 			\item $(x_n)_{n \in \mathbb{N}} \subset X$ is called a Cauchy sequence if \[\forall \varepsilon > 0 \; \exists N \in \mathbb{N} \text{ s.t. } m,n > N \text{ implies } d(x_n,x_m) < \varepsilon\]
 			\item A metric space in which all Cauchy sequences converge is called complete.
 		\end{enumerate}
 	\end{definition}
-
+	
 	\begin{example}
 		\begin{enumerate}
 			\item $(C^0([a,b], \mathbb{R}), d_\infty)$ with $d_\infty(f,g) = \max\limits_{x \in [a,b]} \left|f(x)-g(x)\right|$ is complete.
 			\item $(\mathbb{R}^n, d_2)$ with $d_2(x,y) = ||x-y||_2$ is complete.
 		\end{enumerate}
 	\end{example}
-
+	
 	\begin{lemma}
 		Let $(X,d)$ be a complete metric space and $\varnothing \neq A \subset X$. Then $(A,d)$ is complete iff $A$ is closed.
 	\end{lemma}
-
+	
 	\begin{definition}
 		$A \subset X$ is called bounded if its diameter \[diam(A) = \sup\{d(x,y): \; x,y \in A\}\] is finite.
 	\end{definition}
-
+	
 	\begin{theorem}
 		$(X,d)$ is complete iff $\forall (F_n)_{n \in \mathbb{N}}$ sequences of closed subsets such that $F_{n+1} \subset F_n$ and $diam(F_n) \to 0$ then \[\exists ! x_0 \in X \text{ s.t.} \bigcap\limits_{n \in \mathbb{N} F_n = \{x_0\}}\]
 	\end{theorem}
-
+	
 	\subsection{Continuity}
 	\begin{definition}
 		Let $(X,d_x), (Y, d_y)$ be metric spaces and $f: X \to Y$. $f$ is continuous in $x_0$ if \[\forall \varepsilon > 0 \; \exists \delta > 0 \text{ s.t. } \forall x \in X \; d_x(x,x_0) < \delta \text{ implies } d_y(f(x),f(x_0)) < \varepsilon\]
@@ -164,7 +164,7 @@
 			\item $A$ is called precompact or totally bounded if $\forall \varepsilon > 0 \; \exists N \in \mathbb{N}$ and $\exists x_1,...,x_N \in X$ such that $A \subset \bigcup_{i = 1}^N B_\varepsilon(x_i)$.
 		\end{enumerate}
 	\end{definition}
-
+	
 	\begin{theorem}
 		Let $(X,d)$ be a metric scape and $A \subset X$. The following are equivalent:
 		\begin{enumerate}
@@ -173,11 +173,11 @@
 			\item $(A,d)$ is complete and $A$ is precompact.
 		\end{enumerate}
 	\end{theorem}
-
+	
 	\begin{remark}
 		If $A$ is precompact, then $\overline{A}$ is precompact. Further, if $(X,d)$ is complete and $A\subset X$ then $A$ is precompact $\Leftrightarrow$ $\overline{A}$ is compact.
 	\end{remark}
-
+	
 	Recall: $A$ compact $\Rightarrow$ bounded and closed and $f: X \to Y$ continuous with $A \subset X$ compact, then $f(A)$ is compact as well. Further, if $f:A \to \mathbb{R}$ is continuous and $A$ is compact, then \[\exists x_1, x_2 \in A \; \text{ s.t. } f(x_1) \leq f(x) \leq f(x_2) \; \forall x \in A\]
 	Theorem of Heine-Borel: $A \subset \mathbb{R}^n$ is compact iff $A$ is closed and bounded.
 	\subsection{Theorem of Baire}
@@ -185,17 +185,17 @@
 		\label{th: baire}
 		Let $(X,d)$ be a complete metric space and $\forall n \in \mathbb{N}$ consider $U_n \subset X$ open and dense. Then \[\bigcap\limits_{n \in \mathbb{N}} U_n\] is dense in $X$.
 	\end{theorem}
-
+	
 	\begin{remark}
 		\begin{enumerate}
 			\item Completeness is in general necessary. Consider $(\mathbb{Q}, d)$ and $d(x,y) = \left|x-y\right|$. Define a sequence $x_n$ such that $\mathbb{Q} = \{x_n \; n \in \mathbb{N}\}$. Take $U_n = \mathbb{Q} \setminus \{x_n\}$ which is open and dense. Then \[\bigcap\limits_{n \in \mathbb{N}} U_n = \varnothing\]
 		\end{enumerate}
 	\end{remark}
-
+	
 	\begin{corollary}
 		Let $(X,d)$ be a complete metric space. Let $\forall n \in \mathbb{N}$, $A_n \subset X$ be closed and \[X = \bigcup\limits_{n \in \mathbb{N}} A_n\] Then $\exists N \in \mathbb{N}$ s.t. $A_N$ has an interior point.
 	\end{corollary}
-
+	
 	\begin{remark}
 		Theorem \ref{th: baire} is also called \underline{Baire category theory}.\\
 		\begin{itemize}
@@ -219,7 +219,7 @@
 		
 		\noindent $p:X \to \mathbb{R}$ is called a seminorm if $p(x) \geq 0$ $\forall x \in X$ and 2. and 3. are also satisfied.
 	\end{definition}
-
+	
 	\begin{example}
 		\begin{enumerate}
 			\item $C^0([0,1]; \mathbb{R})$ with $||f||_\infty = \max\limits_{x \in [0,1]} \left|f(x)\right|$
@@ -231,15 +231,15 @@
 	\begin{remark}
 		Any normed space is a metric space via \[d(x,y) = ||x-y||\] All concepts from chapter \ref{sec: metric spaces} apply.
 	\end{remark}
-
+	
 	\begin{lemma}
 		Let $(X,||\cdot||)$ be a normed space. Then $X$ is called separable iff $\exists A \subset X$ countable such that s.t. $\overline{span\{A\}} = X$ where $span\{A\} = \{\sum_{i=1}^{n} \lambda_i x_i$\} with $n \in \mathbb{N}$, $\lambda_i \in K$ and $x_i \in A$. Here the colusre is defined w.r.t the norm.
 	\end{lemma}
-
+	
 	\begin{definition}
 		A complete normed space is called a Banach space.
 	\end{definition}
-
+	
 	\subsection{Example: $l^p$-spaces}
 	We consider the vector space $\mathbb{K}^\mathbb{N}$ of sequences in in $\mathbb{K}$. Let $x = (x_n)_{n \in \mathbb{N}}$ and $y = (y_n)_{n \in \mathbb{N}}$. Define $x+y = (x_n+y_n)_{n \in \mathbb{N}}$ and $\lambda x = (\lambda x_n)_{n \in \mathbb{N}}$.\\
 	For $x \in \mathbb{K}^\mathbb{N}$ define \[||x||_{l^p} = \left(\sum_{n=1}^\infty \left|x\right|^p\right)^{1/p}\] for $1\leq p < \infty$ and \[||x||_{l^\infty} = \sup\limits_{n \in \mathbb{N}} \left|x_n\right|\] else.\\
@@ -250,7 +250,7 @@
 	\begin{lemma}
 		For finite $p$, $l^p$ is separable while $l^\infty$ is not.
 	\end{lemma}
-
+	
 	\subsection{Finite dimensional normed spaces}
 	Let $X$ be a vector space over $\mathbb{K}$. $\exists e_1,...,e_n \in X$ s.t. \[\forall x \in X; \; \exists \lambda_1,...,\lambda_n \in \mathbb{K}: \; x = \sum_{i=1}^n \lambda_i x_i\]
 	For $p \in [1,\infty)$ we define \[||x||_p = \left(\sum_{i=1}^n \left|\lambda_i\right|^p\right)^{1/p}\] and for $p = \infty$ \[||x||_\infty = \max\limits_{1 \leq i \leq n} \left|\lambda_i\right|\]
@@ -258,15 +258,15 @@
 	\begin{definition}
 		Two norms are equivalent in that \[\alpha ||\cdot ||_1 \leq ||\cdot ||_2 \leq \beta ||\cdot ||_1\]
 	\end{definition}
-
+	
 	\begin{theorem}
 		In a finite dimensional space, all norms are equivalent.
 	\end{theorem}
-
+	
 	\begin{theorem}
 		Finite dimensional normed spaces are Banach spaces.
 	\end{theorem}
-
+	
 	\subsection{On the closure of $\overline{B_1(0)}$}
 	\begin{lemma}[Lemma of Riesz, Lemma of the almost orthogonal element]
 		Let $X$ be a normed space. $U \subset X$ a closed subspace of $X$ s.t. $U \neq X$. Then $\forall \lambda \in (0,1) \exists x_\lambda \in X$ s.t. $||x_\lambda|| = 1$ and $dist(x_\lambda, U) \geq \lambda$.
@@ -274,7 +274,7 @@
 	\begin{theorem}
 		In a normed space $X$, $\overline{B_1(0)}$ is compact iff $X$ is finite dimensional.
 	\end{theorem}
-
+	
 	\section{A question from approximation theory}
 	\subsection{Theorem of Stone-Weierstrass}
 	Let $X$ be a compact metric space. Then $(C^0(X), \mathbb{K}), ||\cdot ||_\infty$, where $||f||_\infty = \max\limits_{x \in X} \left|f(x)\right|$ is a Banach space.\\
@@ -313,7 +313,7 @@
 			\item if $f,g \in A$ then $\max\{f,g\} \in \overline{A}$ and $\min\{f,g\} \in \overline{A}$
 		\end{enumerate}
 	\end{lemma}
-
+	
 	\begin{theorem}[Stone-Weierstrass]
 		Let $A$ be a compact metric space. $A \subset C^0(X,\mathbb{K})$ is a unital subalgebra that separates points and if $\mathbb{K} = \mathbb{C}$ is stable under conjugation, then $A$ is dense in $C^0(X,\mathbb{K})$ w.r.t $||\cdot||_\infty$.
 	\end{theorem}
@@ -346,8 +346,8 @@
 	\begin{theorem}[Universal Approximation theorem of Hornik-Stinchcombe-White]
 		Let $\Phi$ we a squashing function $K\subset \mathbb{R}^d$ compact $f:K \to \mathbb{R}$ continuous and $\varepsilon > 0$. Then $\exists g \in \Sigma^d(\Phi)$ s.t. \[\sup_{x \in K} \left|f(x)-g(x)\right| < \varepsilon\]
 	\end{theorem}
-
-\section{Continuous linear maps}
+	
+	\section{Continuous linear maps}
 	$(X,||\cdot ||_X), (Y,||\cdot ||:Y)$ are $K$-Vector spaces with $K = \mathbb{R}$ or $K = \mathbb{C}$. $T:X \to Y$ is called linear if \[T(\lambda_1x_1 + \lambda_2 x_2) = \lambda_1 T(x_1) + \lambda_2 T(x_2)\]
 	\subsection{Continuity of linear maps}
 	\begin{definition}
@@ -418,7 +418,7 @@
 			\item antisymmetric: $x \leq y$ and $y \leq x \Rightarrow x = y$
 			\item transitivity $x \leq y, y \leq z \Rightarrow x \leq z$
 		\end{enumerate}
-	Then
+		Then
 		\begin{itemize}
 			\item $A \subset M$ is called chain of totally ordered if $\forall x,y \in A$ either $x \leq y$ or $y \leq x$
 			\item $b \in M$ is an upper bound for a chain $A$ if $a \leq b$ for all $a \in A$
@@ -475,7 +475,7 @@
 	\begin{theorem}
 		Let $(x,||\cdot ||)$, $A, B$ convex subsets $A \neq \varnothing, B \neq \varnothing$, $A \cap B = \varnothing$. Let $A$ be closed and $B$ be compact. Then $\exists F \in X', \exists \varepsilon > 0$ s.t. $F(a) + \varepsilon \leq F(b) - \varepsilon$ $\forall a \in A, b \in B$.
 	\end{theorem}
-\section{Hilbert Spaces}
+	\section{Hilbert Spaces}
 	Let $X$ be a vector space over $\mathbb{K}$ where $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$.
 	\subsection{Inner product space}
 	\begin{definition}
@@ -629,7 +629,7 @@
 				\item $\sigma_C(T) = \{\lambda \in \sigma(T)\setminus \sigma_P(T): Im (\lambda Id- T) \neq X \text{ but } \overline{Im (\lambda Id - T)} = X\}$
 				\item $\sigma_r(T) = \sigma(T) \setminus (\sigma_P(T) \cup \sigma_C(T))$.
 			\end{itemize}
-		\item the elements of the point spectrum are called eigenvalues and $x \in X\setminus \{0\}: (I\lambda Id - T)(x) = 0$ is called eigenvector associated ot $\lambda$.
+			\item the elements of the point spectrum are called eigenvalues and $x \in X\setminus \{0\}: (I\lambda Id - T)(x) = 0$ is called eigenvector associated ot $\lambda$.
 		\end{itemize}
 	\end{definition}
 	\begin{theorem}
@@ -656,7 +656,7 @@
 		Let $X$ be a separable Hilbert space with $\dim X = \infty$ and $T \in K(X)$ self-adjoint. Then $\exists$ a complete ONS $(e_n)_{n \in \mathbb{N}}$ of eigenvectors of $T$. In particular $\forall x \in X$ \[Tx = \sum_{n=1}^\infty \lambda_n \langle x,e_N\rangle e_n\]
 		with $\lambda_n$ being the corresponding eigenvalue to $e_n$.
 	\end{corollary}
-\section{Reproducing kernel Hilbert spaces}
+	\section{Reproducing kernel Hilbert spaces}
 	\subsection{Definitions}
 	Here, we again use $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$. Further $X\neq \varnothing$ is simply a set. Also \[F(X,\mathbb{K}) = \{f: X \to \mathbb{K} \text{ a map}\}\]
 	This is a vector space.
@@ -693,7 +693,7 @@
 	\begin{theorem}
 		Let $H$ be a RKHS on $X$. $\{x_1,...,x_n\} \subset X$ distinct points in $X$. $A:= (K(x_i,x_j))$ a $n\times n$-matrix. $v = (\lambda_1,...,\lambda_n)^T \in \mathbb{K}^n$. Then $\exists w \in \mathbb{K}^n$ s.t. $v-Aw \in \ker(A)$ and \[H \ni f:= \sum_{i=1}^n w_ik_{x_i}\] satisfies \[J(f) = \inf_{g \in H} J(g)\] We have $k_{x_i} = K(\cdot,x_i)$ and $f$ is the unique minimizer of minimal norm. 
 	\end{theorem}
-\section{Theorems on continuous linear maps}
+	\section{Theorems on continuous linear maps}
 	\subsection{uniform boundedness}
 	We need the theorem of Baire a lot in this chapter, so we recall it.
 	\begin{theorem}[Baire's theorem]
@@ -781,7 +781,7 @@
 	\begin{theorem}
 		If $X,Y$ Banach, \[A = \{T \in L(X,Y): T \text{ is an isomorphism}\}\] is open in $L(X,Y)$. I.e. if $T\in L(X,Y)$ isomorphism $\Rightarrow \exists \rho > 0$ s.t. $\forall S \in L(X,Y)$ s.t. $||S-T|| < \rho$ then $S$ is an isomorphism. 
 	\end{theorem}
-\section{$L^p$-spaces}
+	\section{$L^p$-spaces}
 	\subsection{Definitions}
 	Let $(\Omega, \mathcal{A}, \mu)$ be a measure space.
 	\begin{definition}
@@ -835,4 +835,62 @@
 	\begin{lemma}
 		Let $\Omega \subset \mathbb{R}^n$ open $f \in L^1(\Omega)$, $\varepsilon>0$. Then $f\varepsilon \in C^\infty(\mathbb{R}^n)$. If $supp(f) = k\subset\Omega$ compact then for $\varepsilon < dist(k,\partial \Omega)$, $f_\varepsilon \in C_0^\infty(\Omega)$.
 	\end{lemma}
+	\begin{theorem}
+		Let $\Omega \subset \mathbb{R}^n$ be open. \begin{enumerate}
+			\item If $f \in C^0(\Omega)$, $K\subset \Omega$ compact, $f_\varepsilon \to f$ uniformly on $K$.
+			\item If $f \in L^p(\Omega)$, $p\in [1,\infty)$, then $||f_\varepsilon||_p \leq ||f||_p$ and $f_\varepsilon \to f$ in $L^p(\Omega)$.
+		\end{enumerate}
+	\end{theorem}
+	\begin{corollary}
+		Let $\Omega \subset \mathbb{R}^n$ be open. Then $C^\infty_0(\Omega)$ is dense in $L^p(\Omega)$, $1\leq p < \infty$. I.e. \[\overline{C_0^\infty(\Omega)}^{||\cdot||_p} = L^p(\Omega)\] 
+	\end{corollary}
+	\begin{remark}[Dirac Sequences]
+		$(\phi_k)_{k\in \mathbb{N}} \subset C^\infty(\mathbb{R}^n)$ s.t. \begin{itemize}
+			\item $\int \phi_k dx = 1$
+			\item $\forall \varepsilon>0 \; \lim\limits_{k \to \infty} \int_{\mathbb{R}^n\setminus B_\varepsilon(0)} \phi_k dx = 0$ 
+		\end{itemize}
+		allow for a generalization of the above theorem.
+	\end{remark}
+	\begin{definition}
+		$L^p_{loc}(\Omega) = \{f \in L^0(\Omega) : f \in L^p(K)$ for all compact sets $K\subset \Omega\}$. And further $L^0(\Omega)$ is the space of equivalence classes of a.e. equal measurable functions from $\Omega \to \mathbb{R}$.
+	\end{definition}
+	\begin{theorem}[Fundamental Lemma in the calculus of variations]
+		Let $\Omega \subset \mathbb{R}^n$ open, $f\in L_{loc}^1(\Omega)$ and \[\int_\Omega f(x)\phi(x)dx = 0 \; \forall \phi \in C_0^\infty(\Omega)\] then $f \equiv 0$ a.e.
+	\end{theorem}
+	\subsection{Separability of $L^p$}
+	\begin{theorem}
+		Let $\Omega \subset \mathbb{R}^n$ be open, $p \in [1,\infty)$. Then $L^p(\Omega)$ is separable.
+	\end{theorem}
+	\subsection{Dualspace of $L^p(\Omega)$, $p \in [1,\infty)$}
+	Similar to $l^p$. Let $q \in (1,\infty]$ s.t. $\frac{1}{p}+\frac{1}{q} = 1$, $\Omega \subset \mathbb{R}^n$ open. Let $g \in L^q(\Omega)$. \[T_g:L^p(\Omega) \to \mathbb{R}, \; T_g(f) = \int_\Omega f(x)g(x)dx\]
+	Then, by Hölder, \[T_g \in L^p(\Omega)', \,||T_g||_{L^p(\Omega)} \leq ||g||_q\]
+	\begin{theorem}
+		Let $\Omega \subset \mathbb{R}^n$ open, $p \in [1,\infty)$ and $q \in (1,\infty]$ s.t. $\frac{1}{p}+\frac{1}{q} = 1$. Then $J:L^q(\Omega) \to L^p(\Omega)$ with $g\mapsto T_g$ is an isometric isomorphism.
+	\end{theorem}
+	\begin{theorem}
+		Let $(\Omega,\mathcal{A},\mu)$ be a $\sigma$-finite measure space and $\nu:\mathcal{A} \to \mathbb{R}$ a bounded signed measure, i.e. \begin{itemize}
+			\item $\nu(\varnothing) = 0$
+			\item $\nu$ is $\sigma$-additive
+			\item the total variation $$||\nu||_{var} = \sup\{\sum_{k=1}^n \left|\nu(E_i)\right|: \, n \in \mathbb{N} \text{ and } E_1,...,E_n \in \mathcal{A} \text{ are pairwise disjoint sets}\}$$ is finite
+		\end{itemize}
+		Then the following are equivalent: \begin{enumerate}
+			\item $\exists! f \in L^1(\Omega, \mu)$ s.t. $\nu(A) = \int_Af\,d\nu$
+			\item $\nu$ is absolutely continuous w.r.t. $\mu$, i.e. \[\forall A \in \mathcal{A}: \mu(A) = 0 \Rightarrow \nu(A) = 0\]
+		\end{enumerate}
+	\end{theorem}
+	\begin{remark}
+		In 1, one often uses the notation $f = \frac{d\nu}{d\mu}$ and calls this function Radon-Nikodym derivative of $\nu$ w.r.t. $\mu$. 
+	\end{remark}
+\section{Reflexive Spaces and Weak Convergence}
+	\subsection{Reflexive Spaces}
+	Let $X \neq \{0\}$ be a normed space and $X'$ be its dual.
+	\begin{definition}
+		$X'' = (X')' = L(X',\mathbb{K})$ is the bi-dualspace of $X$.
+	\end{definition}
+	There is a natural map between $X$ and $X''$. This is $i_X: X \to X''$, defined by \[x\mapsto i_X(x) \in X'', \text{ i.e. } i_X(x):X'\to\mathbb{K}\]
+	That is $i_X(x)(f) = f(x)\, \forall f \in X'$.\\
+	$i_X$ is linear and bounded.
+	\begin{definition}
+		$i_X:X\to X''$ as above is called canonical evaluation map. 
+	\end{definition}
 \end{document}

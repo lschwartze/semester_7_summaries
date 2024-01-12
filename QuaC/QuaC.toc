@@ -22,3 +22,7 @@
 \contentsline {subsection}{\numberline {4.4}Algorithmus für das Ordnungsproblem}{16}{}%
 \contentsline {section}{\numberline {5}Problem der verborgenen Untergruppe}{20}{}%
 \contentsline {subsection}{\numberline {5.1}Graphenautomorphie Problem}{22}{}%
+\contentsline {section}{\numberline {6}Endliche Quantenautomaten}{22}{}%
+\contentsline {subsection}{\numberline {6.1}Messung nach Lesen von jedem Symbol}{24}{}%
+\contentsline {subsection}{\numberline {6.2}Beschreibung der Berechnung}{24}{}%
+\contentsline {subsection}{\numberline {6.3}Der Two-Way-Quanten-Automat}{25}{}%

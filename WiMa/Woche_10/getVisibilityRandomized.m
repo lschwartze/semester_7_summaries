@@ -1,4 +1,4 @@
-function [vis,elem_vis] = getVisibility(coord,elem,elem2obj,coord2obj,s,n)
+function [vis,elem_vis] = getVisibilityRandomized(coord,elem,elem2obj,coord2obj,s,n)
     light_centroid = s(1,:);
         
     connectors = s-light_centroid;
@@ -47,10 +47,9 @@ function [vis,elem_vis] = getVisibility(coord,elem,elem2obj,coord2obj,s,n)
     vis(idx) = 0;
     
     elem_vis = elem(vis == 1, :);
-    % doesIntersect(elem2obj, vis, t2, light_centroid, s, coord);
-    t2A = elem(full,1);
-    t2B = elem(full,2);
-    t2C = elem(full,3);
-    out = arrayfun(@(a,b,c) doesIntersect(elem2obj,vis,a,b,c,light_centroid,s,coord), t2A,t2B,t2C);
+    
+    % triangles that have not yet been considered are given a random
+    % visibility score
+    out = randi([0,1],1,sum(full));
     vis(full) = out;
 end

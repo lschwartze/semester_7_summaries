@@ -83,7 +83,7 @@
 		\frac{i+1}{3}, \; i = 2 \mod 3\\
 		\frac{n+i}{3}, \; i = 0 \mod 3
 	\end{cases}\]
-
+	
 	Da wir aber die Richtung von $\overline{S}$ zu $S$ benötigen, brauchen wir die Umkehrabbildung von $\tau$: \[\tau^{-1}(j) = \begin{cases}
 		3j-1, \; 1 \leq j \leq \frac{n}{3}\\
 		3j-n, \; \frac{n}{3} < j \leq \frac{2n}{3}
@@ -229,7 +229,7 @@
 	\begin{lemma}
 		Die gesamte Ausgabelänge des Algorithmus zu Berechnung aller längsten Repeats für eine De Bruijn Sequenz $S$ der Ordnung $k$ ist $\Omega(n\log n)$, wobei $n = 2^k+k-1$.
 	\end{lemma}
-\section{komprimierte Ganztext Indizes}
+	\section{komprimierte Ganztext Indizes}
 	\subsection{Burrows-Wheeler Transformation}
 	Die BWT für einen String $S$ entsteht aus einer Rotationmatrix des Strings. Dafür wird in Zeile 1 $S$ geschrieben, in Zeile 2 der Suffix $S_2$ gefolgt von $S[1]$ und so weiter.\\
 	Anschließend werden die Zeilen lexikografisch sortiert. Die letzte Spalte $L$ dieser Matrix ist die BWT. Das Problem dieser Konstruktion ist, dass die Laufzeit super-linear ist.
@@ -289,4 +289,88 @@
 		\item return $\bot$ 
 	\end{enumerate} 
 	Dieser Suchalgorithmus hat Laufzeit $\mathcal{O}(m)$. Das ist die theoretische Untergrenze der Laufzeit.
+	\subsection{Wavelet Bäume}
+	Das Problem der Backward-search ist, dass eine vergleichsweise hohe Speicherplatz-Komplexität von $\mathcal{O}(\sigma\cdot n)$ benötigt wird. Wavelet-Bäume erlauben rank Abfragen in logarithmischer Zeit mit viel geringerem Speicherplatz. Ein Wavelet-Baum beginnt mit dem String $S$ und dem sortierten Alphabet $\Sigma$. Es wird $\Sigma$ in der Hälfte gespalten und ein Bitarray $B$ erzeugt, das für jeden Buchstaben in $S$ 0 speichert, wenn der Buchstaben in der linken Hälfte des gespaltenen Alphabet landet und 1 sonst. Alle mit 0 gekennzeichneten Buchstaben werden in der Reihenfolge von $S$ in die nächste Stufe des Baums geschrieben und alle mit 1 gekennzeichneten in die rechte. Dieses Verfahren wird iteriert, bis nur noch ein Buchstabe in jeder Hälfte steht. Rank Abfragen funktionieren wie folgt.\newpage
+	\underline{$rank_c(BWT,i,[l,r])$}
+	\begin{enumerate}
+		\item if $l=r$, return $i$
+		\item else
+		\item $m = \lfloor\frac{l+r}{2}\rfloor$
+		\item if $c\leq \Sigma[m]$ then return $rank_c(BWT,rank_0(B^{[l,r]},i),[l,m])$
+		\item else return $rank_c(BWT,rank_1(B^{[l,r]},i),[m+1,r])$
+		\item endif
+		\item endif
+	\end{enumerate}
+	Die Speicherplatzkomplexität ist damit nur noch $\mathcal{O}(n\cdot \log \sigma)$. Die Zeit der Rückwärtssuche wächst damit aber auf $\mathcal{O}(m\cdot \log \sigma)$. Auf ähnliche Weise lassen sich Abfragen an die BWT (also zum Beispiel bestimme $BWT[i]$) in $\mathcal{O}(\log \sigma)$ beantworten, ohne die BWT selbst zu speichern. Select-Abfragen lassen sich auf Wavelet Bäumen ebenso in $\mathcal{O}(\log \sigma)$ umsetzen.\\
+	\underline{$rank_c(BWT,i)$ auf einem perfekten Wavelet Baum}
+	\begin{enumerate}
+		\item $l\gets 1, r\gets \sigma, j \gets 1$
+		\item while $j \leq 2^h-1$
+		\item $m \gets \lfloor\frac{l+r}{2}\rfloor$
+		\item if $c \leq \Sigma[m]$
+		\item $i \gets rank_0(A[j],i), j \gets 2j, r \gets m$
+		\item else 
+		\item $i \gets rank_1(A[j],i), j \gets 2j+1, l \gets m+1$
+		\item endif
+		\item endwhile
+		\item return $i$
+	\end{enumerate}
+	Dieser Algorithmus muss den gesamten Wavelet Baum absteigen und hat daher Laufzeit $\mathcal{O}(\log \sigma)$.\\
+	Um den Buchstaben der BWT an der Stelle $i$ zu bestimmen, kann mit einem Wavelet Baum der folgende Algorithmus verwendet werden:\\
+	\underline{$BWT[i]$}
+	\begin{enumerate}
+		\item let $A[1,2^h-1]$ be the array of bit vectors
+		\item $j\gets 1$
+		\item while $j\leq 2^h-1$
+		\item if $A[j][i] = 0$
+		\item $i \gets rank_0(A[j],i)$, $j\gets 2j$
+		\item else
+		\item $i \gets rank_1(A[j],i), j \gets 2j+1$
+		\item endif
+		\item endwhile
+		\item return $\Sigma[j-2^h+1]$
+	\end{enumerate}
+	Es fehlt noch die Implementierung der select Abfrage auf Wavelet Bäumen.\\
+	\underline{$select_c(BWT,i)$}
+	\begin{enumerate}
+		\item $h\gets \log \sigma, c \gets \Sigma[k]$
+		\item $j\gets 2^h-1+k$
+		\item while $j >1$
+		\item if $j$ is even
+		\item $b\gets 0$
+		\item else
+		\item $b \gets 1$
+		\item endif
+		\item $j\gets \lfloor \frac{j}{2}\rfloor$
+		\item $i \gets select_b(A[j],i)$
+		\item endwhile
+		\item return $i$
+	\end{enumerate}
+	\subsection{Bidirektionale Suche}
+	\begin{definition}
+		Der Wavelet Index eines Strings $S$ besteht aus \begin{itemize}
+			\item Dem Rückwärts-Index, der Rückwärtssuche auf Basis des Wavelet Baums erlaubt.
+			\item Dem Vorwärts-Index, der Rückwärtssuche auf dem inversen String $S^{rev}$ erlaubt. Hier benötigen wir den Wavelet Baum der BWT des umgekehrten Strings $S^{rev}$.
+		\end{itemize}
+	\end{definition}
+	Wir benötigen für die Suche den folgenden Pseudo-Code.\\
+	\underline{$getBounds[i,j],c$}
+	\begin{enumerate}
+		\item return $getBounds'([i,j],c,[1,\sigma],0)$
+	\end{enumerate}
+	wobei $getBounds'$ der folgende Pseudo-Code beschreibt\\
+	\underline{$getBounds'([i,j],c,[l,r],smaller)$}
+	\begin{enumerate}
+		\item if $l=r$ return $(i,j,smaller)$
+		\item else
+		\item $(a_0,b_0) \gets (rank_0(B^{[l,r]},i-1),rank_0(B^{[l,r]},j))$
+		\item $(a_1,b_1) \gets (i-1-a_0,j-b_0)$
+		\item $m = \lfloor \frac{l+r}{2}\rfloor$
+		\item if $c \leq \Sigma[m]$
+		\item return $getBounds'([a_0+1,b_0],c,[l,m],smaller)$
+		\item else
+		\item return $getBounds'([a_1+1,b_1],c,[m+1,r],smaller+b_0-a_0)$
+		\item endif
+		\item endif
+	\end{enumerate}
 \end{document}

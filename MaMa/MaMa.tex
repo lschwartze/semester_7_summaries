@@ -469,6 +469,29 @@
 	\begin{lemma}
 		Let $f: \mathbb{R}^n \to \mathbb{R}^m$ be a piecewise affine function with pieces $Q_1,...,Q_s.$ For every $x \in \mathbb{R}^n$ there is an $\alpha \geq 1$ and a piece $Q_t$ such that $\beta x \in Q_t$ fpr all $\beta \geq \alpha$.
 	\end{lemma}
-	\subsection{convolutions}
-	
+	\subsection{loss functions for binary classifications ($Y = \{-1,1\})$}
+	The key metric is the 0-1-loss \[l_{0-1}(y,y') = \begin{cases}
+		0, & y=y'\\
+		1, & y\neq y'
+	\end{cases}\]
+	The problem is that minimizing this function is quite hard, which is why we introduce surrogate loss functions. \begin{itemize}
+		\item logistic loss $l(y,y') = -\log\left(\frac{1}{1+e^{-yy'}}\right)$
+		\item square loss $l(y,y') = (y-y')^2$
+		\item exponential loss $l(y,y') = \exp(-yy')$
+	\end{itemize}
+	Interestingly, all these loss functions may be rewritten (if necessary) such that only the product $yy'$ appears as a variable. Thus $l(y,y') = \phi(yy')$. For example \[l_{0-1}(y,y') = \begin{cases}
+			0, & yy'= 1\\
+			1, & yy' = -1
+	\end{cases} = 1_{yy'=-1}\]
+	Let's consider a classifier \[h:X\to\{-1,1\}\] in fact we compute, \[f:X\to\mathbb{R}\] and $h$ takes the form \[h(x) = sgn(f(x))\]
+	We want to concentrate on loss functions of the type $l(y,f(x)) = \phi(yf(x))$.\\
+	So now the question is, if the classifier $f$ minimizes the surrogate loss $\phi$ does this imply that $f$ is a good classifier (i.e. small true risk)?\\
+	The Bayes error was defined by \[\varepsilon_{bayes} = \inf_h L_D(h) = \mathbb{E}_{(x,y)\sim D} l(y,h(x))\] and the Bayes classifier is an $h$ that achieves $\varepsilon_{bayes}$. For a loss function $\phi: \mathbb{R} \to \mathbb{R}_+, \; f:\mathbb{R}\to\mathbb{R}$ we define \[L_\phi(f) = \mathbb{E}_{(x,y)\sim D} [\phi(yf(x))]\]
+	\begin{definition}
+		$\phi$ is Bayes-consistent if for all $(f_n)_{n \in \mathbb{N}}: X \to \mathbb{R}$ s.t. \[L_\phi(f_i) \to \inf_{g:X\to\mathbb{R}} L_\phi(g)\]
+		then also \[L(sgn\circ f_i)\to\varepsilon_{bayes}\]
+	\end{definition}
+	\begin{theorem}
+		Let $\phi: \mathbb{R} \to \mathbb{R}_+$ be continuous, differentiable at 0 with $\phi'(0)<0$ and convex. Then $\phi$ is Bayes-consistent.
+	\end{theorem}
 \end{document}

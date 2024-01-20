@@ -881,7 +881,7 @@
 	\begin{remark}
 		In 1, one often uses the notation $f = \frac{d\nu}{d\mu}$ and calls this function Radon-Nikodym derivative of $\nu$ w.r.t. $\mu$. 
 	\end{remark}
-\section{Reflexive Spaces and Weak Convergence}
+	\section{Reflexive Spaces and Weak Convergence}
 	\subsection{Reflexive Spaces}
 	Let $X \neq \{0\}$ be a normed space and $X'$ be its dual.
 	\begin{definition}
@@ -893,4 +893,80 @@
 	\begin{definition}
 		$i_X:X\to X''$ as above is called canonical evaluation map. 
 	\end{definition}
+	\begin{lemma}
+		$i_X$ is a linear isometry.
+	\end{lemma}
+	\begin{definition}
+		A normed space $X$ is called reflexive if its canonical evaluation map is surjective.
+	\end{definition}
+	\begin{lemma}
+		$X$ reflexive $\implies$ $X$ Banach.
+	\end{lemma}
+	\begin{theorem}
+		Let $\Omega \subset \mathbb{R}^n$ open, $1<p<\infty$. Then $L^p(\Omega)$ is reflexive.
+	\end{theorem}
+	\begin{corollary}
+		Every Hilbertspace is reflexive.
+	\end{corollary}
+	\begin{theorem}
+		Let $X$ be a Banach space. \begin{enumerate}
+			\item If $T:X\to Y$ is an isomorphism, then $X$ is is reflexive iff $Y$ is reflexive.
+			\item closed subspaces of reflexive spaces are reflexive.
+			\item $X$ is reflexive iff $X'$ is reflexive.
+		\end{enumerate}
+	\end{theorem}
+	\subsection{weak convergence}
+	\begin{definition}
+		A sequence $x_n \subset X$ converges weakly to $x \in X$ if \[\forall f \in X': \; f(x_n) \to f(x) \; n \to \infty\] in $\mathbb{K}$.\\
+		NOTATION: $x_n\rightharpoonup x$ in $X$.
+	\end{definition}
+	\begin{remark}
+		\begin{enumerate}
+			\item the weak limit is unique.
+			\item if $x_n \to x$ in $X$ then $x_N \rightharpoonup x$ in $X$.
+			\item in $X$ Hilbert space, $x_n \rightharpoonup x$ in $X$ iff $\langle x_n,y\rangle_X \to \langle x,y \rangle_X$.
+			\item closed subsets are not weakly closed.
+		\end{enumerate}
+	\end{remark}
+	\begin{definition}
+		Let $X$ be a normed space. \begin{enumerate}
+			\item $M\subset X$ is called weakly sequentially compact if $\forall (x_n)_{n \in \mathbb{N}}$ there exists a weakly convergent subsequence with weak limit in $M$.
+			\item $M\subset X$ is called weakly closed if $\forall (x_n)_{n \in \mathbb{N}}$ s.t. $x_n \rightharpoonup x$ in $X$, we have $x\in M$.
+		\end{enumerate}
+	\end{definition}
+	\begin{definition}
+		\begin{enumerate}
+			\item $(f_n)_{n\in \mathbb{N}} \subset X'$ is weakly$^*$-convergent to $f \in X'$ if $f_n(x) \to f(x) \; \forall x \in X$. NOTATION: $f_n\overset{*}{\rightharpoonup} f$.
+			\item $M\subset X'$ is weakly$^*$-sequentially compact if $\forall (f_n)_{n\in \mathbb{N}}$ there exists a subsequence $f_{n_k}$ and $\exists f \in X'$ s.t. $f_{n_k} \overset{*}{\rightharpoonup} f$.
+		\end{enumerate}
+	\end{definition}
+	\begin{remark}
+		\begin{enumerate}
+			\item weak$^*$-limtis are unique
+			\item given $(f_n)_{n \in \mathbb{N}} \subset X'$ s.t. $f_n\to f$ then $f_n \overset{*}{\rightharpoonup} f$.
+		\end{enumerate}
+	\end{remark}
+	\begin{remark}
+		Let $f_n)_{n \in \mathbb{N}} \subset X'$. \begin{enumerate}
+			\item $f_n \rightharpoonup f$ in $X'$ $\Rightarrow f_n \overset{*}{\rightharpoonup} f$ in $X'$.
+			\item If $X$ is reflexive then $f_n \rightharpoonup f$ in $X'$ $\Leftrightarrow f_n \overset{*}{\rightharpoonup} f$ in $X'$.
+		\end{enumerate}
+	\end{remark}
+	\begin{theorem}
+		Let $X$ be a normed space. Then \begin{itemize}
+			\item weakly convergent sequences are bounded.
+			\item If $X$ is a Banach space, then weakly$^*$-convergent sequences in $X'$ are bounded.
+		\end{itemize}
+	\end{theorem}
+	\begin{lemma}
+		Let $X$ be a normed space. \begin{itemize}
+			\item if $x_n \rightharpoonup x$ in $X$, then $||x||_X \leq \liminf\limits_{n \to \infty} ||x_n||_X$.
+			\item if $f_n \overset{*}{\rightharpoonup} f$ in $X'$, then $||f||_{X'} \leq \liminf\limits_{n \to \infty} ||f_n||_{X'}$.
+		\end{itemize}
+		We say that the norm is weakly lower semi-continuous.
+	\end{lemma}
+	\subsection{Results on weak and weak$^*$-compactness}
+	\begin{theorem}
+		Let $(X,||\cdot||)$ be separable. Then, any bounded sequence in t´$X'$ admits a weakly$^*$-convergent subsequence. In particular, \[\overline{B_1(0)} \subset X'\] is weakly$^*$-sequentially compact.
+	\end{theorem}
 \end{document}

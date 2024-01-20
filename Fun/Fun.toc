@@ -47,3 +47,5 @@
 \contentsline {subsection}{\numberline {10.4}Dualspace of $L^p(\Omega )$, $p \in [1,\infty )$}{30}{}%
 \contentsline {section}{\numberline {11}Reflexive Spaces and Weak Convergence}{31}{}%
 \contentsline {subsection}{\numberline {11.1}Reflexive Spaces}{31}{}%
+\contentsline {subsection}{\numberline {11.2}weak convergence}{32}{}%
+\contentsline {subsection}{\numberline {11.3}Results on weak and weak$^*$-compactness}{33}{}%

@@ -33,3 +33,4 @@
 \contentsline {subsection}{\numberline {4.5}Universal approximators}{22}{}%
 \contentsline {subsection}{\numberline {4.6}Deep neural networks vs. shallow neural networks}{23}{}%
 \contentsline {subsection}{\numberline {4.7}Overconfident neural networks}{24}{}%
+\contentsline {subsection}{\numberline {4.8}loss functions for binary classifications ($Y = \{-1,1\})$}{24}{}%

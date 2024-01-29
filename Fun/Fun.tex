@@ -967,6 +967,87 @@
 	\end{lemma}
 	\subsection{Results on weak and weak$^*$-compactness}
 	\begin{theorem}
-		Let $(X,||\cdot||)$ be separable. Then, any bounded sequence in t´$X'$ admits a weakly$^*$-convergent subsequence. In particular, \[\overline{B_1(0)} \subset X'\] is weakly$^*$-sequentially compact.
+		Let $(X,||\cdot||)$ be separable. Then, any bounded sequence in $X'$ admits a weakly$^*$-convergent subsequence. In particular, \[\overline{B_1(0)} \subset X'\] is weakly$^*$-sequentially compact.
 	\end{theorem}
+	\begin{lemma}
+		Let $X$ be a normed space. \begin{enumerate}
+			\item if $X'$ is separable $\Rightarrow \; X$ is separable
+			\item if $X$ is reflexive: $X'$ is separable iff $X$ is separable
+		\end{enumerate} 
+	\end{lemma}
+	\begin{theorem}
+		Let $X$ be reflexive. Then any bounded sequence in $X$ admits a weakly convergent subsequence.
+	\end{theorem}
+	\begin{theorem}
+		Let $XM\subset X$ be convex and closed. Then $M$ is weakly sequentially closed.
+	\end{theorem}
+	\begin{corollary}[Lemma of Mazur]
+		Let $X$ be a normed space. $(x_k)_{k\in \mathbb{N}} \subset X$ with $x_k \rightharpoonup x$ in $X$, then \[x\in \overline{span\{x_k\}}\]
+	\end{corollary}
+	\begin{theorem}
+		Let $X$ be a reflexive Banach space, $M\subset X$ with $X\neq \varnothing$ closed and convex. Let $f:M\to\mathbb{R}$ s.t. \[\forall (x_k)_{k\in\mathbb{N}} \text{ s.t. } x_k \rightharpoonup x \text{ in } X\] then \[f(x)\leq \liminf_{n\to \infty} f(x_n)\] (weakly lower semi-continuous) and coercive, i.e. $f(x)\to \infty$ if $||x||\to \infty$. Then $f$ attains its minimum in $M$.
+	\end{theorem}
+	\section{The adjoint of an operator and Fredholm operators}
+	\subsection{Adjoint}
+	\begin{definition}
+		Let $(X,||\cdot||_X), (Y,||\cdot||_Y)$, $T\in L(X,Y)$. Then $T':Y'\to X'$ s.t. $(T'y')(x) = y'(Tx) \;\forall x \in X\; \forall y'\in Y'$ is the adjoint of $T$.
+	\end{definition}
+	\begin{remark}
+		If $X$ and $Y$ Hilbert spaces, $T\in L(X,Y)$, then $T':Y'\to X'$ and $T^*$ are two different operators called adjoints. By Riesz we get $J_X:X\to X'$ and $J_Y:Y\to Y'$. Thus \[T^* = J_X^{-1}\circ T' \circ J_Y\]
+	\end{remark}
+	\begin{lemma}
+		Let $X,Y,Z$ be normed spaces, $T$, $T_1$, $T_2 \in L(X,Y)$, $S \in L(Y,Z)$. Let $\alpha, \beta \in \mathbb{K}$. Then \begin{enumerate}
+			\item $T' \in L(Y',X')$ and $||T'|| = ||T||$
+			\item $(\alpha T_1 + \beta T_2)' = \alpha T_1' + \beta T_2'$
+			\item $(S\circ T)' = T' \circ S'$
+			\item $T''\circ i_X = i_Y \circ T$ in $L(X,Y'')$
+		\end{enumerate}
+	\end{lemma}
+	\begin{definition}
+		Let $X$ be a normed space, $U\subset X$ a subspace and $Z\subset X'$ a subspace. Then \[U^\bot = \{x' \in X': \, x'(u) = 0 \; \forall u \in U\} \subset X'\]
+		\[Z_\bot = \{x \in X: x'(x) = 0 \; \forall x' \in Z\} \subset X\] are called annihilators of $U$ and $Z$ respectively.
+	\end{definition}
+	\begin{remark}
+		$U^\bot$ and $Z_\bot$ are closed subspaces of $X'$ and $X$ respectively.
+	\end{remark}
+	\begin{lemma}
+		Let $X$ be a normed space, $U\subset X$. Then \[(U^\bot)_\bot = \overline{U}\]
+	\end{lemma}
+	\begin{theorem}
+		Let $X,Y$ be normed spaces and $T\in L(X,Y)$. Then \begin{enumerate}
+			\item $\ker T' = (R(T))^\bot$ and $\ker T = (R(T'))_\bot$
+			\item $\overline{(R(T))} = (\ker T')_\bot$
+		\end{enumerate}
+	\end{theorem}
+	\begin{remark}
+		If $X$ is a Hilbert space and $U$ a subspace. Then $U^\bot$ defines two things, \begin{itemize}
+			\item the orthogonal complement of $U$, that is a subspace of $X$
+			\item the annihilator of $U$, a subspace of $X'$
+		\end{itemize}
+		The notation is consistent, since these two spaces can be identified using the map given by Riesz-representation theorem.
+	\end{remark}
+	\begin{remark}
+		By the last theorem, if $T\in L(X,Y)$ and $R(T)$ is closed, then \[R(T) = (\ker T')_\bot\]
+		That means that for $y\in Y$ the following are equivalent \begin{itemize}
+			\item $\exists X$ s.t. $Tx = y$
+			\item for $y'\in Y'$ s.t. $T'y' = 0$ we have $y'(y) = 0$.
+		\end{itemize}
+	\end{remark}
+	\begin{theorem}
+		If $X$ and $Y$ are Banach spaces and $T \in L(X,Y)$ then $T$ is an isomorphism iff $T'$ is an isomorphism. Moreover $(T')^{-1} = (T^{-1})'$.
+	\end{theorem}
+	\subsection{Theorem of Arzelá-Ascoli}
+	Let $(X,d)$ be a compact metric space, $Y$ is a Banach space, $C^0(X,Y)$ with $||f||_\infty = \max_{x\in X} ||f(x)||$.
+	\begin{theorem}
+		$(C^0(X,Y),||\cdot ||_\infty)$ is a Banach space.
+	\end{theorem}
+	The goal is to understand compact subsets of $(C^0(X,\mathbb{K}^n),||\cdot ||_\infty)$. 
+	\begin{definition}
+		$S\subset C^0(X,Y)$ is pointwise bounded if \[\forall x \in X \; \exists M_x > 0: \; ||f(x)||_Y \leq M_x \; \forall f \in A\]
+		It is uniformly bounded if $M$ is independent of $x$.\\
+		$A$ is equicontinuous if \[\forall \varepsilon > 0 \exists \delta > 0: \; \forall x,y \in X: \; d_x(x,y) < \delta \text{ we have } ||f(x)-f(y)||_Y < \varepsilon \; \forall f \in A\]
+	\end{definition}
+	\begin{lemma}
+		If $A \subset C^0(X,Y)$ is pointwise bounded and equicontinuous, then $A$ is uniformly bounded.
+	\end{lemma}
 \end{document}

@@ -376,4 +376,25 @@
 	\begin{example}
 		Wir nehmen an, wir haben einen String $S$ mit BWT und wissen, dass im Rückwärtsindex $R$ das $le$-Intervall $[13,15]$ und im Vorwärtsindex $V$ das $el$-Intervall $[7,9]$ gegeben ist. Nun wollen wir nach dem Pattern $len$ suchen. Daher suchen wir in $V$ nach $nel$ und machen einen Rückwärtsschritt auf $S^{rev}$.
 	\end{example}
+	\subsection{Approximate String Matching}
+	Im Folgenden werden Algorithmen zur approximativen String Suche eingeführt. Ziel dabei ist es, auch Matches zu finden, die sich kaum vom gesuchten Pattern unterscheiden. Die Ähnlichkeit zweier Strings kann anhand der Hamming-Distanz oder der Levenshtein Distanz gemessen werden.\\
+	Seien $S$ und $P$ Strings der Länge $n$ bzw. $m$, wobei $m<n$. Sei $K<m$. Ein $m$-langer Substring $S[i,i+m]$ ist ein $k$-mismatch von $P$ in $S$, wenn \[hdist(P,S[i,i+m]) \leq k\] wobei $hdist$ die Hamming-Distanz sei. Wenn $m$ und $\Sigma$ klein sind, so kann dieses Problem mit einem naiven Ansatz gut gelöst werden. Wir definieren \[\mathcal{P} = \{P: hdist(P,P') \leq k\}\] als die Hamming-Kugel mit Radius $k$.\\
+	Für ein $w$-Intervall gibt $getIntervals([i,j])$ die Liste aller $cw$-Intervall zurück, wobei $c\in \Sigma$. Diese Funktion unterscheidet sich kaum von der $getBounds$-Funktion der Bidirektionalen Suche und wird daher nicht nochmal extra erklärt.\\
+	Wir beschäftigen uns damit, wie hoch die Laufzeit der Funktion ist. Da jeder Knoten im Wavelet-Baum im worst-case genau einmal besucht wird, haben wir eine worst-case-Laufzeit von $\mathcal{O}(\sigma)$. Sei nun aber $q$ die Anzahl der Buchstaben $c$ aus $\Sigma$, sodass $cw$ in $S$ vorkommt. Dann ist der Aufwand sogar beschränkt durch $O(q\log \sigma)$. Der Algorithmus für das $k$-mismatch-Problem ist dann wie folgt gegeben: \\
+	\underline{$k-mismatch(P,j,d,[lb,rb])$} 
+	\begin{enumerate}
+		\item if $d< 0$ return $\varnothing$
+		\item if $j = 0$ return $\{[lb,rb]\}$
+		\item $I\gets \varnothing$, $list \gets getIntervals([lb,rb])$
+		\item for $(c,[lb,rb])$ in list do
+		\item if $P[j]=c$ then $I\gets I\cup k-msimatch(P,j-1,d,[lb,rb])$
+		\item else $I\gets I \cup k-mismatch(P,j-1,d-1,[lb,rb])$
+		\item endfor
+		\item return $I$
+	\end{enumerate}
+	Wenn man als Fehlermaß anstatt der Hamming Distanz die Levenshtein Distanz heranziehen möchte, so muss der Algorithmus an zwei Stellen erweitert werden.\\
+	In Zeile 4 wird \[I \gets I \cup k-differences(P,j-1,d-1,[lb,rb])\] und in Zeile 5 wird \[I \gets I \cup k-differences(P,j-1,d,[lb,rb])\] eingefügt. Zeile 4 entspricht dabei dem Fall, dass der Buchstabe $P[j]$ aus dem String an dieser Stelle gelöscht wurde und Zeile 5 dementsprechend das Einfügen eines Buchstabens $c$. Das Problem ist, das der Suchraum exponentiell größer ist, als mit der Hamming Distanz. Deswegen wird die Einschränkung an an $d$ in Zeile 1 verändert auf eine untere Schranke. Im Folgenden werden wir uns Gedanken machen, wie diese zu wählen ist, damit kein approximativer Match verloren geht.
+	\begin{definition}
+		Für einen String $S$ und ein Muster $P$ gibt es eine eindeutige links-rechts-Zerlegung \[P = w_1x_1w_2c_2...w_kc_kw_{k+1}\] sodass jedes $w_i$ ein Substring von $S$ ist, aber $w_ic_i$ nicht. Man definiert daraus \[M_{lr}(P,S) = \{p_i | p_i = \sum_{j=1}^{i}\left|w_jc_j\right|\}\] Man bezeichnet die $c_i$ auch als markiere Buchstaben. $M_{lr}(P,S)$ ist dann die Menge der Positionen in $P$ an denen die markierten Buchstaben vorkommen.
+	\end{definition}
 \end{document}

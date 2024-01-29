@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  16 JAN 2024 14:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  26 JAN 2024 11:37
 entering extended mode
 **./Seqs.tex
 (Seqs.tex
@@ -268,7 +268,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 276--278
 
  []
 
-[11] [12] [13] [14] [15] (Seqs.aux) ) 
+[11] [12] [13] [14] [15] [16] [17] (Seqs.aux) ) 
 Here is how much of TeX's memory you used:
  2896 strings out of 479322
  39594 string characters out of 2856609
@@ -278,4 +278,4 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  67i,7n,74p,984b,301s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Seqs.dvi (16 pages, 58308 bytes).
+Output written on Seqs.dvi (18 pages, 65136 bytes).

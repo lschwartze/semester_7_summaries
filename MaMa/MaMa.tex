@@ -480,8 +480,8 @@
 		\item exponential loss $l(y,y') = \exp(-yy')$
 	\end{itemize}
 	Interestingly, all these loss functions may be rewritten (if necessary) such that only the product $yy'$ appears as a variable. Thus $l(y,y') = \phi(yy')$. For example \[l_{0-1}(y,y') = \begin{cases}
-			0, & yy'= 1\\
-			1, & yy' = -1
+		0, & yy'= 1\\
+		1, & yy' = -1
 	\end{cases} = 1_{yy'=-1}\]
 	Let's consider a classifier \[h:X\to\{-1,1\}\] in fact we compute, \[f:X\to\mathbb{R}\] and $h$ takes the form \[h(x) = sgn(f(x))\]
 	We want to concentrate on loss functions of the type $l(y,f(x)) = \phi(yf(x))$.\\
@@ -494,4 +494,64 @@
 	\begin{theorem}
 		Let $\phi: \mathbb{R} \to \mathbb{R}_+$ be continuous, differentiable at 0 with $\phi'(0)<0$ and convex. Then $\phi$ is Bayes-consistent.
 	\end{theorem}
+	\subsection{imbalanced classes}
+	It is not always the case that all classes are equally as important. This is for example the case in the spam-filter. I we talk about binary classification tasks, we can define one class as the positive class, while the other will be called the negative class. This gives rise to the following vocabulary: \begin{definition}
+		\item true positive $t_p$ 
+		\item true negative $t_n$
+		\item false positive $f_p$
+		\item false negative $f_n$
+	\end{definition}
+	We define some measures to achieve a value for each of the classes.
+	\begin{definition}
+		\begin{enumerate}
+			\item true positive rate (tpr) $=\frac{t_p}{t_p+f_n}$
+			\item true negative rate (tnr) $=\frac{t_n}{t_n+f_p}$
+			\item false positive rate (fpr) $= 1-tnr$		
+		\end{enumerate}
+		We can also define a precision measure \[precision = \frac{t_p}{t_p+f_p}\]
+	\end{definition}
+	\subsection{fine-tuning after training}
+	Given a classifier $h:X \to \{-1,1\}$ we want to make it better somehow. Normally $h$ outputs its confidence level, i.e. $h:X\to [0,1]$ or it outputs some score in $\mathbb{R}$. In both cases we need to introduce a threshold $t$ and predict 1 if $h(x)\geq t$ and otherwise -1. By adjusting this threshold, we may end up with different fpr and tpr values. The precision will also change but is slightly more unpredictable.\\
+	The second approach would be to incorporate the class imbalance/ class importance into the training itself. Going back to the example of spam classification. How can we change the training in such a way that the imbalance in classes is incorporated? The first idea would be to go away from the 0-1-loss and instead use a loss function of the form \[l(y,y') = \begin{cases}
+		0, & y=y'\\
+		10,& y=ham\; y' = spam\\
+		1, & y=spam\; y'=ham
+	\end{cases} = \begin{cases}
+		0,& y=y'\\
+		w(y), & y\neq y'
+	\end{cases}\] where $w:Y\to \mathbb{R}_+$ is a weight function on the classes. It's an easy observation that $l(y,y') = w(y) l_{0-1}(y,y')$ which we will denote by $l=wl_{0-1}$. The goal is to minimize the true loss \[L_{D,l}(h) = \mathbb{E}_{(x,y)\sim D} [l(y,h(x))]\]
+	\begin{lemma}
+		Let $D$ be a distribution on $X\times Y$ and $w:Y\to \mathbb{R}_{>0}$ a class weight function. Then $\exists$ distribution $D_2$ on $X\times Y$ and $z>0$ such that for all loss functions $l_1,l_2$ with $l_1=wl_2$ it holds that \[zL_{D_2,l_2}(h) = L_{D_1,l_1}(h)\] for every classifier $h$.
+	\end{lemma}
+	We make one additional observation: \begin{remark}
+		We note that in general $D_2$ is defined by \[\mathbb{P}_{D_2}[(x,y)] = \frac{1}{z}\mathbb{P}_{D_1}[(x,y)]w(y)\] where $z$ is simply some normalization parameter. This gives rise to the fact that \[\mathbb{P}_{D_2}[y|x] = \frac{\mathbb{P}_{D_1}[y|x]\cdot w(y)}{\sum_{y' \in Y}\mathbb{P}_{D_1}[y'|x]w(y')}\]
+	\end{remark}
+	Given a loss function $l$ and a distribution $D$ on $X\times Y$, let's say that a classifier $h^*:X\to Y$ is a Bayes-classifier for $(D,l)$ if \[L_{D,l}(h^*) = \inf_g L_{D,l}(g)\]
+	\begin{lemma}
+		Assume a distribution $D$ on $X\times \{-1,1\}$ with 0-1 loss. Then we know that the Bayes classifier is for a given $x\in X$ \[h^*(x) = \begin{cases}
+			1,& \mathbb{P}_D[1|x] \geq \frac{1}{2}\\
+			-1, & \text{ else}
+		\end{cases}\]
+		For a more general $l = w\cdot l_{0-1}$ we can also exactly compute the Bayes classifier.
+	\end{lemma}
+	Indeed we can apply the previous lemma for $D=D_1, l_1 = l, l_2=l_{0-1}$ and $w$ to see that $\exists z>0$ and $D_2$ such that \[L_{D,l}(h) = zL_{D_2,l_{0-1}}(h)\] since we know the Bayes classifier on the RHS, the result on the LHS will be a Bayes classifier for the other distribution. That is we still get \[\mathbb{P}_{D_2}[1|x] \geq \frac{1}{2}\] This we know how to handle and we end up with \[\mathbb{P}_D[1|x] \geq \frac{w(-1)}{w(1)+w(-1)}\]
+	For the following we need to broaden the meaning of Bayes consistency. \begin{definition}
+		Let $l^*$ be a (class weighted version of the 0-1) loss function and $l$ be a surrogate loss function $l:Y\times Y \to \mathbb{R}_+$. Then we say that $l$ is Bayes-consistent for $l^*$ if $\forall h_1,h_2,...:X \to Y$ and all $D$ on $X\times Y$ with \[\lim_{i \to \infty} L_{D,l}(h_i) = \inf_g L_{D,l}(g)\] then it follows that \[\lim_{i\to \infty} L_{D,l^*}(h_i) = \inf_g L_{D,l^*}(g)\]  
+	\end{definition}
+	\section{ensemble learning}
+	\subsection{wisdom of the crowd}
+	We want to use this concept with an ensemble of classifiers $h_1,...,h_T$. We want these such that the probability that classifier $h_i$ is correct is $p>\frac{1}{2}$. Lastly, we need these classifiers to be stochastically independent. In general, this is blatantly wrong and we can never assume that. But let's roll with it for now. Then one can observe that the probability that the majority of the classifiers is wrong goes to 0 as $T\to \infty$.
+	\subsection{inequalties}
+	We know Tchebycheff's inequality \[\mathbb{P}[\left|X-\mathbb{E}[X]\right| \geq \lambda] \leq \frac{V[X]}{\lambda^2}\]
+	Cantelli's inequality gives a slightly different result than the above. \begin{lemma}
+		For a random variable $X$ and $\lambda >0$ it holds that \begin{enumerate}
+			\item $\mathbb{P}[X\geq \mathbb{E}[x]+\lambda] \leq \frac{V[X]}{V[X]+\lambda^2}$
+			\item $\mathbb{P}[X\leq \mathbb{E}[X]-\lambda] \leq \frac{V[X]}{V[X]+\lambda^2}$
+		\end{enumerate} 
+	\end{lemma}
+	To prove this we'll need Markov's inequality. \begin{lemma}
+		Let $X$ be a non-negative random variable and $t>0$. Then \[\mathbb{P}[X\geq t] \leq \frac{\mathbb{E}[X]}{t}\]
+	\end{lemma}
+	\subsection{dependent classifiers}
+	We again assume an ensemble of classifiers which we will model as random variables $X_1,...,X_n \in \{0,1\}$ where 1 means it classifies correctly and 0 not. We want to consult the majority of the classifiers. We hence calculate \[\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i := \bar{p}\] and we say that $\bar{X}$ is correct iff $\bar{X}>\frac{1}{2}$. It is no loss of generality to assume that $\mathbb{P}[X_i] > \frac{1}{2}$ because otherwise it would be quite bad. This then is enough to show that \[\mathbb{E}[\bar{X}] > \frac{1}{2}\] Similarly, using Cantelli's inequality we can note that \[\mathbb{P}[\bar{X}>\frac{1}{2}] \to \frac{(\bar{p}-\frac{1}{2})^2}{c\bar{p}(1-\bar{p}) + (\bar{p}-\frac{1}{2})^2} (n\to \infty)\] where $c$ is some correlation-constant. This holds true for all classifiers even if they are correlated. If one plots this as a function in $\bar{p}$ with different constants $c$, one can notice, that a small correlation coefficient is more important than good classifiers.
 \end{document}

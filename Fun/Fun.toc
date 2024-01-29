@@ -49,3 +49,6 @@
 \contentsline {subsection}{\numberline {11.1}Reflexive Spaces}{31}{}%
 \contentsline {subsection}{\numberline {11.2}weak convergence}{32}{}%
 \contentsline {subsection}{\numberline {11.3}Results on weak and weak$^*$-compactness}{33}{}%
+\contentsline {section}{\numberline {12}The adjoint of an operator and Fredholm operators}{34}{}%
+\contentsline {subsection}{\numberline {12.1}Adjoint}{34}{}%
+\contentsline {subsection}{\numberline {12.2}Theorem of Arzelá-Ascoli}{35}{}%

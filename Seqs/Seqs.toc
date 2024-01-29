@@ -16,3 +16,4 @@
 \contentsline {subsection}{\numberline {2.4}Backward search}{11}{}%
 \contentsline {subsection}{\numberline {2.5}Wavelet Bäume}{12}{}%
 \contentsline {subsection}{\numberline {2.6}Bidirektionale Suche}{15}{}%
+\contentsline {subsection}{\numberline {2.7}Approximate String Matching}{16}{}%

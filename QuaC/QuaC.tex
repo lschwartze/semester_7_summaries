@@ -463,4 +463,86 @@
 	\begin{theorem}
 		Ein 2QFA kann nicht reguläre Sprachen erkennen. Es gilt \[1QFA \subsetneq REG \subsetneq 2QFA\]
 	\end{theorem}
+	\section{Quantenkommunikationskomplexität}
+	\subsection{klassische Varianten}
+	Die Komplexität wird hier nicht mehr anhand der Laufzeit gemessen, sondern daran, wie viel Information ausgetauscht werden muss. Wir betrachten die Kommunikation zwischen zwei Parteien A und B. Seien $X,Y \subseteq \{0,1\}^n$. Es sei $f:X\times Y \to \{0,1\}$. Wir nehmen an, A habe die Information $x$ und B habe $y$. Nun ist die Frage, wie viele Bits ausgetauscht werden müssen, damit A und B $f$ berechnen können.
+	\begin{example}
+		\begin{enumerate}
+			\item Seien $X=Y=\{0,1\}^n$ und $f(x,y) = \bigoplus_{i=1}^n x_i \oplus \bigoplus_{j=1} y_j$. Soll nun A de Lösung kennen, so müsste nur ein Bit von B nach A geschickt werden. Wenn B die Information $\bigoplus_{j=1} y_j$ nach A schickt, so kann A $f$ berechnen.
+			\item Sei $g_2(x,y) = \begin{cases}
+				1, & \left|x\right|_1 = \left|y\right|_1\\
+				0, & \text{ sonst}
+			\end{cases}$ Im Worst-Case sind nun alle $y_j = 1$. Dann müsste B $\lceil\log(\left|y\right|_1)\rceil$ Bits zu A schicken.
+			\item Sei $f_3(x,y) = \begin{cases}
+				1, & x=y\\
+				0, & \text{ sonst }
+			\end{cases}$. In diesem Fall sind $n$ Bits ausreichend und notwendig.
+			Wir zeigen wir nun, dass $n$ Bits notwendig sind?\\
+			Es muss ein Kommunikationsprotokoll vorab vereinbaren, das beide Parteien kennen. Dieses Protokoll lässt sich im Allgemeinen als Spielbaum darstellen, wobei die die Baumtiefe der Menge an zu versendenden Bits entspricht. Außerdem gibt es $\forall (x,y) \in X\times Y$ einen Pfad im Baum. Daher kann man sehen, dass falls die Kommunikationskomplexität $\leq n-1$ ist, dann $\exists w_1\neq w_2 \in X=Y$ mit Pfad($w_1w_1$) = Pfad($w_2w_w$) = Pfad($w_1w_2$), da der Teilpfad bis zum Ende von $w_1$ dem Teilpfad bis zum Ende von $w_2$ entspricht. Das geht weiter, wenn anschließend das Wort $w_2$ gelesen wird. Das ist aber ein Widerspruch, da $w_1\neq w_2$ und daher Pfad($w_1w_2$) in einer 0 endet, die anderen beiden Pfade hingegen in einer 1.
+		\end{enumerate}
+	\end{example}
+	\subsection{probabilistische Varianten}
+	Hier sind wir auf der Suche nach Protokollen, sodass A berechnet $f(x,y)$ mit Fehlerwahrscheinlichkeit $\leq \varepsilon$. Für ein Problem $P$ bezeichnen wir mit $C_\varepsilon(P)$ die Kommunikationskomplexität von $P$ mit Fehlerwahrscheinlichkeit $\leq \varepsilon$, wobei $C(P)=C_0(P)$ die deterministischen Kommunikationskomplexität.
+	\begin{example}
+		Wir arbeiten weiter mit der Funktion $f_3 = EQ$ vom obigen Beispiel und möchten die Fehlerwahrscheinlichkeit $\leq \varepsilon$ halten. Dafür lassen wir A und B die kleinste Primzahl $p$ berechnen, sodass $p>\frac{n}{\varepsilon}$. Die folgenden Berechnungen finden statt in $\mathbb{Z}_p$. B bestimmt mit den Bits von $y$ ein Polynom $q$ der Form \[q(z) = y_1+y_2z+y_3z^2 + ... + y_nz^{n-1}\] und wählt ein zufälliges $v \in_R \mathbb{Z}_p$ und berechnet $q(v) = w$. Anschließend werden $v$ und $w$ an A geschickt. A berechnet daraufhin das Polynom \[P(z) = x_1+x_2z+x_3z^2 + ... + x_nz^{n-1}\] Wenn $P(v) = w$, dann wird $1$ als Antwort zurückgegeben, andernfalls 0. Aus der Zahlentheorie wissen wir, dass $p\leq \frac{2n}{\varepsilon}$, weswegen der Algorithmus nur $2\lceil\log(\frac{2n}{\varepsilon})\rceil = \mathcal{O}(\log n)$ Bits verschickt. Es fehlt nun noch zu zeigen, dass die Fehlerwahrscheinlichkeit in der Tat $\leq \varepsilon$ ist. Wenn $P(v)\neq w$ ist, dann ist die Antwort $0$ gerechtfertigt, da $x\neq y$ sein müssen. Wenn allerdings 1 zurückgegeben wird, dann könnte es trotzdem sein, dass $x\neq y$ obwohl $P(v) = q(v)$. Es gilt aber \[\mathbb{P}_v[q(v)=P(v) | q\neq P] = \mathbb{P}_v[q(v)-P(v)=0|q\neq P] = \mathbb{P}_v[v \text{ ist NST von } q-P]\] Der Grad von $q-P$ ist höchstens $n-1$ und daher ist die Anzahl der Nullstellen $\leq n-1$. Daher ist obige Wahrscheinlichkeit \[\leq \frac{n-1}{p} \leq \frac{n}{\frac{n}{\varepsilon}} \leq \varepsilon\]
+	\end{example} 
+	\subsection{Quantenkommunikationskomplexität}
+	Für Quantenkommunikation gibt es zwei verschiedene Varianten: \begin{definition}
+		\begin{itemize}
+			\item A und B schicken sich klassische Bits und dürfen nur vor dem Spiel Quantenzustände kommunizieren und verschränken
+			\item Die Spieler dürfen Qbits übertragen
+		\end{itemize}
+	\end{definition}
+	Man kann zeigen, dass beide Modelle gleichmächtig sind. Wie beginnen mit einem Beispiel für die zweite Variante.
+	\begin{example}
+		Diesmal betrachten wir drei Spieler A,B,C mit $x_A, x_B, x_C \in \{0,1\}$, sodass \[x_A \oplus x_B \oplus x_C = 0\] Die Aufgabe an die drei Spieler ist, drei Bits $a,b,c$ zu produzieren, sodass \[a\oplus b\oplus c = x_A \lor x_B \lor x_C\] Klassisch ist das nicht möglich zu lösen. Wir bezeichnen (für alle Spieler, aber am Beispiel von A) $a_i$ als das Bit, das A produziert, falls $x_A = i \in \{0,1\}$. Es gibt nun vier Fälle \[a_0 \oplus b_0 \oplus c_0 = 0\]
+		\[a_0 \oplus b_1 \oplus c_1 = 1\] \[a_1 \oplus b_0 \oplus c_1 = 1\] \[a_1 \oplus b_1 \oplus c_0 = 1\] Hieran sieht man, dass dieses Problem deterministisch nicht lösbar ist. Auch eine probabilistische Lösung kann keine niedrige Fehlerwahrscheinlichkeit erreichen, da immer nur 3 der obigen Gleichungen gleichzeitig wahr sein können. Wir betrachten daher im Folgenden die Quantenlösung.\\
+		Die Spieler teilen initial das Qbit \[|\phi\rangle = \frac{-1}{2}(|000\rangle - |011\rangle - |101\rangle - |110\rangle)\] den sogenannten GHZ Zustand. Jeder der Spieler (am Beispiel von A) führt anschließend folgendes Protokoll aus: Falls $x_A = 0$, Messung von $<\phi\rangle$ bezüglich der Standardbasis. Falls $x_A = 1$, eine Messung bezüglich der Basis $\{|+\rangle = \frac{1}{\sqrt{2}}(|0\rangle+|1\rangle), |-\rangle = \frac{1}{\sqrt{2}} |0\rangle-|1\rangle\}$. Anschließend setzt A den Wert $a$ auf das Ergebnis der Messung. Nun gibt es zwei Fälle \begin{enumerate}
+			\item Fall: $(x_A,x_B,x_C) = (0,0,0)$. In diesem Fall ist es egal, welches Ergebnis die Messung zurückgibt, denn die Summe ist immer 0.
+			\item Fall: $(x_A,x_B,x_C) \neq (0,0,0)$. In diesem Fall messen zwei der Spieler bezüglich der Dualbasis. Wenn man $|\phi\rangle$ bezüglich dieser Basis umschreibt, so erhält man \[|\phi\rangle = \frac{1}{4}(|+-0\rangle - |-+0\rangle - |++1\rangle + |--1\rangle)\]
+			wodurch als Ergebnis nur $(0,1,0), (1,0,0), (0,0,1)$ oder $(1,1,1)$ zurückgegeben werden kann. Dieser erfüllen alle die Bedingung $a\oplus b\oplus c = x_A\lor x_B\lor x_C$.
+		\end{enumerate}
+	\end{example}
+	\begin{example}
+		Wir betrachten nun ein zweites Beispiel mit drei Spielern A,B,C und den Worten $x=x_1x_0, y=y_1y_0, z = z_1z_0$, wobei $x+y+z = 0 \mod 2$, $x_0\oplus y_0\oplus z_0 = 0$ und der zu berechnenden Funktion \[f(x,y,z) = \frac{x+y+z \mod 4}{2}\] d.h. \[f(x,y,z) = \begin{cases}
+			0,& x+y+z=0\\
+			1,& x+y+z=2
+		\end{cases}\] Offensichtlich gilt $f(x,y,z) = x_1 \oplus y_1 \oplus z_1 \oplus (x_0 \oplus y_0 \oplus z_0)$. Alle drei Spieler sollen $f$ berechnen. Mit Quantenkommunikation sind 3 Bits notwendig, wobei ein deterministischer Ansatz 4 Bits benötigt.
+	\end{example}
+	\begin{definition}
+		Wir geben einige Kommunikationsprobleme an, die später nützlich sein werden.\\
+		\begin{enumerate}
+			\item $Disj(x,y) = \lor_{i=1}^n x_i \land y_i$. Hier gilt $C_\varepsilon(Disj) = \Omega(n)$ und $C_0(Disj) = \Omega(n)$
+			\item $EQ'(x,y) = \begin{cases}
+				1, & x=y\\
+				0, & \Delta(x,y) = \frac{n}{2}\\
+				NaN, & \text{ sonst}
+			\end{cases}$ wobei $\Delta$ der Hamming Abstand sei. Für dieses Problem gilt $C_\varepsilon(EQ') = \mathcal{O}(1)$, wenn gemeinsame Zufallsbits verwendet werden können. Wenn die Zufallsbits von A und B unabhängig sind, ist die Kommunikationskomplexität $\mathcal{O}(\log n)$. Es gilt immer $C_0(EQ') = \Omega(n)$. 
+		\end{enumerate}
+	\end{definition}
+	\begin{definition}
+		Für das Folgende ist ein bisschen Notation nötig. \[\mathcal{F}_n = \{f:\{0,1\}^n \to \{0,1\}\}\] Beachte, dass man anhand der Wahrheitstafel jedes $f$ als eine $2^n$-lange Bitfolge definieren kann. Da es $2^n = N$ viele solche $f$ gibt, ist \[\mathcal{F}_n \hat{=} \{0,1\}^N\]
+		Auf diese Weise kann $L:\{0,1\}^2 \to \{0,1\}$ ausgebaut werden zu \[L(g,h): \{0,1\}^{n} \to \{0,1\}\] durch \[\forall x \in {0,1}^n\; L(g,h)(x) = L(g(x),h(x)) \; \forall g,h \in \mathcal{F}\] 
+	\end{definition}
+	\begin{theorem}
+		Sei $F: \mathcal{F}_n \to \{0,1\}$ und $L:\{0,1\}^2 \to \{0,1\}$. Falls es einen Quanten-Algorithmus für $F(f)$ mit $t$ Fragen an $f$ der Form \[|x\rangle|y\rangle \to |x\rangle|y\oplus f(x)\rangle\] gibt, dann gibt es ein Quantenkommunikationsprotokoll mit $t(2n+4)$ Qubits für folgendes Problem:\\
+		A erhält $g$, B erhält $h$ und A muss $F(L(g,h))$ berechnen.
+	\end{theorem}
+	\begin{example}
+		Sei $F = OR_N$ und $L = AND_2$. Was ist $F(L(g,h))$? Es gilt \[F(L(g,h)) = 1 \Leftrightarrow \; \exists x \in \{0,1\}^n: L(g,h)(x) = 1\]
+		Das wiederum ist genau dann der Fall, wenn es ein $x$ gibt, sodass $g(x)\land h(x) = 1$. Man sieht, dass diese Funktion äquivalent zum $Disj$ Problem ist, $F(L(g,h)) = Disj_N(g,h)$.\\
+		Der Algorithmus von Grover kann auf natürliche Weise verwendet werden, um $OR_N$ zu berechnen (denn man sucht nach einer 1). Das bedeutet, es gibt einen Quantenalgorithmus für $F(f)$ mit $\mathcal{O}(\sqrt{N})$ Fragen. Aus obigem Theorem schließen wir, dass es ein Quantenkommunikationsprotokoll mit $\mathcal{O}(\sqrt{N}\log N)$ Bits gibt.
+	\end{example}
+	\begin{example}
+		Sei $F=OR'$, das heißt \[F(f) = \begin{cases}
+			1, & \left|\{x: f(x) = 0\}\right| = \left|\{x: f(x) = 1\}\right|\\
+			0, & f(x) = 0\; \forall x\\
+			NaN, & \text{ sonst}
+		\end{cases}\] und sei $L=\oplus$. Wir stellen uns wieder die Frage, was $F(L(g,h))$ ist. \[F(L(g,h)) = 0 \Leftarrow g(x)\oplus h(x) = 0 \; \forall x \Leftrightarrow g(x)=h(x) \; \forall x \Leftrightarrow \Delta(g,h) = 0\] Auf der anderen Seite ist \[\Delta(g,h) = \frac{N}{2} \Leftrightarrow \left|\{x: L(g,h)(x) = 0\}\right| = \left|\{x: L(g,h)(x) = 1\}\right|\] Es folgt daraus $F(L(g,h)) = \lnot EQ'$, denn \[F(L(g,h)) = \begin{cases}
+		1, & \Delta(g,h) = 2^{n-1}\\
+		0, & \Delta(g,h) = 0\\
+		NaN, & \text{ sonst}
+	\end{cases}\]
+	Da die Komplexität für das negierte Problem aber gleich bleibt, können wir aus einer Lösung für $F(L(g,h))$ auch auf $EQ'$ schließen. Der Algorithmus von Deutsch-Josza berechnet genau $F$ mit $t=1$. Hier wird anstatt NaN aber ein zufälliges Bit zurückgegeben, was aber zu keinen Problemen führt. Wir folgern, dass wir für $\lnot EQ'$ (und damit für $EQ'$) eine Quantenkommunikationskomplexität von $\mathcal{O}(\log N)$ erreichen.
+	\end{example}
 \end{document}

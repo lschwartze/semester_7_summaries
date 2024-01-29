@@ -34,3 +34,9 @@
 \contentsline {subsection}{\numberline {4.6}Deep neural networks vs. shallow neural networks}{23}{}%
 \contentsline {subsection}{\numberline {4.7}Overconfident neural networks}{24}{}%
 \contentsline {subsection}{\numberline {4.8}loss functions for binary classifications ($Y = \{-1,1\})$}{24}{}%
+\contentsline {subsection}{\numberline {4.9}imbalanced classes}{25}{}%
+\contentsline {subsection}{\numberline {4.10}fine-tuning after training}{26}{}%
+\contentsline {section}{\numberline {5}ensemble learning}{28}{}%
+\contentsline {subsection}{\numberline {5.1}wisdom of the crowd}{28}{}%
+\contentsline {subsection}{\numberline {5.2}inequalties}{28}{}%
+\contentsline {subsection}{\numberline {5.3}dependent classifiers}{28}{}%

@@ -397,4 +397,41 @@
 	\begin{definition}
 		Für einen String $S$ und ein Muster $P$ gibt es eine eindeutige links-rechts-Zerlegung \[P = w_1x_1w_2c_2...w_kc_kw_{k+1}\] sodass jedes $w_i$ ein Substring von $S$ ist, aber $w_ic_i$ nicht. Man definiert daraus \[M_{lr}(P,S) = \{p_i | p_i = \sum_{j=1}^{i}\left|w_jc_j\right|\}\] Man bezeichnet die $c_i$ auch als markiere Buchstaben. $M_{lr}(P,S)$ ist dann die Menge der Positionen in $P$ an denen die markierten Buchstaben vorkommen.
 	\end{definition}
+	\begin{lemma}
+		Ist \[\left|M_{lr}(P,s)\right| = k\] dann gibt es keinen Substring von $S$ der $P$ mit weniger als $k$ Fehlern matcht.
+	\end{lemma}
+	\begin{definition}
+		Wir definieren nun das $M_{lr}$-Array durch \[M_{lr}[j] = \left|\{p_i \leq j | p_i \in M_{lr}(P,S)\}\right|\]
+	\end{definition}
+	\begin{corollary}
+		Ist $M_{lr}[j] = d$, dann gibt es keinen Substring von $S$ der $P[1,j]$ mit weniger als $d$ Fehlern matcht.
+	\end{corollary}
+	\subsection{Verwendung von bidirektionaler Suche}
+	Das Vorgehen wird zunächst anhand der approximativen Suche mit nur einem Fehler erklärt. In diesem Fall sei $m=\left|P\right|$ und $s = \frac{m}{2}$. Dann ist dieser eine Fehler entweder links oder rechts von $s$. Ist er links, dann wird auf der linken Seite approximativ gesucht und rechts mit Rückwärtssuche exakt. Ist er rechts, wird auf der rechten Seite approximativ gesucht und auf der linken Seite wird Vorwärtssuche (dh Rückwärtssuche auf dem reversen String). In der Realität ist die Position des Fehlers nicht bekannt, weswegen beide Varianten getestet werden müssen.\\
+	Für eine allgemeine Zahl $d$ an Fehlern, wird das Pattern in $d+1$ Teile geteilt und das selber Verfahren verallgemeinert. Hierfür wird Bidirektionale Suche benötigt.
+	\section{Weiterführendes}
+	\subsection{LCP-Tabelle}
+	Wir wissen bereits, wie man die LCP-Tabelle berechnen kann, aber wir werden nun eine andere Version einführen, die die LCP-Tabelle anhand der BWT bestimmt.\\
+	\underline{LCP from BWT}
+	\begin{enumerate}
+		\item $LCP[i]\gets \bot, LCP[1]\gets -1, LCP[n+1]\gets -1, l \gets 0$
+		\item initialize empty queue $Q$
+		\item for each $c \in \Sigma$
+		\item $enqueue(Q,[C[c]+1,C[c+1]])$
+		\item endfor 
+		\item $size \gets \sigma$
+		\item while $Q\neq \varnothing$
+		\item if $size = 0$
+		\item $l\gets l+1$, $size \gets \left|Q\right|$
+		\item endif
+		\item $[lb,rb] \gets dequeue(Q)$, $size \gets size-1$
+		\item if $LCP[rb+1] = \bot$
+		\item $LCP[rb+1] \gets l$
+		\item $list \gets getInterval([lb,rb])$
+		\item foreach $[i,j] \in list$
+		\item $enqueue(Q,[i,j])$
+		\item endfor
+		\item endif 
+		\item endwhile
+	\end{enumerate}
 \end{document}

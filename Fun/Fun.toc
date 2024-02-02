@@ -52,3 +52,4 @@
 \contentsline {section}{\numberline {12}The adjoint of an operator and Fredholm operators}{34}{}%
 \contentsline {subsection}{\numberline {12.1}Adjoint}{34}{}%
 \contentsline {subsection}{\numberline {12.2}Theorem of Arzelá-Ascoli}{35}{}%
+\contentsline {subsection}{\numberline {12.3}Projections}{36}{}%

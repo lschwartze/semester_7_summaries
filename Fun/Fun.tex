@@ -1050,4 +1050,56 @@
 	\begin{lemma}
 		If $A \subset C^0(X,Y)$ is pointwise bounded and equicontinuous, then $A$ is uniformly bounded.
 	\end{lemma}
+	\begin{theorem}[Arzelá-Ascoli]
+		Let $X$ be a compact metric space, $A\subset C^0(X,\mathbb{K}^n)$. Then $A$ is precompact iff $A$ is pointwise bounded and equicontinuous.
+	\end{theorem}
+	\begin{remark}
+		As a consequence, if $(f_n)_{n \in \mathbb{N}} \subset C^0(X,\mathbb{K}^n)$ that is pointwise bounded and equicontinuous the there is a subsequence $(f_{n_j})_{j \in \mathbb{N}}$ and \[\exists f \in C^0(X,\mathbb{K}^n) \, s.t. \, f_{n_j} \to f \, in\, C^0(X,\mathbb{K}^n)\]
+	\end{remark}
+	\begin{theorem}[Schauder]
+		Let $X,Y$ be Banach spaces. Then \[T \in K(X,Y) \iff T' \in K(Y',X')\]
+	\end{theorem}
+	\subsection{Projections}
+	Let $X$ be a vector space.
+	\begin{definition}
+		A linear map $P: X \to X$ is a projection if $P^2 = P\circ P = P$.
+	\end{definition}
+	\begin{lemma}
+		Let $P: X \to X$ be linear. Then \begin{enumerate}
+			\item $P$ is a projection $\iff \; P = Id$ on $R(P)$.
+			\item If $P$ is a projection, then $X = \ker P \oplus R(P)$
+			\item If $P$ is a projection, then $Id-P$ is also a projection.
+			\item Let $Y\subset X$ be a subspace. Then $\exists P:X\to X$ s.t. $R(P) = Y$.
+		\end{enumerate}
+	\end{lemma}
+	Let $(X,||\cdot||)$ be a normed space.
+	\begin{definition}
+		In $(X,||\cdot||)$, $\mathcal{P}(X) = \{P \in L(X): \; P^2 = P\}$ is the set of linear continuous projections.
+	\end{definition}
+	\begin{remark}
+		Let $P \in \mathcal{P}(X)$. Then \begin{enumerate}
+			\item $\ker P$ is closed.
+			\item $R(P)$ is closed.
+			\item $X = \ker P \oplus R(P)$ as a topological sum, that is $x_n \to x$ in $X$ iff $Px_n \to Px$ in $(P)$ and $x_n-Px_n \to x-Px$ in $\ker P$.
+		\end{enumerate}
+	\end{remark}
+	\begin{theorem}[Theorem of closed complement]
+		Let $X$ be a Banach space, $Y,Z$ subspaces, s.t. $X = Y\oplus Z$ in an algebraic sense. Then $\exists P \in \mathcal{P}(X)$ with $R(P) = Y$ and $\ker P = Z$ iff $Y$ and $Z$ are closed.\\
+		Then $X = Y\oplus Z$ is also in the topological sense and $Z$ is called the complement of $Y$ in $X$. 
+	\end{theorem}
+	\begin{definition}
+		Let $X$ be a vector space, $U \subset X$ a subspace. We define the relation $x\sim y$ if $x-y \in U$ or $\exists u \in U$ s.t. $x=y+u$. Then \[X/U = \{[x]| x \in X\}\] is called the Quotient space.
+	\end{definition}
+	\begin{lemma}
+		If $U\subset X$ is closed in $(X,||\cdot||)$. Then we define the norm \[||[x]||_{X/U} = dist(x,U)\] If $X$ is Banach, then $X/U$ equipped with this norm is Banach as well.
+	\end{lemma}
+	\begin{definition}
+		If $U\subset X$ is a closed subspace s.t. $\dim X/U < \infty$, then $codim \;U = \dim X/U$ is the codimension of $U$ in $X$.
+	\end{definition}
+	\begin{theorem}
+		Let $X$ be Banach, $U\subset X$ closed subspace with $codim \;U = n < \infty$. \begin{enumerate}
+			\item Then $\exists V \subset X$ subspace with $\dim V = n$ s.t. \[X = U\oplus V\] In particular $\exists P:X \to X$ continuous projection with $R(P) = U$.
+			\item $dim U^\bot = codim \; U = n$
+		\end{enumerate}
+	\end{theorem}
 \end{document}

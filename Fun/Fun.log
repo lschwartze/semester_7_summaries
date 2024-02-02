@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  25 JAN 2024 09:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  1 FEB 2024 09:27
 entering extended mode
 **./Fun.tex
 (Fun.tex
@@ -276,7 +276,7 @@ ce, $\OML/cmm/m/it/12 Y$ \OT1/cmr/m/it/12 normed space, $\OMS/cmsy/m/n/12 T  \
 OML/cmm/m/it/12 L\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 X; Y\OT1/cmr/m/n/12 )$
  []
 
-[25] [26] [27] [28] [29] [30] [31] [32] [33] [34] [35] (Fun.aux) ) 
+[25] [26] [27] [28] [29] [30] [31] [32] [33] [34] [35] [36] [37] (Fun.aux) ) 
 Here is how much of TeX's memory you used:
  2930 strings out of 479322
  40116 string characters out of 2856609
@@ -286,4 +286,4 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  67i,10n,74p,945b,278s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Fun.dvi (36 pages, 139264 bytes).
+Output written on Fun.dvi (38 pages, 145748 bytes).

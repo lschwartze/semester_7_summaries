@@ -554,4 +554,33 @@
 	\end{lemma}
 	\subsection{dependent classifiers}
 	We again assume an ensemble of classifiers which we will model as random variables $X_1,...,X_n \in \{0,1\}$ where 1 means it classifies correctly and 0 not. We want to consult the majority of the classifiers. We hence calculate \[\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i := \bar{p}\] and we say that $\bar{X}$ is correct iff $\bar{X}>\frac{1}{2}$. It is no loss of generality to assume that $\mathbb{P}[X_i] > \frac{1}{2}$ because otherwise it would be quite bad. This then is enough to show that \[\mathbb{E}[\bar{X}] > \frac{1}{2}\] Similarly, using Cantelli's inequality we can note that \[\mathbb{P}[\bar{X}>\frac{1}{2}] \to \frac{(\bar{p}-\frac{1}{2})^2}{c\bar{p}(1-\bar{p}) + (\bar{p}-\frac{1}{2})^2} (n\to \infty)\] where $c$ is some correlation-constant. This holds true for all classifiers even if they are correlated. If one plots this as a function in $\bar{p}$ with different constants $c$, one can notice, that a small correlation coefficient is more important than good classifiers.
+	\begin{definition}
+		The following classifier is called the majority classifier.
+		\[h(x) = \arg\max_{y\in \{-1,1\}} \left|\{h_i(x)=y\}\right|\]
+		We can also introduce a number of random variables \[X_i(x,y) = \begin{cases}
+			1, & h_i(x)=y\\
+			0, & otherwise
+		\end{cases}\]
+	\end{definition}
+	\subsection{random forests}
+	This is a special kind of majority classifiers (which is also possible to be used as a regression but we won't). The set of classifiers $h_1,...,h_n$ is a set of decision trees in this case. For each $h_i$ we want \begin{itemize}
+		\item a small true risk
+		\item only small correlation to the other decision trees
+	\end{itemize}
+	For the second point there are two tricks. \begin{definition}[bootstrapping]
+		The training set $S$ is used as a basis to construct different training sets $S_i$ for each $h_i$. If $\left|S\right|=m$, we usually want the $S_i$ to be of size $\delta m$ for $\delta \in (0,1]$. Then $S_i$ is formed by drawing $\delta m$ elements from $S$ with replacement (i.e. a point can be drawn multiple times). 
+	\end{definition}
+	\begin{definition}[random feature selection]
+		Usually, when training a decision tree, we would want to maximize over the gain of homogeneity over all features and all thresholds. Now, want to draw a subset $F$ of the features and we only want to maximize the gain over this subset. If there are $d$ features total, in practice one would usually choose $\left|F\right| = \sqrt{d}$.
+	\end{definition}
+	\subsection{Adaboost}
+	This is yet another ensemble classifier. It takes a set of comparatively weak base classifiers and distributes them in a weighted linear combination \[A(x) = sgn \left(\sum_{t=1}^T\alpha_t h_t(x)\right)\]
+	For the base classifiers, one would usually choose something like decision stumps. On their own, these are very bad classifiers.\\
+	\underline{training:} First, we train one of the weak classifiers. Afterwards, we figure out the points that are classified wrong and give those some kind of weight. This has the effect, that training the second classifier will probably take care of these wrong samples. The weight is usually introduced by a weighted loss function for the training of the following weak base classifiers.\\
+	But how do we fix the $\alpha$ in the formula of Adaboost? And how do we adjust the weights?\\
+	Let $p_{(x,y)}^t$ be the weight that is given to the tuple $(x,y)$ when training the $t$-th classifier. Similarly, let \[\varepsilon_t = \sum_{(x,y) \in S} p_{(x,y)}^t l_{0-1}(y,h_t(x))\] be the (weighted) error of the $t$-th classifier. Then we choose \[\alpha_t = \frac{1}{2} \log\left(\frac{1}{\varepsilon_t} - 1\right)\] and \[p_{(x,y)}^{t+1} = \frac{p_{(x,y)}^t e^{-\alpha_t y h_t(x)}}{\sum_{(x',y') \in S} p_{(x,y)}^t e^{-\alpha_t y' h_t(x')}}\] Note that the denominator of the last fraction is simply a normalization term, that guarantees that the weights sum up to 1.\\
+	Now let's figure out the training error of Adaboost. We want that each of the base classifiers adds something to $A$. Therefore, we make the following assumption: For every training set $S$ and for every probability distribution $p$ over $S$ it holds that \[\min_{h \in W} L_{p,S}(h) \leq \frac{1}{2}-\gamma\] where $W$ is the set of base classifiers. We tacitly assume that we can give weights to the training set.
+	\begin{theorem}
+		If the above holds, the training error of the classifier $h^*$ ouput by Adaboost is \[L_S(h^*) \leq e^{-2\gamma^2 T}\] where $T$ is the number of base classifiers.
+	\end{theorem}
 \end{document}

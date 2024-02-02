@@ -14,7 +14,7 @@ coord2obj = [1;4];
 elem2obj = [1;2];
 
 %*** Objekt
-[coordtmp, elemtmp] = read_off("../off_copies/toilet.off ");
+[coordtmp, elemtmp] = mysphere(res);%read_off("../off_copies/toilet.off ");
 coordtmp = coordtmp*0.25;
 coordtmp(:,2) = coordtmp(:,2)+1;
 coordtmp(:,3) = coordtmp(:,3)+1;

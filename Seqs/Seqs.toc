@@ -17,3 +17,6 @@
 \contentsline {subsection}{\numberline {2.5}Wavelet Bäume}{12}{}%
 \contentsline {subsection}{\numberline {2.6}Bidirektionale Suche}{15}{}%
 \contentsline {subsection}{\numberline {2.7}Approximate String Matching}{16}{}%
+\contentsline {subsection}{\numberline {2.8}Verwendung von bidirektionaler Suche}{18}{}%
+\contentsline {section}{\numberline {3}Weiterführendes}{18}{}%
+\contentsline {subsection}{\numberline {3.1}LCP-Tabelle}{18}{}%

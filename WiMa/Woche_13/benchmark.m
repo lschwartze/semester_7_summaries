@@ -1,12 +1,12 @@
 clc, clear, close all
 
-iter = 20:10:100;
+iter = 10:10:50;
 
 timeCreateScene = zeros(size(iter));
 timeGetVisibility = zeros(size(iter));
 timeGetVisibilityBB = zeros(size(iter));
 timeGetVisibilityTriangle = zeros(size(iter));
-timeGetVisibilityTriangleVec = zeros(size(iter));
+timeGetVisibilityNaive = zeros(size(iter));
 
 for i=1:size(iter,2)
     
@@ -28,9 +28,12 @@ for i=1:size(iter,2)
     getVisibilityTriangle(coord,elem,elem2obj,coord2obj,s,n);
     timeGetVisibilityTriangle(i) = toc();
     
-    %tic();
-    %getVisibilityTriangleVec(coord,elem,elem2obj,coord2obj,s,n);
-    %timeGetVisibilityTriangleVec(i) = toc();
+    tic();
+    vis = ones(size(s,1),1);
+    doesIntersect(vis,elem,s(2:end,:), s(1,:), s, coord,n);
+    timeGetVisibilityNaive(i) = toc();
+    
+   
     
 end
 
@@ -40,13 +43,17 @@ title('Time to create scene')
 xlabel('resolution')
 ylabel('Time in seconds')
 figure(2)
+loglog(iter,timeGetVisibility)
 hold on
-semilogy(iter,timeGetVisibility)
-semilogy(iter,timeGetVisibilityBB)
-semilogy(iter,timeGetVisibilityTriangle)
+loglog(iter,timeGetVisibilityBB)
+loglog(iter,timeGetVisibilityTriangle)
+loglog(iter,timeGetVisibilityNaive)
+hold off
+
+grid on
 %semilogy(iter,timeGetVisibilityTriangleVec)
-legend("bounding ball", "bounding boxes", "triangles")
+legend("bounding ball", "bounding boxes", "triangles", "naive")
 
 title('Time to get visiblity')
-xlabel('Number of iterations')
+xlabel('resolution')
 ylabel('Time in seconds')

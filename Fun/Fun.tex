@@ -1102,4 +1102,42 @@
 			\item $dim U^\bot = codim \; U = n$
 		\end{enumerate}
 	\end{theorem}
+	\subsection{Fredholm operators}
+	Let $X,Y$ be Banach spaces.
+	\begin{definition}
+		$A\in L(X,Y)$ is a Fredholm operator if \begin{enumerate}
+			\item $\dim \ker A < \infty$
+			\item $R(A)$ is closed (this is not strictly needed as it is implied by 3)
+			\item $codim R(A) < \infty$
+		\end{enumerate}
+		The number $ind (A) = \dim \ker A - codim R(A) \in \mathbb{Z}$ is called the index of $A$.
+	\end{definition}
+	\begin{remark}
+		\begin{itemize}
+			\item if $A$ is Fredholm, then $\exists V$ subspace of $Y$ s.t. $Y = R(A) \oplus V$
+			\item if $ind(A) = 0$, $A$ is injective iff $A$ is surjective.
+		\end{itemize}
+	\end{remark}
+	Our aim now is, that if $T \in K(X)$ is a compact operator, then $Id-T$ is a Fredholm operator.
+	\begin{theorem}
+		Let $X$ be Banach, $T\in K(X)$, $A = Id - T$. Then $\dim \ker A < \infty$.
+	\end{theorem}
+	\begin{theorem}
+		Let $X$ be Banach, $T \in K(X)$, $A=Id - T$. Then $R(A)$ is closed.
+	\end{theorem}
+	\begin{lemma}
+		Let $X$ be Banach, $T\in K(X)$, $A= Id-T$, If $\ker A = \{0\}$, then $R(A) = X$.
+	\end{lemma}
+	\begin{theorem}
+		Let $X$ be Banach, $T\in K(X)$, $A = Id-T$. Then $A$ is a Fredholm operator of index 0 and $$\dim \ker A = codim R(A) = \dim \ker A' = codim R(A')$$
+	\end{theorem}
+\section{Spectral theorem in Banach spaces}
+	\begin{theorem}[Theorem of Riesz-Schauder]
+		Let $X$ be a Banach space, $T \in K(X)$. Then \begin{enumerate}
+			\item $0 \in \sigma(T)$ if $\dim X = \infty$
+			\item $\sigma(T) \setminus \{0\} \subset \sigma_p(T)$ and $\sigma(T) \setminus B_r(0)$ is finite or empty $\forall r > 0$.
+			\item For $\lambda \in \sigma(T) \setminus \{0\}$, let $n_\lambda = \sup \{n \in \mathbb{N}: \, \ker((\lambda Id - T)^{n-1}) \subsetneq \ker((\lambda Id - T)^n)\} \geq 1$ called the order of $\lambda$, while $\dim \ker (\lambda Id - T)$ is the geometric multiplicity of $\lambda$.
+			\item (Riesz-decomposition) For $\lambda \in \sigma(T) \setminus \{0\}$ \[X = \ker(\lambda Id - T)^{n_\lambda} \oplus R(\lambda Id -T)^{n_\lambda}\]
+		\end{enumerate}
+	\end{theorem}
 \end{document}

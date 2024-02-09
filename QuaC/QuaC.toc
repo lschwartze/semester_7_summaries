@@ -31,3 +31,11 @@
 \contentsline {subsection}{\numberline {7.2}probabilistische Varianten}{27}{}%
 \contentsline {subsection}{\numberline {7.3}Quantenkommunikationskomplexität}{28}{}%
 \contentsline {subsection}{\numberline {7.4}Finger Printing}{32}{}%
+\contentsline {subsection}{\numberline {7.5}Quantenkryptologie}{34}{}%
+\contentsline {section}{\numberline {8}Quanten fehlerkorrigierende Codes}{35}{}%
+\contentsline {subsection}{\numberline {8.1}klassische fehlerkorrigierende Codes}{35}{}%
+\contentsline {subsection}{\numberline {8.2}Quantencodes}{35}{}%
+\contentsline {subsubsection}{\numberline {8.2.1}Bit-Flips}{36}{}%
+\contentsline {subsubsection}{\numberline {8.2.2}Phase-Flip}{36}{}%
+\contentsline {subsubsection}{\numberline {8.2.3}9-Bit Code}{36}{}%
+\contentsline {subsubsection}{\numberline {8.2.4}CSS Codes}{36}{}%

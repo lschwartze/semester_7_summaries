@@ -53,3 +53,5 @@
 \contentsline {subsection}{\numberline {12.1}Adjoint}{34}{}%
 \contentsline {subsection}{\numberline {12.2}Theorem of Arzelá-Ascoli}{35}{}%
 \contentsline {subsection}{\numberline {12.3}Projections}{36}{}%
+\contentsline {subsection}{\numberline {12.4}Fredholm operators}{37}{}%
+\contentsline {section}{\numberline {13}Spectral theorem in Banach spaces}{38}{}%

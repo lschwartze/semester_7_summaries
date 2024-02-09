@@ -561,4 +561,45 @@
 		\item $x\neq y \implies \langle h_x |h_y \rangle \leq \delta$.
 	\end{itemize}
 	Wir halten fest, dass $|h_x\rangle$ und $|h_y\rangle$ Quantenzustände der Länge $\log m +1 = \mathcal{O}(\log n)$ Qubits sind. Beide Zustände werden nun an C geschickt, welcher mit einen dafür ausgelegten Schaltkreis bestimmt, ob $x=y$. Der Schaltkreis hat die drei Eingaben $|0^n\rangle$, $|\phi\rangle = |h_x\rangle$, $|\psi\rangle = |h_y\rangle$. Mit einer Hadamard Transformation auf den ersten $n$ Bits ergibt sich der Zustand \[\frac{1}{\sqrt{2}} ((|0\rangle+|1\rangle)|\phi\rangle|\psi\rangle)\] Anschließend wird ein kontrollierter Swap auf den letzten beiden Qubits mit dem ersten Qubit als Kontrollbit durchgeführt. Wir erreichen en Zustand \[\frac{1}{\sqrt{2}} (|0\rangle|\phi\rangle|\psi\rangle + |1\rangle |\psi\rangle |\phi\rangle)\] Auf den ersten $n$ Bits wird wieder eine Hadamard Transformation durchgeführt und wir erhalten den Zustand \[\frac{1}{2} (|0\rangle(|\phi\rangle|\psi\rangle + |\psi\rangle|\phi\rangle) + |1\rangle (|\psi\rangle |\phi\rangle - |\phi\rangle |\psi\rangle))\] Wir schreiben nun \[|\phi\rangle = \sum_i a_i|i\rangle, \; |\psi\rangle = \sum_i b_i |\i\rangle\] Dadurch lässt sich der letzte Teil schreiben als \[|\psi\rangle |\phi\rangle - |\phi\rangle |\psi\rangle = \sum_{i,j} (a_ib_j - a_jb_i)|i\rangle|j\rangle\] Die Wahrscheinlichkeit 1 zu messen, ist demnach \[\frac{1}{4} \sum_{i,j} \left|a_ib_j - a_jb_i\right|^2 = \frac{1}{2} (1-\langle\phi|\psi\rangle^2)\] Ist $x=y$, dann ist dieser Ausdruck 0 und man misst auf jeden Fall den Wert 0, ansonsten wird mit positiver Wahrscheinlichkeit 1 gemessen. Wenn eine Fehlerwahrscheinlichkeit von $\varepsilon$ erreicht werden soll, so muss dieses Vorgehen $\mathcal{O}(\log \frac{1}{\varepsilon})$ mal wiederholt werden.
+	\subsection{Quantenkryptologie}
+	Der Sender A (Alice) will eine Nachricht an den Empfänger B (Bob) schicken. Die Nachricht bezeichnen wir im Folgenden mit $m$. A hat eine Verschlüsselungsfunktion $f$ und B hat eine andere Funktion $g$. Beide haben Zugriff auf einen Schlüssel $k$. Wenn $g = f^{-1}$, ist das Problem gelöst.\\
+	Der Schlüssel ist der Knackpunkt. Ein Beispiel für den Schlüssel $k$ ist zum Beispiel der sogenannte One-Time-Pad. Dabei ist $k$ eine Bitfolge und A berechnet die Funktion $f(m,k) = m\oplus k$, das Bitweise XOR. Anschließend berechnet B die Funktion $f(f(k,m)) = m$. Das Verfahren ist sicher, solange die Übertragung des Schlüssels nicht abgehört wurde. Dieses Problem lässt sich aber mit einem Quantenansatz lösen. Das Protokoll basiert darauf, dass A und B bemerken können, wenn die Information in $k$ abgehört wurde.\\
+	Sei $\left|m\right| = n$. A führt zuerst die folgenden Schritte aus
+	\begin{enumerate}
+		\item wähle $a,b \in _R \{0,1\}^{4n}$
+		\item for $i=1$ to $4n$ do
+		\item $|q_i\rangle = \begin{cases}
+			|a_i\rangle, & b_i=0\\
+			H|a_i\rangle = \frac{1}{\sqrt{2}} (|0\rangle + (-1)^{a_i} |1\rangle), & b_i = 1
+		\end{cases}$
+	\item endfor
+	\item schicke $|q_1\rangle ... |q_{4n}\rangle$
+	\end{enumerate}
+	Anschließend folgt B dem folgenden Protokoll 
+	\begin{enumerate}
+		\item wähle $c \in \{0,1\}^{4n}$
+		\item for $i=1$ to $4n$ do
+		\item falls $c_i = 0 \; \Rightarrow $ Messung von $|q_i\rangle$ bezüglich Standardbasis, sonst Messung bezüglich Hadamard Basis.
+	\end{enumerate}
+	Anschließend schickt A $b$ an B und B schickt $c$ an A.\\
+	Sei $G = \{i | c_i = b_i\}$. Es gilt $\mathbb{E}[\left|G\right|] = 2n$. A und B können $G$ bestimmen. Nun wählt A eine Untermenge $G' \subset G$ mit $\left|G'\right| = n$ und schickt die Menge der Paare $\{(a_i,i) | i \in G'\}$ an B. B schickt die Menge der Paare $\{(q_i,i)| i \in G'\}$ an A. Ist $a_i = q_i$ für alle $i \in G'$, dann gilt die Verbindung als sicher und es kann vorgegangen werden wie oben. Gibt es ein $i \in G'$ mit $a_i \neq q_i$, so wurde die Kommunikation abgehört.\\
+	Wenn eine dritte Person C nun die Kommunikation abgehört hätte, dann müsste sie die $|q_i\rangle$ messen. Da C aber die zufällige Bitfolge c nicht kennt, weiß C nicht nach welcher Basis gemessen werden muss. Für jedes Bit ergibt sich daher die Wahrscheinlichkeit $\frac{1}{2}$, dass die richtige Basis für jedes Bit gewählt wurde und damit die Wahrscheinlichkeit, dass C abhören kann, ohne bemerkt zu werden $\left(\frac{1}{2}\right)^n$. 
+	\section{Quanten fehlerkorrigierende Codes}
+	\subsection{klassische fehlerkorrigierende Codes}
+	Die Idee von fehlerkorrigierenden Codes ist, dass man ein Codewort $c$ eines Codes $C$ versendet, und dieses Codewort durch etwaige Störungen in der Übertragung verändert werden kann. Ist $C$ fehlerkorrigierend, so kann das übertragene Wort wieder zurück zu $c$ überführen solange die Anzahl der Fehler nicht zu groß ist. Dieser Rückschluss auf das eigentliche Codewort geschieht zum Beispiel nach dem Maximum Likelihood Prinzip. Die wahrscheinliche einfachsten Codes sind der Form $C = \{0^n,1^n\}$ (genannt Wiederholungscodes). Diese sind $\lfloor\frac{n-1}{2}\rfloor$-fehlerkorrigierend. Ein anderes Beispiel sind Paritätscodes $C$, wobei für $c \in C$ immer gelten muss, dass $\left|c\right|_1$ ist gerade. Diese können keinen Fehler korrigieren.\\
+	Beide obigen Beispiele sind Subklassen der Menge der linearen Codes. Für einen linearen Code $C$ gilt für alle $c,c'$, dass $c\oplus c' \in C$ gilt, das heißt $C$ ist ein Unterraum des Raumes der Vektoren. Insbesondere gibt es eine Basis $B = \{b_1,...,b_n\}$ für $C$. Die Matrix $M$ mit den $b_i$ in der $i$-ten Zeile heißt Generatormatrix für $C$. Das heißt für alle $w \in \{0,1\}^n$ ist $M\cdot w$ ein Codewort in $C$. Eine Prüfmatrix $P$ ist eine boole'sche Matrix, sodass die Spalten eine Basis für $C^\bot$ definieren. Insbesondere gilt $c \in C \iff cP = 0$.
+	\subsection{Quantencodes}
+	Wir unterscheiden zwei verschiedene Fehler, die in einer Quantencode-Übertragung auftreten können: \begin{itemize}
+		\item Bit-Flips: $a|0\rangle + b|1\rangle$ wird übertragen als $b|0\rangle + a|1\rangle$
+		\item Phase-Flips: $a|0\rangle + b|1\rangle$ wird übertragen als $a|0\rangle - b|1\rangle$
+	\end{itemize}
+	\subsubsection{Bit-Flips}
+	Mit einem einfachen Schaltkreis lassen sich die Transformationen $|0\rangle \to |000\rangle$ und $|1\rangle \to |111\rangle$ umsetzen. Damit erhält man $\phi \to \hat{\phi} = a|000\rangle + b|111\rangle$. Würde man nun nach einer fehlerhaften Übertragung $a|001\rangle + b|110\rangle$, so kann man mit dem Maximum-Likelihood-Prinzip wiederum das ursprüngliche Codewort rekonstruieren. Mit einem extra Register, kann man einen Schaltkreis erstellen, der die Positionen der Fehler ausgibt. Mithilfe eines NOT-Gatters auf diesen Bits können diese Fehler schließlich behoben werden.
+	\subsubsection{Phase-Flip}
+	Man bemerke, dass ein Phase-Flip nichts anderes ist, als ein Bit-Flip in der Dualbasis. Man transformiere das Fehlerhaft übertragene Qubit $a|0\rangle - b|1\rangle$ mit einer Hadamard Transformation und erhält \[\frac{1}{\sqrt{2}} (a-b)|0\rangle + (a+b)|1\rangle\] Wenn man darauf wiederum einen Bit-Flipm ausführt, so erhält man \[\frac{1}{\sqrt{2}} (a+b)|0\rangle + (a-b)|1\rangle\] Nun führe man wiederum eine Hadamard Transformation aus und man erhält dadurch $a|0\rangle + b|1\rangle$ zurück. Es ist nun klar, dass man den Schaltkreis von oben auf Phase-Flips anpassen kann.
+	\subsubsection{9-Bit Code}
+	Die Idee in diesem Code ist es, beide obigen Strategien kombiniert werden. Es wird zunächst ein Bit in neun Versionen davon kopiert. Der Code kann Fehler in irgendeinem der Qubits korrigieren. 
+	\subsubsection{CSS Codes}
+	Sei $H$ ein Unterraum von $\{0,1\}^n$. Die Codewörter sind Überlagerungen von den Vektoren in $H$. Wir definieren \[|H\rangle = \frac{1}{\sqrt{\left|H\right|}} \sum_{h \in H} |h\rangle\] Bit-Flips können mit einem $\{0,1\}$-Vektor $g$ repräsentiert werden. Es gilt $g_i = 1 \iff$ an Stelle $i$ ist ein Fehler. Es gilt \[|H+g\rangle = \frac{1}{\sqrt{\left|H\right|}} \sum_{h \in H} |h+g\rangle\] Für Phase.Flips verwenden wir einen Vektor $g'$ wobei \[|H+g'\rangle = \frac{1}{\sqrt{\left|H\right|}}\sum_{h \in H} (-1)^{g'\cdot h} |h\rangle\]
+	Es folgt schließlich, wenn beide Fehler betrachtet werden sollen, dann ist \[|H+g+g'\rangle = \frac{1}{\sqrt{\left|H\right|}} \sum_{h \in H} (-1)^{g'\cdot h}|h+g\rangle\]
 \end{document}

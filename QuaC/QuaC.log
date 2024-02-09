@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  30 JAN 2024 11:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.3) (preloaded format=latex 2021.5.10)  8 FEB 2024 11:21
 entering extended mode
 **./QuaC.tex
 (QuaC.tex
@@ -341,7 +341,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 513--514
 
 LaTeX Warning: Command \i invalid in math mode on input line 563.
 
-[33] [34] (QuaC.aux) ) 
+[33] [34]
+Overfull \hbox (13.65504pt too wide) in paragraph at lines 592--592
+[]\OT1/cmr/m/n/12 Wir un-ter-schei-den zwei ver-schiedene Fehler, die in einer 
+Quantencode-[]Ubertra-gung auftreten
+ []
+
+[35] [36] [37] (QuaC.aux) ) 
 Here is how much of TeX's memory you used:
  2898 strings out of 479322
  39613 string characters out of 2856609
@@ -351,4 +357,4 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  67i,13n,74p,1769b,251s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on QuaC.dvi (35 pages, 139612 bytes).
+Output written on QuaC.dvi (38 pages, 154336 bytes).

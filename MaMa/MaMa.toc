@@ -42,3 +42,10 @@
 \contentsline {subsection}{\numberline {5.3}dependent classifiers}{28}{}%
 \contentsline {subsection}{\numberline {5.4}random forests}{29}{}%
 \contentsline {subsection}{\numberline {5.5}Adaboost}{30}{}%
+\contentsline {subsection}{\numberline {5.6}gradient boosting}{31}{}%
+\contentsline {subsection}{\numberline {5.7}XGBoost}{31}{}%
+\contentsline {section}{\numberline {6}Autoencoders}{32}{}%
+\contentsline {subsection}{\numberline {6.1}applications}{32}{}%
+\contentsline {subsection}{\numberline {6.2}PCA}{33}{}%
+\contentsline {subsection}{\numberline {6.3}Kullback-Leibler divergence of normal distributions}{33}{}%
+\contentsline {subsection}{\numberline {6.4}Reconstruction loss of a variational autoencoder}{34}{}%

@@ -583,4 +583,29 @@
 	\begin{theorem}
 		If the above holds, the training error of the classifier $h^*$ ouput by Adaboost is \[L_S(h^*) \leq e^{-2\gamma^2 T}\] where $T$ is the number of base classifiers.
 	\end{theorem}
+	\subsection{gradient boosting}
+	This is an adaption for Adaboost that allows usage of any loss function. First we look at the overall training error. \[L_S(\phi_{T+1}) = \frac{1}{\left|S\right|} \sum_{(x,y) \in S} l(y,\underbrace{\phi_T(x) + h_{T+1}(x)}_{ = \phi_{T+1}(x)})\] The idea is to work on the $h_t$. We set $h_{T+1}(x) = z$ which is a variable and we do a first order Taylor approximation. Then \[L_S(\phi_{T+1}) \approx \frac{1}{\left|S\right|} \sum_{(x,y) \in S}l(y,\phi_T(x)) + \underbrace{l'(y,\phi_T(x))}_{= \frac{\partial}{\partial z} l(y,z)}\cdot h_{T+1}(x)\] Since we want to minimize $L_S(\phi_{T+1})$ the idea is to $h_{T+1}(x)$ s.t. \[\frac{1}{\left|S\right|} \sum_{(x,y) \in S}l(y,\phi_T(x)) + l'(y,\phi_T(x))\cdot h_{T+1}(x)\] becomes small. This obviously becomes small if we choose $h_{T+1}(x) = -\alpha l'(y,\phi_T(x))$ for an $\alpha > 0$.
+	\subsection{XGBoost}
+	This ensemble classifier is also of the form $\sum_{t=1}^T h_t$ where the $h_t$ might perhaps be regression trees. XGBoost uses \begin{itemize}
+		\item gradient boost with second order Taylor approximation
+		\item regression trees $h_t$ of arbitrary size. This can lead to overfitting when unsupervised, which is why there is a penalty function that penalizes large trees 
+	\end{itemize} 
+	Therefore, we write the training error as \[L_S(\phi_{T+1}) = \frac{1}{\left|S\right|} \sum_{(x,y) \in S} l(y,\phi_T(x) + h_{T+1}(x)) + \sum_{t=1}^{T+1} \Omega(h_t) \]\[\approx \frac{1}{\left|S\right|} \sum_{(x,y) \in S} l(y,\phi_T(x)) + l'(y,\phi_T(x))\cdot h_{T+1}(x) + \frac{1}{2}l''(y,\phi_T(x))h_{T+1}^2(x) + \sum_{t=1}^{T+1} \Omega(h_t) + \Omega(h_{T+1})\] The objective is to minimize this term which can be seen to be equivalent ot minimizing \[\frac{1}{\left|S\right|} \sum_{(x,y) \in S} l'(y,\phi_T(x))h_{T+1}(x) + \frac{1}{2} l''(y,\phi_T(x))h_{T+1}^2(x) + \Omega(h_{T+1})\] as all the other terms are constant.
+	\section{Autoencoders}
+	If we have lots of data but do not know the actual classes of the images or whatever, training becomes tricky. One possible solution is semi-supervised learning. Here we start by training the algorithm on unlabelled data. The idea is that this hopefully learns some insight about the distribution of the data. Then in a second step it would be possible to train with only a small set of labelled data. A possible implementation for this problem might be a autoencoder. This is a small neural network with an $n$-dimensional input and output layer with a single $k$-dimensional hidden layer in between. Here we need $k << n$. The idea is that the autoencoder minimizes \[\frac{1}{\left|S\right|} \sum_{(x,y) \in S} ||x-d(e(x))||_2^2\] where $e$ shall be the function that is represented by the weights and bias of the input layer towards the hidden layer (i.e. the encoder) and $d$ the function after the hidden layer (i.e. the decoder). 
+	\subsection{applications}
+	\underline{anomaly detection:} This is a good use-case for an autoencoder. Here, one inputs the data into the autoencoder and checks the reconstruction error. If some of the data return a high reconstruction error, chances are that this data is faulty.\\
+	\underline{denoising:} During the training of the autoencoder we need clean data. This is given some (known) noise (i.e. $x+e$) and the job of the autoencoder would be to clean up real noise later on.
+	\subsection{PCA}
+	But how can we actually implement such an dimension reduction as in the autoencoder above? One idea would be PCA (principal component analysis). It actually turns out that most dimension reduction protocols return results that are very similar to PCA.\\
+	The basic idea is that given some data $x^{(1)},...,x^{(N)} \in \mathbb{R}^n$ where $N>>n$ we compute a representation $\hat{x}^{(1)}, ..., \hat{x}^{(N)} \in \mathbb{R}^k$ where $k<n$. The exact protocol is based on the singular value decomposition. Given any matrix $X \in \mathbb{R}^{N \times n}$ we want to write \[X = USV^T\] where $U$ and $V$ are orthonormal and $S$ is a diagonal matrix that is filled with 0-rows to match the dimensions of $X$. The singular values $\sigma_1 \geq \sigma_2 \geq .. \geq \sigma_n \geq 0$ are the diagonal elements of $S$.\\
+	PCA now specifies the target dimension $k$ (called the number of principal components). Then only the $k$ largest singular values $\sigma_1, ..., \sigma_k$ are used. It takes the matrix $V_k^T$ (i.e. the first $k$ columns of $V$) and multiplies with the $x^{(i)}$. 
+	\subsection{Kullback-Leibler divergence of normal distributions}
+	For any $\mu \in \mathbb{R}^k$ and $s \in \mathbb{R}^k_{\geq 0}$ we have \[D_{KL}(N(\mu,s)||N(0,1)) = \frac{1}{2} \sum_{i=1} (s_i + \mu_i^2 - 1 - \ln s_i)\]
+	\begin{lemma}
+		Let $p,q$ be univariate probability density functions with independent components, i.e. \[p(x) = \prod_{l=1}^k p_i(x_i)\] and \[q(x) = \prod_{l=1}^k q_i(x_i)\] where each $p_i,q_i$ is a univariate probability density function. Then \[D_{KL}(p||q) = \sum_{i=1}^k D_{KL}(p_i||q_i)\]
+	\end{lemma}
+	\subsection{Reconstruction loss of a variational autoencoder}
+	Generally the loss of a VAE is classified as reconstruction loss (caused by the decoder) or Kullback-Leibler loss (caused by the encoder). We concentrate on the first one which is given by \[\mathbb{E}_{z \sim q_\phi(z|x)} [\log p_\Theta(x|z)]\]
+	During training of the autoencoder we need to calculate $\nabla_\Theta \mathbb{E}_{z \sim q_\phi(z|x)} [\log p_\Theta(x|z)]$ 
 \end{document}
